@@ -99,6 +99,5 @@ import_CSDR_1921 <- function(path) {
     dplyr::rename("SUMMARY_REPORTING_ELEMENT" = "WBS_REPORTING_ELEMENTS")
 
   return(CSDR_1921)
-  # Change
 
 }
