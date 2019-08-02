@@ -18,7 +18,7 @@
 import_CSDR_1921 <- function(path) {
 
   # Import the pipe! ----------------------------------------------------------
-  `%>%` <- magrittr::`%>%`
+  # `%>%` <- magrittr::`%>%`
 
   # Specify 1921 column types and mark that merged columns are skipped. -------
 
