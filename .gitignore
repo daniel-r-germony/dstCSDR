@@ -38,3 +38,6 @@ rsconnect/
 project.Rcheck/
 project*.tar.gz
 project*.tgz
+dstCSDR.Rcheck/
+dstCSDR*.tar.gz
+dstCSDR*.tgz
