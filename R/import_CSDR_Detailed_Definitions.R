@@ -513,7 +513,6 @@ col_types <- readr::cols(
 
   `Form` =
     readr::col_factor(levels = c("1921-2", "1921,1921-1"))
-  #TODO: Figure out what the FlexFile form label is and add it here.
 )
 
 detailed_defs <-
