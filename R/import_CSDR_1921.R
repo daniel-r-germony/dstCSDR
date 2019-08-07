@@ -13,8 +13,6 @@
 #'    CSDR 1921 data as columns.
 #' @export
 
-# @import magrittr, readxl, dplyr
-
 import_CSDR_1921 <- function(path) {
 
   # Import the pipe! ----------------------------------------------------------

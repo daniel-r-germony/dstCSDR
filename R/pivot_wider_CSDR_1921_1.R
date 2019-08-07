@@ -14,7 +14,6 @@
 #'   data as columns.
 #' @export
 
-# @import magrittr, dplyr, tidyr
 
 pivot_wider_CSDR_1921_1 <- function(CSDR_1921_1_plus, ...) {
 

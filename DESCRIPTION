@@ -1,16 +1,20 @@
 Package: dstCSDR
-Title: R Functions To Process And Analyze Cost and Software Data Reporting (CSDR) Data
+Title: Tools for Cost and Software Data Reporting (CSDR) Data
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Daniel",
-           family = "Germony",
-           role = c("aut", "cre"),
-           email = "daniel.r.germony.civ@mail.mil",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: R Functions To Process And Analyze Cost and Software Data Reporting (CSDR) Data.
+    person("Daniel", "Germony", email = "daniel.r.germony.civ@mail.mil",
+    role = c("aut", "cre"))
+Description: R functions and example datasets to help process, review,
+    validate, and analyze Cost and Software Data Reporting (CSDR) Data.
 License: GPL-3
+Imports:
+    dplyr (>= 0.8.3),
+    forcats (>= 0.4.0),
+    purrr (>= 0.3.2),
+    readxl (>= 1.3.1),
+    tidyr (>= 0.8.3.9000)
 Suggests: 
-    testthat, dplyr, tidyr, forcats, purrr, readxl
+    testthat (>= 2.2.1)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

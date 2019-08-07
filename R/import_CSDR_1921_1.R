@@ -16,8 +16,6 @@
 #'    functional categories are converted from padded rows to a column).
 #' @export
 
-# @import magrittr, readxl, purrr, dplyr, forcats
-
 import_CSDR_1921_1 <- function(path) {
 
   # Import the pipe! ----------------------------------------------------------
