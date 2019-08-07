@@ -29,42 +29,42 @@ add_cols_CSDR_1921_1 <- function(CSDR_1921_1) {
     CSDR_1921_1_plus$TYPE %>%
     forcats::as_factor()
 
-  # ADD "NONRECURRING, RECURRING, OR TOTAL" column. ---------------------------
+  # ADD "Recurring / Nonrecurring" column. ---------------------------
   CSDR_1921_1_plus <-
     CSDR_1921_1_plus %>%
     dplyr::mutate(
-      "NONRECURRING, RECURRING, OR TOTAL" = dplyr::case_when(
-        TYPE == "A. NONRECURRING INCURRED TO DATE" ~ "NONRECURRING",
-        TYPE == "B. RECURRING INCURRED TO DATE" ~ "RECURRING",
-        TYPE == "C. TOTAL INCURRED TO DATE" ~ "TOTAL",
-        TYPE == "D. NONRECURRING INCURRED AT COMPLETION" ~ "NONRECURRING",
-        TYPE == "E. RECURRING INCURRED AT COMPLETION" ~ "RECURRING",
-        TYPE == "F. TOTAL INCURRED AT COMPLETION" ~ "TOTAL",
+      "Recurring / Nonrecurring" = dplyr::case_when(
+        TYPE == "A. NONRECURRING INCURRED TO DATE" ~ "Nonrecurring",
+        TYPE == "B. RECURRING INCURRED TO DATE" ~ "Recurring",
+        TYPE == "C. TOTAL INCURRED TO DATE" ~ "Total",
+        TYPE == "D. NONRECURRING INCURRED AT COMPLETION" ~ "Nonrecurring",
+        TYPE == "E. RECURRING INCURRED AT COMPLETION" ~ "Recurring",
+        TYPE == "F. TOTAL INCURRED AT COMPLETION" ~ "Total",
         TRUE ~ "ERROR"
       )
     )
 
-  CSDR_1921_1_plus$`NONRECURRING, RECURRING, OR TOTAL` <-
-    CSDR_1921_1_plus$`NONRECURRING, RECURRING, OR TOTAL` %>%
+  CSDR_1921_1_plus$`Recurring / Nonrecurring` <-
+    CSDR_1921_1_plus$`Recurring / Nonrecurring` %>%
     forcats::as_factor()
 
-  # Add "TO DATE OR AT COMPLETE" column. --------------------------------------
+  # Add "To Date / At Completion" column. --------------------------------------
   CSDR_1921_1_plus <-
     CSDR_1921_1_plus %>%
     dplyr::mutate(
-      "TO DATE OR AT COMPLETE" = dplyr::case_when(
-        TYPE == "A. NONRECURRING INCURRED TO DATE" ~ "TO DATE",
-        TYPE == "B. RECURRING INCURRED TO DATE" ~ "TO DATE",
-        TYPE == "C. TOTAL INCURRED TO DATE" ~ "TO DATE",
-        TYPE == "D. NONRECURRING INCURRED AT COMPLETION" ~ "AT COMPLETE",
-        TYPE == "E. RECURRING INCURRED AT COMPLETION" ~ "AT COMPLETE",
-        TYPE == "F. TOTAL INCURRED AT COMPLETION" ~ "AT COMPLETE",
+      "To Date / At Completion" = dplyr::case_when(
+        TYPE == "A. NONRECURRING INCURRED TO DATE" ~ "To Date",
+        TYPE == "B. RECURRING INCURRED TO DATE" ~ "To Date",
+        TYPE == "C. TOTAL INCURRED TO DATE" ~ "To Date",
+        TYPE == "D. NONRECURRING INCURRED AT COMPLETION" ~ "At Completion",
+        TYPE == "E. RECURRING INCURRED AT COMPLETION" ~ "At Completion",
+        TYPE == "F. TOTAL INCURRED AT COMPLETION" ~ "At Completion",
         TRUE ~ "ERROR"
       )
     )
 
-  CSDR_1921_1_plus$`TO DATE OR AT COMPLETE` <-
-    CSDR_1921_1_plus$`TO DATE OR AT COMPLETE` %>%
+  CSDR_1921_1_plus$`To Date / At Completion` <-
+    CSDR_1921_1_plus$`To Date / At Completion` %>%
     forcats::as_factor()
 
   # Add "FUNCTIONAL DATA ELEMENT NUMBER" column. ------------------------------
@@ -168,8 +168,8 @@ add_cols_CSDR_1921_1 <- function(CSDR_1921_1) {
       "SUB-FUCTIONAL CATIGORY",
       "Unit of Measure",
       "TYPE",
-      "NONRECURRING, RECURRING, OR TOTAL",
-      "TO DATE OR AT COMPLETE",
+      "Recurring / Nonrecurring",
+      "To Date / At Completion",
       "COST TYPE",
       "FUNCTIONAL DATA ELEMENTS",
       "FUNCTIONAL DATA ELEMENT NUMBER",
@@ -181,7 +181,7 @@ add_cols_CSDR_1921_1 <- function(CSDR_1921_1) {
     ) %>%
     dplyr::arrange(`18. WBS ELEMENT CODE`,
                    `TYPE`,
-                   `TO DATE OR AT COMPLETE`,
+                   `To Date / At Completion`,
                    `FUNCTIONAL DATA ELEMENTS`)
 
   return(CSDR_1921_1_plus)

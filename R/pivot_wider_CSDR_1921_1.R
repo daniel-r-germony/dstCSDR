@@ -25,7 +25,7 @@ pivot_wider_CSDR_1921_1 <- function(CSDR_1921_1_plus, ...) {
     CSDR_1921_1_plus %>%
     dplyr::arrange(`18. WBS ELEMENT CODE`,
                    `TYPE`,
-                   `TO DATE OR AT COMPLETE`,
+                   `To Date / At Completion`,
                    `FUNCTIONAL DATA ELEMENTS`
     ) %>%
     dplyr::select(`18. WBS ELEMENT CODE`,
