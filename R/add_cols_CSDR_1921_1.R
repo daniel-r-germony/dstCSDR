@@ -166,7 +166,7 @@ add_cols_CSDR_1921_1 <- function(CSDR_1921_1) {
       "19. WBS REPORTING ELEMENT",
       "FUNCTIONAL CATEGORY",
       "SUB-FUCTIONAL CATIGORY",
-      "HOURS OR DOLLARS",
+      "Unit of Measure",
       "TYPE",
       "NONRECURRING, RECURRING, OR TOTAL",
       "TO DATE OR AT COMPLETE",
