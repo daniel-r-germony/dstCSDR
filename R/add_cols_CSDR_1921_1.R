@@ -67,94 +67,94 @@ add_cols_CSDR_1921_1 <- function(CSDR_1921_1) {
     CSDR_1921_1_plus$`To Date / At Completion` %>%
     forcats::as_factor()
 
-  # Add "FUNCTIONAL DATA ELEMENT NUMBER" column. ------------------------------
+  # Add "Functional Element Number" column. ------------------------------
   CSDR_1921_1_plus <-
     CSDR_1921_1_plus %>% dplyr::mutate(
-      "FUNCTIONAL DATA ELEMENT NUMBER" = dplyr::case_when(
-        `FUNCTIONAL DATA ELEMENTS` == "(1) DIRECT ENGINEERING LABOR HOURS" ~ 1L,
-        `FUNCTIONAL DATA ELEMENTS` == "(2) DIRECT ENGINEERING LABOR DOLLARS" ~ 2L,
-        `FUNCTIONAL DATA ELEMENTS` == "(3) ENGINEERING OVERHEAD DOLLARS" ~ 3L,
-        `FUNCTIONAL DATA ELEMENTS` == "(4) TOTAL ENGINEERING DOLLARS" ~ 4L,
-        `FUNCTIONAL DATA ELEMENTS` == "(5) DIRECT TOOLING LABOR HOURS" ~ 5L,
-        `FUNCTIONAL DATA ELEMENTS` == "(6) DIRECT TOOLING LABOR DOLLARS" ~ 6L,
-        `FUNCTIONAL DATA ELEMENTS` == "(7) DIRECT TOOLING & EQUIPMENT DOLLARS" ~ 7L,
-        `FUNCTIONAL DATA ELEMENTS` == "(8) DIRECT QUALITY CONTROL LABOR HOURS" ~ 8L,
-        `FUNCTIONAL DATA ELEMENTS` == "(9) DIRECT QUALITY CONTROL LABOR DOLLARS" ~ 9L,
-        `FUNCTIONAL DATA ELEMENTS` == "(10) DIRECT MANUFACTURING LABOR HOURS" ~ 10L,
-        `FUNCTIONAL DATA ELEMENTS` == "(11) DIRECT MANUFACTURING LABOR DOLLARS" ~ 11L,
-        `FUNCTIONAL DATA ELEMENTS` == "(12) MANUFACTURING OPERATIONS OVERHEAD DOLLARS (Including Tooling and Quality Control)" ~ 12L,
-        `FUNCTIONAL DATA ELEMENTS` == "(13) TOTAL MANUFACTURING OPERATIONS DOLLARS (Sum of rows 6, 7, 9, 11, and 12)" ~ 13L,
-        `FUNCTIONAL DATA ELEMENTS` == "(14) RAW MATERIAL DOLLARS" ~ 14L,
-        `FUNCTIONAL DATA ELEMENTS` == "(15) PURCHASED PARTS DOLLARS" ~ 15L,
-        `FUNCTIONAL DATA ELEMENTS` == "(16) PURCHASED EQUIPMENT DOLLARS" ~ 16L,
-        `FUNCTIONAL DATA ELEMENTS` == "(17) MATERIAL HANDLING OVERHEAD DOLLARS" ~ 17L,
-        `FUNCTIONAL DATA ELEMENTS` == "(18) TOTAL DIRECT-REPORTING SUBCONTRACTOR DOLLARS" ~ 18L,
-        `FUNCTIONAL DATA ELEMENTS` == "(19) TOTAL MATERIAL DOLLARS" ~ 19L,
-        `FUNCTIONAL DATA ELEMENTS` == "(20) OTHER COSTS NOT SHOWN ELSEWHERE (Specify in Remarks)" ~ 20L,
-        `FUNCTIONAL DATA ELEMENTS` == "(21) TOTAL COST (Direct and Overhead)" ~ 21L
+      "Functional Element Number" = dplyr::case_when(
+        `Functional Element` == "(1) DIRECT ENGINEERING LABOR HOURS" ~ 1L,
+        `Functional Element` == "(2) DIRECT ENGINEERING LABOR DOLLARS" ~ 2L,
+        `Functional Element` == "(3) ENGINEERING OVERHEAD DOLLARS" ~ 3L,
+        `Functional Element` == "(4) TOTAL ENGINEERING DOLLARS" ~ 4L,
+        `Functional Element` == "(5) DIRECT TOOLING LABOR HOURS" ~ 5L,
+        `Functional Element` == "(6) DIRECT TOOLING LABOR DOLLARS" ~ 6L,
+        `Functional Element` == "(7) DIRECT TOOLING & EQUIPMENT DOLLARS" ~ 7L,
+        `Functional Element` == "(8) DIRECT QUALITY CONTROL LABOR HOURS" ~ 8L,
+        `Functional Element` == "(9) DIRECT QUALITY CONTROL LABOR DOLLARS" ~ 9L,
+        `Functional Element` == "(10) DIRECT MANUFACTURING LABOR HOURS" ~ 10L,
+        `Functional Element` == "(11) DIRECT MANUFACTURING LABOR DOLLARS" ~ 11L,
+        `Functional Element` == "(12) MANUFACTURING OPERATIONS OVERHEAD DOLLARS (Including Tooling and Quality Control)" ~ 12L,
+        `Functional Element` == "(13) TOTAL MANUFACTURING OPERATIONS DOLLARS (Sum of rows 6, 7, 9, 11, and 12)" ~ 13L,
+        `Functional Element` == "(14) RAW MATERIAL DOLLARS" ~ 14L,
+        `Functional Element` == "(15) PURCHASED PARTS DOLLARS" ~ 15L,
+        `Functional Element` == "(16) PURCHASED EQUIPMENT DOLLARS" ~ 16L,
+        `Functional Element` == "(17) MATERIAL HANDLING OVERHEAD DOLLARS" ~ 17L,
+        `Functional Element` == "(18) TOTAL DIRECT-REPORTING SUBCONTRACTOR DOLLARS" ~ 18L,
+        `Functional Element` == "(19) TOTAL MATERIAL DOLLARS" ~ 19L,
+        `Functional Element` == "(20) OTHER COSTS NOT SHOWN ELSEWHERE (Specify in Remarks)" ~ 20L,
+        `Functional Element` == "(21) TOTAL COST (Direct and Overhead)" ~ 21L
       )
     )
 
-  # Add "COST TYPE" column. ---------------------------------------------------
+  # Add "Functional Element" column. ---------------------------------------------------
   CSDR_1921_1_plus <-
     CSDR_1921_1_plus %>% dplyr::mutate(
-      "COST TYPE" = dplyr::case_when(
-        # `FUNCTIONAL DATA ELEMENTS` == "(1) DIRECT ENGINEERING LABOR HOURS" ~ NA,
-        `FUNCTIONAL DATA ELEMENTS` == "(2) DIRECT ENGINEERING LABOR DOLLARS" ~ "DIRECT",
-        `FUNCTIONAL DATA ELEMENTS` == "(3) ENGINEERING OVERHEAD DOLLARS" ~ "OVERHEAD",
-        `FUNCTIONAL DATA ELEMENTS` == "(4) TOTAL ENGINEERING DOLLARS" ~ "SUBTOTAL",
-        # `FUNCTIONAL DATA ELEMENTS` == "(5) DIRECT TOOLING LABOR HOURS" ~ NA,
-        `FUNCTIONAL DATA ELEMENTS` == "(6) DIRECT TOOLING LABOR DOLLARS" ~ "DIRECT",
-        `FUNCTIONAL DATA ELEMENTS` == "(7) DIRECT TOOLING & EQUIPMENT DOLLARS" ~ "DIRECT",
-        # `FUNCTIONAL DATA ELEMENTS` == "(8) DIRECT QUALITY CONTROL LABOR HOURS" ~ NA,
-        `FUNCTIONAL DATA ELEMENTS` == "(9) DIRECT QUALITY CONTROL LABOR DOLLARS" ~ "DIRECT",
-        # `FUNCTIONAL DATA ELEMENTS` == "(10) DIRECT MANUFACTURING LABOR HOURS" ~ NA,
-        `FUNCTIONAL DATA ELEMENTS` == "(11) DIRECT MANUFACTURING LABOR DOLLARS" ~ "DIRECT",
-        `FUNCTIONAL DATA ELEMENTS` == "(12) MANUFACTURING OPERATIONS OVERHEAD DOLLARS (Including Tooling and Quality Control)" ~ "OVERHEAD",
-        `FUNCTIONAL DATA ELEMENTS` == "(13) TOTAL MANUFACTURING OPERATIONS DOLLARS (Sum of rows 6, 7, 9, 11, and 12)" ~ "SUBTOTAL",
-        `FUNCTIONAL DATA ELEMENTS` == "(14) RAW MATERIAL DOLLARS" ~ "DIRECT",
-        `FUNCTIONAL DATA ELEMENTS` == "(15) PURCHASED PARTS DOLLARS" ~ "DIRECT",
-        `FUNCTIONAL DATA ELEMENTS` == "(16) PURCHASED EQUIPMENT DOLLARS" ~ "DIRECT",
-        `FUNCTIONAL DATA ELEMENTS` == "(17) MATERIAL HANDLING OVERHEAD DOLLARS" ~ "OVERHEAD",
-        `FUNCTIONAL DATA ELEMENTS` == "(18) TOTAL DIRECT-REPORTING SUBCONTRACTOR DOLLARS" ~ "DIRECT",
-        `FUNCTIONAL DATA ELEMENTS` == "(19) TOTAL MATERIAL DOLLARS" ~ "SUBTOTAL",
-        `FUNCTIONAL DATA ELEMENTS` == "(20) OTHER COSTS NOT SHOWN ELSEWHERE (Specify in Remarks)" ~ "OTHER DIRECT COSTS",
-        `FUNCTIONAL DATA ELEMENTS` == "(21) TOTAL COST (Direct and Overhead)" ~ "TOTAL"
+      "Functional Element_alt" = dplyr::case_when(
+        `Functional Element` == "(1) DIRECT ENGINEERING LABOR HOURS" ~ "Direct Engineering Labor",
+        `Functional Element` == "(2) DIRECT ENGINEERING LABOR DOLLARS" ~ "Direct Engineering Labor",
+        `Functional Element` == "(3) ENGINEERING OVERHEAD DOLLARS" ~ "Engineering Overhead",
+        `Functional Element` == "(4) TOTAL ENGINEERING DOLLARS" ~ "Summary",
+        `Functional Element` == "(5) DIRECT TOOLING LABOR HOURS" ~ "Direct Tooling Labor",
+        `Functional Element` == "(6) DIRECT TOOLING LABOR DOLLARS" ~ "Direct Tooling Labor",
+        `Functional Element` == "(7) DIRECT TOOLING & EQUIPMENT DOLLARS" ~ "Direct Tooling & Equipment",
+        `Functional Element` == "(8) DIRECT QUALITY CONTROL LABOR HOURS" ~ "Direct Quality Control Labor",
+        `Functional Element` == "(9) DIRECT QUALITY CONTROL LABOR DOLLARS" ~ "Direct Quality Control Labor",
+        `Functional Element` == "(10) DIRECT MANUFACTURING LABOR HOURS" ~ "Direct Manufacturing Labor",
+        `Functional Element` == "(11) DIRECT MANUFACTURING LABOR DOLLARS" ~ "Direct Manufacturing Labor",
+        `Functional Element` == "(12) MANUFACTURING OPERATIONS OVERHEAD DOLLARS (Including Tooling and Quality Control)" ~ "Manufacturing Operations Overhead",
+        `Functional Element` == "(13) TOTAL MANUFACTURING OPERATIONS DOLLARS (Sum of rows 6, 7, 9, 11, and 12)" ~ "Summary",
+        `Functional Element` == "(14) RAW MATERIAL DOLLARS" ~ "Raw Material",
+        `Functional Element` == "(15) PURCHASED PARTS DOLLARS" ~ "Purchased Parts",
+        `Functional Element` == "(16) PURCHASED EQUIPMENT DOLLARS" ~ "Purchased Equipment",
+        `Functional Element` == "(17) MATERIAL HANDLING OVERHEAD DOLLARS" ~ "Material Handling/Overhead",
+        `Functional Element` == "(18) TOTAL DIRECT-REPORTING SUBCONTRACTOR DOLLARS" ~ "Direct-Reporting Subcontractor",
+        `Functional Element` == "(19) TOTAL MATERIAL DOLLARS" ~ "Summary",
+        `Functional Element` == "(20) OTHER COSTS NOT SHOWN ELSEWHERE (Specify in Remarks)" ~ "Other Costs Not Shown Elsewhere",
+        `Functional Element` == "(21) TOTAL COST (Direct and Overhead)" ~ "Summary"
       )
     )
-  CSDR_1921_1_plus$`COST TYPE` <-
-    CSDR_1921_1_plus$`COST TYPE` %>%
+  CSDR_1921_1_plus$`Functional Element_alt` <-
+    CSDR_1921_1_plus$`Functional Element_alt` %>%
     forcats::as_factor()
 
-  # Add "COST TYPE" column. ---------------------------------------------------
+  # Add "Functional Category" column. ---------------------------------------------------
   CSDR_1921_1_plus <-
     CSDR_1921_1_plus %>% dplyr::mutate(
-      "SUB-FUCTIONAL CATIGORY" = dplyr::case_when(
-        `FUNCTIONAL DATA ELEMENTS` == "(1) DIRECT ENGINEERING LABOR HOURS" ~ "ENGINEERING",
-        `FUNCTIONAL DATA ELEMENTS` == "(2) DIRECT ENGINEERING LABOR DOLLARS" ~ "ENGINEERING",
-        `FUNCTIONAL DATA ELEMENTS` == "(3) ENGINEERING OVERHEAD DOLLARS" ~ "ENGINEERING",
-        `FUNCTIONAL DATA ELEMENTS` == "(4) TOTAL ENGINEERING DOLLARS" ~ "ENGINEERING",
-        `FUNCTIONAL DATA ELEMENTS` == "(5) DIRECT TOOLING LABOR HOURS" ~ "TOOLING & EQUIPMENT",
-        `FUNCTIONAL DATA ELEMENTS` == "(6) DIRECT TOOLING LABOR DOLLARS" ~ "TOOLING & EQUIPMENT",
-        `FUNCTIONAL DATA ELEMENTS` == "(7) DIRECT TOOLING & EQUIPMENT DOLLARS" ~ "TOOLING & EQUIPMENT",
-        `FUNCTIONAL DATA ELEMENTS` == "(8) DIRECT QUALITY CONTROL LABOR HOURS" ~ "QUALITY CONTROL",
-        `FUNCTIONAL DATA ELEMENTS` == "(9) DIRECT QUALITY CONTROL LABOR DOLLARS" ~ "QUALITY CONTROL",
-        `FUNCTIONAL DATA ELEMENTS` == "(10) DIRECT MANUFACTURING LABOR HOURS" ~ "MANUFACTURING",
-        `FUNCTIONAL DATA ELEMENTS` == "(11) DIRECT MANUFACTURING LABOR DOLLARS" ~ "MANUFACTURING",
-        `FUNCTIONAL DATA ELEMENTS` == "(12) MANUFACTURING OPERATIONS OVERHEAD DOLLARS (Including Tooling and Quality Control)" ~ "MANUFACTURING OPERATIONS",
-        `FUNCTIONAL DATA ELEMENTS` == "(13) TOTAL MANUFACTURING OPERATIONS DOLLARS (Sum of rows 6, 7, 9, 11, and 12)" ~ "MANUFACTURING OPERATIONS",
-        `FUNCTIONAL DATA ELEMENTS` == "(14) RAW MATERIAL DOLLARS" ~ "RAW MATERIAL",
-        `FUNCTIONAL DATA ELEMENTS` == "(15) PURCHASED PARTS DOLLARS" ~ "PURCHASED PARTS",
-        `FUNCTIONAL DATA ELEMENTS` == "(16) PURCHASED EQUIPMENT DOLLARS" ~ "PURCHASED EQUIPMENT",
-        `FUNCTIONAL DATA ELEMENTS` == "(17) MATERIAL HANDLING OVERHEAD DOLLARS" ~ "MATERIAL HANDLING",
-        `FUNCTIONAL DATA ELEMENTS` == "(18) TOTAL DIRECT-REPORTING SUBCONTRACTOR DOLLARS" ~ "DIRECT-REPORTING SUBCONTRACTOR",
-        `FUNCTIONAL DATA ELEMENTS` == "(19) TOTAL MATERIAL DOLLARS" ~ "MATERIAL",
-        `FUNCTIONAL DATA ELEMENTS` == "(20) OTHER COSTS NOT SHOWN ELSEWHERE (Specify in Remarks)" ~ "OTHER DIRECT COSTS",
-        `FUNCTIONAL DATA ELEMENTS` == "(21) TOTAL COST (Direct and Overhead)" ~ "TOTAL"
+      "Functional Category" = dplyr::case_when(
+        `Functional Element` == "(1) DIRECT ENGINEERING LABOR HOURS" ~ "Engineering",
+        `Functional Element` == "(2) DIRECT ENGINEERING LABOR DOLLARS" ~ "Engineering",
+        `Functional Element` == "(3) ENGINEERING OVERHEAD DOLLARS" ~ "Engineering",
+        `Functional Element` == "(4) TOTAL ENGINEERING DOLLARS" ~ "Engineering",
+        `Functional Element` == "(5) DIRECT TOOLING LABOR HOURS" ~ "Tooling",
+        `Functional Element` == "(6) DIRECT TOOLING LABOR DOLLARS" ~ "Tooling",
+        `Functional Element` == "(7) DIRECT TOOLING & EQUIPMENT DOLLARS" ~ "Tooling",
+        `Functional Element` == "(8) DIRECT QUALITY CONTROL LABOR HOURS" ~ "Quality Control",
+        `Functional Element` == "(9) DIRECT QUALITY CONTROL LABOR DOLLARS" ~ "Quality Control",
+        `Functional Element` == "(10) DIRECT MANUFACTURING LABOR HOURS" ~ "Manufacturing",
+        `Functional Element` == "(11) DIRECT MANUFACTURING LABOR DOLLARS" ~ "Manufacturing",
+        `Functional Element` == "(12) MANUFACTURING OPERATIONS OVERHEAD DOLLARS (Including Tooling and Quality Control)" ~ "Manufacturing Operations",
+        `Functional Element` == "(13) TOTAL MANUFACTURING OPERATIONS DOLLARS (Sum of rows 6, 7, 9, 11, and 12)" ~ "Manufacturing & Manufacturing Operations",
+        `Functional Element` == "(14) RAW MATERIAL DOLLARS" ~ "Material",
+        `Functional Element` == "(15) PURCHASED PARTS DOLLARS" ~ "Material",
+        `Functional Element` == "(16) PURCHASED EQUIPMENT DOLLARS" ~ "Material",
+        `Functional Element` == "(17) MATERIAL HANDLING OVERHEAD DOLLARS" ~ "Material",
+        `Functional Element` == "(18) TOTAL DIRECT-REPORTING SUBCONTRACTOR DOLLARS" ~ "Material",
+        `Functional Element` == "(19) TOTAL MATERIAL DOLLARS" ~ "Material",
+        `Functional Element` == "(20) OTHER COSTS NOT SHOWN ELSEWHERE (Specify in Remarks)" ~ "Other",
+        `Functional Element` == "(21) TOTAL COST (Direct and Overhead)" ~ "Summary"
       )
     )
-  CSDR_1921_1_plus$`SUB-FUCTIONAL CATIGORY` <-
-    CSDR_1921_1_plus$`SUB-FUCTIONAL CATIGORY` %>%
+  CSDR_1921_1_plus$`Functional Category` <-
+    CSDR_1921_1_plus$`Functional Category` %>%
     forcats::as_factor()
 
   # Reorder columns before return. --------------------------------------------
@@ -164,15 +164,14 @@ add_cols_CSDR_1921_1 <- function(CSDR_1921_1) {
     dplyr::select(
       "18. WBS ELEMENT CODE",
       "19. WBS REPORTING ELEMENT",
-      "FUNCTIONAL CATEGORY",
-      "SUB-FUCTIONAL CATIGORY",
+      "Functional Category",
       "Unit of Measure",
       "TYPE",
       "Recurring / Nonrecurring",
       "To Date / At Completion",
-      "COST TYPE",
-      "FUNCTIONAL DATA ELEMENTS",
-      "FUNCTIONAL DATA ELEMENT NUMBER",
+      "Functional Element",
+      "Functional Element_alt",
+      "Functional Element Number",
       "VALUE",
       "20a. NUMBER OF UNITS TO DATE",
       "20b. NUMBER OF UNITS AT COMPLETION",
@@ -182,7 +181,7 @@ add_cols_CSDR_1921_1 <- function(CSDR_1921_1) {
     dplyr::arrange(`18. WBS ELEMENT CODE`,
                    `TYPE`,
                    `To Date / At Completion`,
-                   `FUNCTIONAL DATA ELEMENTS`)
+                   `Functional Element`)
 
   return(CSDR_1921_1_plus)
 }

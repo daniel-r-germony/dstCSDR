@@ -24,17 +24,17 @@ pivot_wider_CSDR_1921_1 <- function(CSDR_1921_1_plus, ...) {
   CSDR_1921_1_wide <-
     CSDR_1921_1_plus %>%
     dplyr::arrange(`18. WBS ELEMENT CODE`,
-                   `TYPE`,
+                   `Recurring / Nonrecurring`,
                    `To Date / At Completion`,
-                   `FUNCTIONAL DATA ELEMENTS`
+                   `Functional Element`
     ) %>%
     dplyr::select(`18. WBS ELEMENT CODE`,
-                  `TYPE`,
-                  `FUNCTIONAL DATA ELEMENTS`,
+                  `Recurring / Nonrecurring`,
+                  `Functional Element`,
                   `VALUE`
     ) %>%
     tidyr::pivot_wider(
-      names_from = c(TYPE, `FUNCTIONAL DATA ELEMENTS`),
+      names_from = c(`Recurring / Nonrecurring`, `Functional Element`),
       names_sep = " / ",
       values_from = `VALUE`
     ) %>%
