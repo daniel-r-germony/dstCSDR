@@ -94,7 +94,19 @@ read_xml_ccdr_header <- function(xml_root) {
                                  "typeAction/contractNumber", "contract_number", "chr",
                                  "typeAction/latestModification", "latest_mod", "chr",
                                  "typeAction/solicitationNumber", "solicitation_number", "chr",
-                                 "typeAction/name", "action_name", "chr"
+                                 "typeAction/name", "action_name", "chr",
+                                 "periodOfPerformance/startDate", "pop_start", "date",
+                                 "periodOfPerformance/endDate", "pop_end", "date",
+                                 "appropriationTypes/appropriationType", "appropriation_type", "chr",
+                                 "reportCycle", "report_cycle", "chr",
+                                 "submissionNumber", "submission_number", "num",
+                                 "resubmissionNumber", "resubmission_number", "num",
+                                 "reportAsOf", "report_as_of", "date",
+                                 "pointOfContact/name", "poc_name", "chr",
+                                 "pointOfContact/department", "poc_department", "chr",
+                                 "pointOfContact/phone", "poc_phone", "chr",
+                                 "pointOfContact/email", "poc_email", "chr",
+                                 "datePrepared", "date_prepared", "date"
   )
 
   get_xpath <- function(xpath) {
@@ -109,7 +121,8 @@ read_xml_ccdr_header <- function(xml_root) {
   header <- tibble::as_tibble(setNames(lapply(header_vars$xpath, get_xpath), header_vars$var_name))
 
   # Will warn if converting text to numeric (NAs introduced by coercion)
-  suppressWarnings(dplyr::mutate_at(header, .vars = header_vars$var_name[header_vars$data_type == "num"], .funs = as.numeric))
+  header <- suppressWarnings(dplyr::mutate_at(header, .vars = header_vars$var_name[header_vars$data_type == "num"], .funs = as.numeric))
+  suppressWarnings(dplyr::mutate_at(header, .vars = header_vars$var_name[header_vars$data_type == "date"], .funs = as.Date))
 }
 
 # Not exported
@@ -118,14 +131,18 @@ read_xml_ccdr_body <- function(xml_root) {
   process_wbs_element <- function(r) {
     wbs <- XML::xmlValue(r[["wbsElementCode"]])
     item <- XML::xmlValue(r[["wbsElementName"]])
-    a <- XML::xmlToDataFrame(XML::xmlChildren(r[["costsIncurredToDate"]]))
-    b <- XML::xmlValue(r[["numberOfUnitsAtCompletion"]])
-    c <- XML::xmlToDataFrame(XML::xmlChildren(r[["costsIncurredAtCompletion"]]))
 
-    values <- as.numeric(c(t(a), b, t(c)))
-    names(values) <- c(paste0("ToDate_", c("NR", "R", "T")), paste0("AtComp_", c("Units", "NR", "R", "T")))
+    units_td <- as.numeric(XML::xmlValue(r[["numberOfUnitsToDate"]]))
+    units_ac <- as.numeric(XML::xmlValue(r[["numberOfUnitsAtCompletion"]]))
+    units <- c(units_td, units_ac)
 
-    dplyr::bind_cols(WBS = wbs, Item = item, tibble::as_tibble(rbind(values)))
+    cost_td <- dplyr::bind_cols(lapply(XML::xmlToList(r[["costsIncurredToDate"]]), as.numeric))
+    cost_ac <- dplyr::bind_cols(lapply(XML::xmlToList(r[["costsIncurredAtCompletion"]]), as.numeric))
+    cost <- dplyr::bind_rows(cost_td, cost_ac)
+
+    time_period <- c("to date", "at completion")
+
+    tibble::add_column(cost, WBS = wbs, Item = item, Time_Period = time_period, Units = units, .before = 1)
   }
 
   # Read children of wbsElements (all cost rows on the report)
@@ -146,4 +163,72 @@ read_xml_ccdr_summary <- function(xml_root) {
   dplyr::bind_cols(Item = c("SubTotalCost", "GA", "UB", "MR", "FCCM", "TotalCost", "Fee", "TotalPrice"),
                    tibble::as_tibble(cost_summary))
 
+}
+
+# ====== 1921-1 Functions =======
+
+#' Read a DD Form 1921-1 XML File
+#'
+#' Parse the data for a given file name with a valid extension (i.e., '1921_1.xml').
+#'
+#' @param file_path The file to read.
+#'
+#' @return A list of two tables (tbl_df): \cr
+#'    \describe{
+#'       \item{metadata}{The document metadata (e.g., Program Name, Contract Number, Report As Of Date, etc.).}
+#'       \item{cost_report}{The WBS level cost report data.}
+#'    }
+#' @export
+#'
+#' @examples
+#' file_path <- paste0(system.file("extdata", package = "costTools"), "/CCDR_Data/")
+#' get_files_ccdr(file_path)
+#'
+#' cost_report_2 <- read_xml_fchr(paste0(file_path, ccdr_files$dir[2], ccdr_files$file[2]))
+read_xml_fchr <- function(file_path) {
+
+  xml_data <- XML::xmlParse(file_path)
+  xml_root <- XML::xmlRoot(xml_data)
+
+  ccdr_version <- XML::xmlGetAttr(xml_root, "csdrDID")
+
+  message(paste("reading csdr version", ccdr_version))
+
+  # Same header format as 1921
+  list(metadata = read_xml_ccdr_header(xml_root),
+       cost_report = read_xml_fchr_body(xml_root))
+
+}
+
+# Not exported
+read_xml_fchr_body <- function(xml_root) {
+
+  # Process a WBS element
+  process_wbs_element <- function(r) {
+    wbs <- XML::xmlValue(r[["wbsElementCode"]])
+    item <- XML::xmlValue(r[["wbsElementName"]])
+
+    units_td <- as.numeric(XML::xmlValue(r[["numberOfUnitsToDate"]]))
+    units_ac <- as.numeric(XML::xmlValue(r[["numberOfUnitsAtCompletion"]]))
+
+    # Extract the nested tables (recurring/nonrecurring and to date/at completion) from the report
+    extract_nesting <- function(o) {
+      node_name <- XML::xmlName(o)
+      cost <- XML::xmlToDataFrame(o, colClasses = rep("numeric", 3))
+
+      time_period <- c("to date", "at completion")
+      units = c(units_td, units_ac)
+
+      tibble::add_column(cost, Element = node_name, Time_Period = time_period, Units = units, .before = 1)
+    }
+
+    costs <- lapply(XML::xmlChildren(r[["functionalDataElements"]]), extract_nesting)
+    tibble::add_column(dplyr::bind_rows(costs), WBS = wbs, Item = item, .before = 1)
+  }
+
+  # Read children of wbsElements (all cost rows on the report)
+  child_elements <- XML::xmlChildren(xml_root[["wbsElements"]])
+
+  # Convert cost rows into data frame
+  dplyr::bind_rows(lapply(child_elements, process_wbs_element))
 }
