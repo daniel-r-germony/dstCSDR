@@ -45,13 +45,13 @@ import_CSDR_1921_1 <- function(path) {
 
   # Provide column names for imported 1921-1 columns. -------------------------
   CSDR_1921_1_col_names <- c(
-    "Functional Element",
-    "A. NONRECURRING INCURRED TO DATE",
-    "B. RECURRING INCURRED TO DATE",
-    "C. TOTAL INCURRED TO DATE",
-    "D. NONRECURRING INCURRED AT COMPLETION",
-    "E. RECURRING INCURRED AT COMPLETION",
-    "F. TOTAL INCURRED AT COMPLETION"
+    "Functional Data Element",
+    "Costs and Hours Incurred To Date - Nonrecurring",
+    "Costs and Hours Incurred To Date - Recurring",
+    "Costs and Hours Incurred To Date - Total",
+    "Costs and Hours Incurred At Completion - Nonrecurring",
+    "Costs and Hours Incurred At Completion - Recurring",
+    "Costs and Hours Incurred At Completion - Total"
   )
 
   # Import all 1921-1 worksheets and combine into a tibble. -------------------
@@ -74,39 +74,39 @@ import_CSDR_1921_1 <- function(path) {
   CSDR_1921_1 <-
     CSDR_1921_1 %>%
     dplyr::filter(!(
-      `Functional Element` %in% c(
+      `Functional Data Element` %in% c(
         "ENGINEERING",
         "MANUFACTURING OPERATIONS",
         "MATERIALS",
         "OTHER COSTS",
-        "Summary"
+        "SUMMARY"
       )
     ))
 
   CSDR_1921_1 <-
     CSDR_1921_1 %>% dplyr::mutate(
-      "Functional Category" = dplyr::case_when(
-        `Functional Element` == "(1) DIRECT ENGINEERING LABOR HOURS" ~ "Engineering",
-        `Functional Element` == "(2) DIRECT ENGINEERING LABOR DOLLARS" ~ "Engineering",
-        `Functional Element` == "(3) ENGINEERING OVERHEAD DOLLARS" ~ "Engineering",
-        `Functional Element` == "(4) TOTAL ENGINEERING DOLLARS" ~ "Summary",
-        `Functional Element` == "(5) DIRECT TOOLING LABOR HOURS" ~ "Tooling",
-        `Functional Element` == "(6) DIRECT TOOLING LABOR DOLLARS" ~ "Tooling",
-        `Functional Element` == "(7) DIRECT TOOLING & EQUIPMENT DOLLARS" ~ "Tooling",
-        `Functional Element` == "(8) DIRECT QUALITY CONTROL LABOR HOURS" ~ "Quality Control",
-        `Functional Element` == "(9) DIRECT QUALITY CONTROL LABOR DOLLARS" ~ "Quality Control",
-        `Functional Element` == "(10) DIRECT MANUFACTURING LABOR HOURS" ~ "Manufacturing",
-        `Functional Element` == "(11) DIRECT MANUFACTURING LABOR DOLLARS" ~ "Manufacturing",
-        `Functional Element` == "(12) MANUFACTURING OPERATIONS OVERHEAD DOLLARS (Including Tooling and Quality Control)" ~ "Manufacturing Operations",
-        `Functional Element` == "(13) TOTAL MANUFACTURING OPERATIONS DOLLARS (Sum of rows 6, 7, 9, 11, and 12)" ~ "Summary",
-        `Functional Element` == "(14) RAW MATERIAL DOLLARS" ~ "Material",
-        `Functional Element` == "(15) PURCHASED PARTS DOLLARS" ~ "Material",
-        `Functional Element` == "(16) PURCHASED EQUIPMENT DOLLARS" ~ "Material",
-        `Functional Element` == "(17) MATERIAL HANDLING OVERHEAD DOLLARS" ~ "Material",
-        `Functional Element` == "(18) TOTAL DIRECT-REPORTING SUBCONTRACTOR DOLLARS" ~ "Material",
-        `Functional Element` == "(19) TOTAL MATERIAL DOLLARS" ~ "Summary",
-        `Functional Element` == "(20) OTHER COSTS NOT SHOWN ELSEWHERE (Specify in Remarks)" ~ "Other",
-        `Functional Element` == "(21) TOTAL COST (Direct and Overhead)" ~ "Summary",
+      `Functional Category` = dplyr::case_when(
+        `Functional Data Element` == "(1) DIRECT ENGINEERING LABOR HOURS" ~ "Engineering",
+        `Functional Data Element` == "(2) DIRECT ENGINEERING LABOR DOLLARS" ~ "Engineering",
+        `Functional Data Element` == "(3) ENGINEERING OVERHEAD DOLLARS" ~ "Engineering",
+        `Functional Data Element` == "(4) TOTAL ENGINEERING DOLLARS" ~ "Summary",
+        `Functional Data Element` == "(5) DIRECT TOOLING LABOR HOURS" ~ "Tooling",
+        `Functional Data Element` == "(6) DIRECT TOOLING LABOR DOLLARS" ~ "Tooling",
+        `Functional Data Element` == "(7) DIRECT TOOLING & EQUIPMENT DOLLARS" ~ "Tooling",
+        `Functional Data Element` == "(8) DIRECT QUALITY CONTROL LABOR HOURS" ~ "Quality Control",
+        `Functional Data Element` == "(9) DIRECT QUALITY CONTROL LABOR DOLLARS" ~ "Quality Control",
+        `Functional Data Element` == "(10) DIRECT MANUFACTURING LABOR HOURS" ~ "Manufacturing",
+        `Functional Data Element` == "(11) DIRECT MANUFACTURING LABOR DOLLARS" ~ "Manufacturing",
+        `Functional Data Element` == "(12) MANUFACTURING OPERATIONS OVERHEAD DOLLARS (Including Tooling and Quality Control)" ~ "Manufacturing Operations",
+        `Functional Data Element` == "(13) TOTAL MANUFACTURING OPERATIONS DOLLARS (Sum of rows 6, 7, 9, 11, and 12)" ~ "Summary",
+        `Functional Data Element` == "(14) RAW MATERIAL DOLLARS" ~ "Material",
+        `Functional Data Element` == "(15) PURCHASED PARTS DOLLARS" ~ "Material",
+        `Functional Data Element` == "(16) PURCHASED EQUIPMENT DOLLARS" ~ "Material",
+        `Functional Data Element` == "(17) MATERIAL HANDLING OVERHEAD DOLLARS" ~ "Material",
+        `Functional Data Element` == "(18) TOTAL DIRECT-REPORTING SUBCONTRACTOR DOLLARS" ~ "Material",
+        `Functional Data Element` == "(19) TOTAL MATERIAL DOLLARS" ~ "Summary",
+        `Functional Data Element` == "(20) OTHER COSTS NOT SHOWN ELSEWHERE (Specify in Remarks)" ~ "Other",
+        `Functional Data Element` == "(21) TOTAL COST (Direct and Overhead)" ~ "Summary",
         TRUE ~ "REMOVE"
       )
     ) %>%
@@ -119,28 +119,28 @@ import_CSDR_1921_1 <- function(path) {
   # Add a column to mark unit of measure. -------------------------------------
   CSDR_1921_1 <-
     CSDR_1921_1 %>% dplyr::mutate(
-      "Unit of Measure" = dplyr::case_when(
-        `Functional Element` == "(1) DIRECT ENGINEERING LABOR HOURS" ~ "Hours",
-        `Functional Element` == "(2) DIRECT ENGINEERING LABOR DOLLARS" ~ "TY $K",
-        `Functional Element` == "(3) ENGINEERING OVERHEAD DOLLARS" ~ "TY $K",
-        `Functional Element` == "(4) TOTAL ENGINEERING DOLLARS" ~ "TY $K",
-        `Functional Element` == "(5) DIRECT TOOLING LABOR HOURS" ~ "Hours",
-        `Functional Element` == "(6) DIRECT TOOLING LABOR DOLLARS" ~ "TY $K",
-        `Functional Element` == "(7) DIRECT TOOLING & EQUIPMENT DOLLARS" ~ "TY $K",
-        `Functional Element` == "(8) DIRECT QUALITY CONTROL LABOR HOURS" ~ "Hours",
-        `Functional Element` == "(9) DIRECT QUALITY CONTROL LABOR DOLLARS" ~ "TY $K",
-        `Functional Element` == "(10) DIRECT MANUFACTURING LABOR HOURS" ~ "Hours",
-        `Functional Element` == "(11) DIRECT MANUFACTURING LABOR DOLLARS" ~ "TY $K",
-        `Functional Element` == "(12) MANUFACTURING OPERATIONS OVERHEAD DOLLARS (Including Tooling and Quality Control)" ~ "TY $K",
-        `Functional Element` == "(13) TOTAL MANUFACTURING OPERATIONS DOLLARS (Sum of rows 6, 7, 9, 11, and 12)" ~ "TY $K",
-        `Functional Element` == "(14) RAW MATERIAL DOLLARS" ~ "TY $K",
-        `Functional Element` == "(15) PURCHASED PARTS DOLLARS" ~ "TY $K",
-        `Functional Element` == "(16) PURCHASED EQUIPMENT DOLLARS" ~ "TY $K",
-        `Functional Element` == "(17) MATERIAL HANDLING OVERHEAD DOLLARS" ~ "TY $K",
-        `Functional Element` == "(18) TOTAL DIRECT-REPORTING SUBCONTRACTOR DOLLARS" ~ "TY $K",
-        `Functional Element` == "(19) TOTAL MATERIAL DOLLARS" ~ "TY $K",
-        `Functional Element` == "(20) OTHER COSTS NOT SHOWN ELSEWHERE (Specify in Remarks)" ~ "TY $K",
-        `Functional Element` == "(21) TOTAL COST (Direct and Overhead)" ~ "TY $K"
+      `Unit of Measure` = dplyr::case_when(
+        `Functional Data Element` == "(1) DIRECT ENGINEERING LABOR HOURS" ~ "Hours",
+        `Functional Data Element` == "(2) DIRECT ENGINEERING LABOR DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(3) ENGINEERING OVERHEAD DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(4) TOTAL ENGINEERING DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(5) DIRECT TOOLING LABOR HOURS" ~ "Hours",
+        `Functional Data Element` == "(6) DIRECT TOOLING LABOR DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(7) DIRECT TOOLING & EQUIPMENT DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(8) DIRECT QUALITY CONTROL LABOR HOURS" ~ "Hours",
+        `Functional Data Element` == "(9) DIRECT QUALITY CONTROL LABOR DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(10) DIRECT MANUFACTURING LABOR HOURS" ~ "Hours",
+        `Functional Data Element` == "(11) DIRECT MANUFACTURING LABOR DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(12) MANUFACTURING OPERATIONS OVERHEAD DOLLARS (Including Tooling and Quality Control)" ~ "TY $K",
+        `Functional Data Element` == "(13) TOTAL MANUFACTURING OPERATIONS DOLLARS (Sum of rows 6, 7, 9, 11, and 12)" ~ "TY $K",
+        `Functional Data Element` == "(14) RAW MATERIAL DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(15) PURCHASED PARTS DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(16) PURCHASED EQUIPMENT DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(17) MATERIAL HANDLING OVERHEAD DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(18) TOTAL DIRECT-REPORTING SUBCONTRACTOR DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(19) TOTAL MATERIAL DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(20) OTHER COSTS NOT SHOWN ELSEWHERE (Specify in Remarks)" ~ "TY $K",
+        `Functional Data Element` == "(21) TOTAL COST (Direct and Overhead)" ~ "TY $K"
       )
     )
 
@@ -172,54 +172,55 @@ import_CSDR_1921_1 <- function(path) {
   }
 
   # Use cell_to_tibble to grab additional data elements from the 1921-1. ------
-  WBS_ELEMENT_CODE <- cell_to_tibble(path, "B21", "text", "18. WBS ELEMENT CODE")
-  WBS_REPORTING_ELEMENT <- cell_to_tibble(path, "G21", "text", "19. WBS REPORTING ELEMENT")
-  NUMBER_OF_UNITS_TO_DATE <- cell_to_tibble(path, "K22", "numeric", "20a. NUMBER OF UNITS TO DATE")
-  NUMBER_OF_UNITS_AT_COMPLETION <- cell_to_tibble(path, "M22", "numeric", "20b. NUMBER OF UNITS AT COMPLETION")
-  REMARKS <- cell_to_tibble(path, "B53", "text", "22. REMARKS")
+  `WBS Code` <- cell_to_tibble(path, "B21", "text", "WBS Code")
+  `WBS Reporting Element` <- cell_to_tibble(path, "G21", "text", "WBS Reporting Element")
+  `Number of Units to Date` <- cell_to_tibble(path, "K22", "numeric", "Number of Units to Date")
+  `Number of Units At Completion` <- cell_to_tibble(path, "M22", "numeric", "Number of Units At Completion")
+  Remarks <- cell_to_tibble(path, "B53", "text", "Remarks")
 
   # Add the additional elements as columns in the 1921-1 tibble. --------------
   CSDR_1921_1 <-
     CSDR_1921_1 %>%
-    dplyr::left_join(WBS_ELEMENT_CODE, by = "source_worksheet_title") %>%
-    dplyr::left_join(WBS_REPORTING_ELEMENT, by = "source_worksheet_title") %>%
-    dplyr::left_join(NUMBER_OF_UNITS_TO_DATE, by = "source_worksheet_title") %>%
-    dplyr::left_join(NUMBER_OF_UNITS_AT_COMPLETION, by = "source_worksheet_title") %>%
-    dplyr::left_join(REMARKS, by = "source_worksheet_title")
+    dplyr::left_join(`WBS Code`, by = "source_worksheet_title") %>%
+    dplyr::left_join(`WBS Reporting Element`, by = "source_worksheet_title") %>%
+    dplyr::left_join(`Number of Units to Date`, by = "source_worksheet_title") %>%
+    dplyr::left_join(`Number of Units At Completion`, by = "source_worksheet_title") %>%
+    dplyr::left_join(Remarks, by = "source_worksheet_title")
 
-  CSDR_1921_1$`18. WBS ELEMENT CODE` <-
-    CSDR_1921_1$`18. WBS ELEMENT CODE` %>%
+  CSDR_1921_1$`WBS Code` <-
+    CSDR_1921_1$`WBS Code` %>%
     forcats::as_factor()
 
-  CSDR_1921_1$`19. WBS REPORTING ELEMENT` <-
-    CSDR_1921_1$`19. WBS REPORTING ELEMENT` %>%
+  CSDR_1921_1$`WBS Reporting Element` <-
+    CSDR_1921_1$`WBS Reporting Element` %>%
     forcats::as_factor()
 
-  CSDR_1921_1$`Functional Element` <-
-    CSDR_1921_1$`Functional Element` %>%
+  CSDR_1921_1$`Functional Data Element` <-
+    CSDR_1921_1$`Functional Data Element` %>%
     forcats::as_factor()
 
   # Reorder the columns before returning. -------------------------------------
   CSDR_1921_1 <-
     CSDR_1921_1 %>%
     dplyr::select(
-      "18. WBS ELEMENT CODE",
-      "19. WBS REPORTING ELEMENT",
-      "Functional Category",
-      "Functional Element",
+      "WBS Code",                                              # "WBSElementID"
+      "WBS Reporting Element",                                 # "WBSElementName"
+      "Functional Category",                                   # "FunctionalCategory"
+      "Functional Data Element",                               # "StandardCategory"
       "Unit of Measure",
-      "A. NONRECURRING INCURRED TO DATE",
-      "B. RECURRING INCURRED TO DATE",
-      "C. TOTAL INCURRED TO DATE",
-      "D. NONRECURRING INCURRED AT COMPLETION",
-      "E. RECURRING INCURRED AT COMPLETION",
-      "F. TOTAL INCURRED AT COMPLETION",
-      "20a. NUMBER OF UNITS TO DATE",
-      "20b. NUMBER OF UNITS AT COMPLETION",
-      "22. REMARKS",
-      "source_worksheet_title"
+      "Costs and Hours Incurred To Date - Nonrecurring",       # "NonrecurringCostsToDate"
+      "Costs and Hours Incurred To Date - Recurring",          # "RecurringCostsToDate"
+      "Costs and Hours Incurred To Date - Total",              # "TotalCostsToDate"
+      "Costs and Hours Incurred At Completion - Nonrecurring", # "NonrecurringCostsAtCompletion"
+      "Costs and Hours Incurred At Completion - Recurring",    # "RecurringCostsAtCompletion"
+      "Costs and Hours Incurred At Completion - Total",        # "TotalCostsAtCompletion"
+      "Number of Units to Date",                               # "QuantityToDate"
+      "Number of Units At Completion",                         # "QuantityAtCompletion"
+      "Remarks"                                                # "WBSElementRemark"
+      # "source_worksheet_title"
     )
 
   return(CSDR_1921_1)
 
 }
+

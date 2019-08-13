@@ -43,16 +43,16 @@ import_CSDR_1921 <- function(path) {
 
   # Provide column names for imported 1921 columns. ---------------------------
   CSDR_1921_col_names <- c(
-    "WBS_ELEMENT_CODE",
-    "WBS_REPORTING_ELEMENTS",
-    "NUMBER_OF_UNITS_TO_DATE",
-    "NONRECURRING_COSTS_INCURRED_TO_DATE",
-    "RECURRING_COSTS_INCURRED_TO_DATE",
-    "TOTAL_COSTS_INCURRED_TO_DATE",
-    "NUMBER_OF_UNITS_AT_COMPLETION",
-    "NONRECURRING_COSTS_INCURRED_AT_COMPLETION",
-    "RECURRING_COSTS_INCURRED_AT_COMPLETION",
-    "TOTAL_COSTS_INCURRED_AT_COMPLETION"
+    "WBS Code",                                    # "WBSElementID"
+    "WBS Reporting Element",                       # "WBSElementName"
+    "Number of Units to Date",                     # "QuantityToDate"
+    "Costs Incurred To Date - Nonrecurring",       # "NonrecurringCostsToDate"
+    "Costs Incurred To Date - Recurring",          # "RecurringCostsToDate"
+    "Costs Incurred To Date - Total",              # "TotalCostsToDate"
+    "Number of Units At Completion",               # "QuantityAtCompletion"
+    "Costs Incurred At Completion - Nonrecurring", # "NonrecurringCostsAtCompletion"
+    "Costs Incurred At Completion - Recurring",    # "RecurringCostsAtCompletion"
+    "Costs Incurred At Completion - Total"         # "TotalCostsAtCompletion"
   )
 
   # Import non-metadata from the 1921. ----------------------------------------
@@ -69,32 +69,6 @@ import_CSDR_1921 <- function(path) {
         # Remove the "DD FORM 1921, MAY 2011" row.
         dplyr::slice(1:(dplyr::n() - 1))
     )
-
-  # Pull reported "22. REMARKS" into its own table. ---------------------------
-  CSDR_1921_remarks <-
-    CSDR_1921 %>% dplyr::slice(dplyr::n()) %>%
-    dplyr::select(1) %>%
-    dplyr::rename("22. REMARKS" = "WBS_ELEMENT_CODE")
-
-  # Create a table with only reported data (i.e., no summary elements). -------
-  CSDR_1921_reported_data <-
-    CSDR_1921 %>%
-    # Remove "Subtotal Cost" thru "Total Price" rows.
-    dplyr::slice(1:(dplyr::n() - 15))
-
-  # Create a table with only summary elements. --------------------------------
-  CSDR_1921_summary_reporting_elements <-
-    CSDR_1921 %>%
-    # Remove "Subtotal Cost" thru "Total Price" rows.
-    dplyr::slice((dplyr::n() - 10):dplyr::n() - 3) %>%
-    dplyr::filter(!is.na(WBS_REPORTING_ELEMENTS)) %>%
-    # Remove the columns without data
-    dplyr::select(2, # WBS_REPORTING_ELEMENTS
-                  6, # TOTAL_COSTS_INCURRED_TO_DATE
-                  10 # TOTAL_COSTS_INCURRED_AT_COMPLETION
-    ) %>%
-    # Rename the first column to something more appropriate
-    dplyr::rename("SUMMARY_REPORTING_ELEMENT" = "WBS_REPORTING_ELEMENTS")
 
   return(CSDR_1921)
 
