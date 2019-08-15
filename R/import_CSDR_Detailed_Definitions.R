@@ -522,4 +522,4 @@ detailed_defs <-
 
 rm(col_types)
 
-use_data(detailed_defs, overwrite = TRUE)
+usethis::use_data(detailed_defs, overwrite = TRUE)
