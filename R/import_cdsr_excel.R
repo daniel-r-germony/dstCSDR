@@ -83,7 +83,7 @@ import_cdsr_excel <- function(path) {
 
     if (nrow(cell_value) == 0) return(NA)
 
-    return(cell_value)
+    return(as.character(cell_value))
   }
 
 
