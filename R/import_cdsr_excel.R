@@ -63,8 +63,8 @@ import_cdsr_excel <- function(path) {
         path = path,
         # WBS table anchor at cell 'B23'
         range = readxl::cell_limits(c(23, 2), c(NA, NA)),
-        col_types = CSDR_1921_col_types,
-        col_names = CSDR_1921_col_names
+        col_types = cdsr_excel_col_types,
+        col_names = cdsr_excel_col_names
       ) %>%
         # Remove the "DD FORM 1921, MAY 2011" row.
         dplyr::slice(1:(dplyr::n() - 1))
