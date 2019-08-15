@@ -9,8 +9,9 @@
 #'    worksheet (remove any coversheets prior to using this script) and cannot
 #'    have columns or rows moved/changed from the standard from (i.e., the
 #'    script assumes a cPet produced/compliant file is provided).
-#' @return Returns a tibble with each WBS element as a row and traditional
-#'    CSDR 1921 data as columns.
+#' @return Returns a list of two tibbles. The first tibble includes each WBS
+#'    element as a row and the repoted data as columns. The second tibble
+#'    includes all of the submission's metadata in two columns.
 #' @export
 
 import_cdsr_excel <- function(path) {
