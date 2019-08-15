@@ -6,6 +6,7 @@ Authors@R:
     role = c("aut", "cre"))
 Description: R functions and example datasets to help process, review,
     validate, and analyze Cost and Software Data Reporting (CSDR) Data.
+Depends: R (>= 2.10)
 License: GPL-3
 Imports:
     dplyr (>= 0.8.3),
