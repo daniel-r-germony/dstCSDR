@@ -80,6 +80,8 @@ import_cdsr_excel <- function(path) {
       .name_repair = "minimal"
     )
 
+    if (nrow(cell_value) == 0) return(NA)
+
     return(cell_value)
   }
 
