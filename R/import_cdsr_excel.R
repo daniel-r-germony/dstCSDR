@@ -119,8 +119,8 @@ import_cdsr_excel <- function(path) {
     "Telephone Number"                     = grab_cell(path, "M19"),
     "Email Address"                        = grab_cell(path, "P19"),
     "Date Prepared"                        = grab_cell(path, "R19")
-   ) %>% t()
+   ) %>% tidyr::pivot_longer(everything(), names_to = "metadata_field", values_to = "repoted_value")
 
-  return(cdsr_excel, csdr_excel_metadata)
+  return(list(cdsr_excel, csdr_excel_metadata))
 
 }
