@@ -144,6 +144,6 @@ import_cdsr_excel <- function(path) {
         dplyr::slice(1:(dplyr::n() - 1))
     )
 
-  return(list(csdr_excel_metadata, cdsr_excel_data))
+  return(list(metadata = csdr_excel_metadata, reported_data = cdsr_excel_data))
 
 }
