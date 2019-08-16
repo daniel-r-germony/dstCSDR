@@ -68,7 +68,7 @@ import_cdsr_excel <- function(path) {
 
   # Import metadata and create an object out of it. ---------------------------
   csdr_excel_metadata  <- tibble::tibble(
-    "Security Classification"              = "UNCLASSIFIED",
+    "Security Classification"              = grab_cell(path, "G2"),
     "Major Program Name"                   = grab_cell(path, "H6"),
     "Major Program Phase/Milestone"        = stringr::str_c(sep = ", ",
       if (is.na(grab_cell(path, "B8"))) NULL else "Pre-A",
