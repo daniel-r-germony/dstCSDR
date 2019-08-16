@@ -81,11 +81,19 @@ import_cdsr_excel <- function(path) {
       .name_repair = "minimal"
     )
 
-    if (nrow(cell_value) == 0) return(NA)
+    # Return an NA value if the cell in Excel was blank
+    if (nrow(cell_value) == 0)
+      return(NA)
 
+    # If the Excel cell had a date, it needs special attention to get it type
+    # coerced into a char that looks like a date.
+    if (lubridate::is.POSIXct(cell_value[[1]])) {
+      cell_value[[1]] <- as.character(cell_value[[1]])
+    }
+
+    # Everything other than NA and dates can get coerced and returned as a char
     return(as.character(cell_value))
   }
-
 
   csdr_excel_metadata  <- tibble::tibble(
     "Security Classification"              = "UNCLASSIFIED",
