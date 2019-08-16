@@ -19,8 +19,9 @@ import_cdsr_excel <- function(path) {
   # Import the pipe! ----------------------------------------------------------
   `%>%` <- magrittr::`%>%`
 
-  # Specify 1921 column types and mark that merged columns are skipped. -------
+  # Read data from the Excel worksheet. ---------------------------------------
 
+  # Specify 1921 column types and mark that merged columns are skipped.
   cdsr_excel_col_types <- c(
     "text",
     "skip", # Because of merged cells
@@ -42,37 +43,7 @@ import_cdsr_excel <- function(path) {
     "numeric"
   )
 
-  # Provide column names for imported 1921 columns. ---------------------------
-  cdsr_excel_col_names <- c(
-    "WBS Code",                                    # "WBSElementID"
-    "WBS Reporting Element",                       # "WBSElementName"
-    "Number of Units to Date",                     # "QuantityToDate"
-    "Costs Incurred To Date - Nonrecurring",       # "NonrecurringCostsToDate"
-    "Costs Incurred To Date - Recurring",          # "RecurringCostsToDate"
-    "Costs Incurred To Date - Total",              # "TotalCostsToDate"
-    "Number of Units At Completion",               # "QuantityAtCompletion"
-    "Costs Incurred At Completion - Nonrecurring", # "NonrecurringCostsAtCompletion"
-    "Costs Incurred At Completion - Recurring",    # "RecurringCostsAtCompletion"
-    "Costs Incurred At Completion - Total"         # "TotalCostsAtCompletion"
-  )
-
-  # Import non-metadata from the 1921. ----------------------------------------
-  cdsr_excel <-
-    # Suppress import errors from the "22. REMARKS" row.
-    suppressWarnings(
-      readxl::read_excel(
-        path = path,
-        # WBS table anchor at cell 'B23'
-        range = readxl::cell_limits(c(23, 2), c(NA, NA)),
-        col_types = cdsr_excel_col_types,
-        col_names = cdsr_excel_col_names
-      ) %>%
-        # Remove the "DD FORM 1921, MAY 2011" row.
-        dplyr::slice(1:(dplyr::n() - 1))
-    )
-
-  # Import metadata from the 1921. --------------------------------------------
-
+  # Create a function to help get data from individual Excel cells. -----------
   grab_cell <- function(path, cell_range) {
     cell_value <- readxl::read_excel(
       path = path,
@@ -95,6 +66,7 @@ import_cdsr_excel <- function(path) {
     return(as.character(cell_value))
   }
 
+  # Import metadata and create an object out of it. ---------------------------
   csdr_excel_metadata  <- tibble::tibble(
     "Security Classification"              = "UNCLASSIFIED",
     "Major Program Name"                   = grab_cell(path, "H6"),
@@ -129,9 +101,9 @@ import_cdsr_excel <- function(path) {
       if (is.na(grab_cell(path, "K9"))) NULL else "PROCUREMENT",
       if (is.na(grab_cell(path, "M8"))) NULL else "O&M"),
     "Report Cycle"                         = stringr::str_c(sep = ", ",
-       if (is.na(grab_cell(path, "M15"))) NULL else "INITIAL",
-       if (is.na(grab_cell(path, "M16"))) NULL else "INTERIM",
-       if (is.na(grab_cell(path, "M17"))) NULL else "FINAL"),
+      if (is.na(grab_cell(path, "M15"))) NULL else "INITIAL",
+      if (is.na(grab_cell(path, "M16"))) NULL else "INTERIM",
+      if (is.na(grab_cell(path, "M17"))) NULL else "FINAL"),
     "Submission Number"                    = grab_cell(path, "O15"),
     "Resubmission Number"                  = grab_cell(path, "Q16"),
     "Report As Of"                         = grab_cell(path, "R15"),
@@ -140,8 +112,38 @@ import_cdsr_excel <- function(path) {
     "Telephone Number"                     = grab_cell(path, "M19"),
     "Email Address"                        = grab_cell(path, "P19"),
     "Date Prepared"                        = grab_cell(path, "R19")
-   ) %>% tidyr::pivot_longer(everything(), names_to = "metadata_field", values_to = "repoted_value")
+  ) %>% tidyr::pivot_longer(everything(), names_to = "metadata_field", values_to = "repoted_value")
 
-  return(list(cdsr_excel, csdr_excel_metadata))
+  # Import non-metadata and create an object out of it. -----------------------
+
+  # Provide column names for imported 1921 columns. ---------------------------
+  cdsr_excel_col_names <- c(
+    "WBS Code",                                    # "WBSElementID"
+    "WBS Reporting Element",                       # "WBSElementName"
+    "Number of Units to Date",                     # "QuantityToDate"
+    "Costs Incurred To Date - Nonrecurring",       # "NonrecurringCostsToDate"
+    "Costs Incurred To Date - Recurring",          # "RecurringCostsToDate"
+    "Costs Incurred To Date - Total",              # "TotalCostsToDate"
+    "Number of Units At Completion",               # "QuantityAtCompletion"
+    "Costs Incurred At Completion - Nonrecurring", # "NonrecurringCostsAtCompletion"
+    "Costs Incurred At Completion - Recurring",    # "RecurringCostsAtCompletion"
+    "Costs Incurred At Completion - Total"         # "TotalCostsAtCompletion"
+  )
+
+  cdsr_excel_data <-
+    # Suppress import errors from the "22. REMARKS" row.
+    suppressWarnings(
+      readxl::read_excel(
+        path = path,
+        # WBS table anchor at cell 'B23'
+        range = readxl::cell_limits(c(23, 2), c(NA, NA)),
+        col_types = cdsr_excel_col_types,
+        col_names = cdsr_excel_col_names
+      ) %>%
+        # Remove the "DD FORM 1921, MAY 2011" row.
+        dplyr::slice(1:(dplyr::n() - 1))
+    )
+
+  return(list(csdr_excel_metadata, cdsr_excel_data))
 
 }
