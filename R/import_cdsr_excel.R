@@ -144,6 +144,19 @@ import_cdsr_excel <- function(path) {
         dplyr::slice(1:(dplyr::n() - 1))
     )
 
+  # Pull "22. REMARKS" and add it to the metadata tibble. ---------------------
+  cdsr_remark <- cdsr_excel_data %>%
+    dplyr::slice(dplyr::n()) %>%
+    dplyr::select(1) %>%
+    dplyr::rename("Remarks" = "WBS Code") %>%
+    tidyr::pivot_longer(everything(),
+                        names_to = "metadata_field",
+                        values_to = "repoted_value")
+
+  csdr_excel_metadata <- csdr_excel_metadata %>%
+      tibble::add_row("metadata_field" = cdsr_remark$'metadata_field',
+                      "repoted_value"  = cdsr_remark$'repoted_value')
+
   return(list(metadata = csdr_excel_metadata, reported_data = cdsr_excel_data))
 
 }
