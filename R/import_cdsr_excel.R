@@ -88,13 +88,20 @@ import_cdsr_excel <- function(path) {
 
 
   csdr_excel_metadata  <- tibble::tibble(
-    "Data Type"                            = "1921",
-    "Data Version"                         = "2011",
     "Security Classification"              = "UNCLASSIFIED",
-    "Major Program Name"                   = grab_cell(path, "H6"), # Need to fix so that a list is imported
-    "Major Program Phase/Milestone"        = "TBD", # Need to fix so that a list is imported
+    "Major Program Name"                   = grab_cell(path, "H6"),
+    "Major Program Phase/Milestone"        = stringr::str_c(sep = ", ",
+      if (is.na(grab_cell(path, "B8"))) NULL else "Pre-A",
+      if (is.na(grab_cell(path, "B9"))) NULL else "A",
+      if (is.na(grab_cell(path, "D8"))) NULL else "B",
+      if (is.na(grab_cell(path, "D9"))) NULL else "C-LRIP",
+      if (is.na(grab_cell(path, "F8"))) NULL else "C-FRP",
+      if (is.na(grab_cell(path, "F9"))) NULL else "O&S"),
     "Prime Mission Product"                = grab_cell(path, "H9"),
-    "Reporting Organization Type"          = "TBD", # Need to fix so that a list is imported
+    "Reporting Organization Type"          = stringr::str_c(sep = ", ",
+      if (is.na(grab_cell(path, "I8"))) NULL else "PRIME / ASSOCIATE CONTRACTOR",
+      if (is.na(grab_cell(path, "K9"))) NULL else "DIRECT-REPORTING SUBCONTRACTOR",
+      if (is.na(grab_cell(path, "M8"))) NULL else "GOVERNMENT"),
     "Organization Name & Address"          = grab_cell(path, "O9"),
     "Division Name  & Address"             = grab_cell(path, "Q9"),
     "Approved Plan Number"                 = grab_cell(path, "S9"),
@@ -106,11 +113,17 @@ import_cdsr_excel <- function(path) {
     "Latest Modification"                  = grab_cell(path, "M13"),
     "Solicitation No"                      = grab_cell(path, "P12"),
     "Contract Name"                        = grab_cell(path, "P13"),
-    "Order/Lot No"                         = grab_cell(path, "R12"),
-    "PoP Start Date"                       = grab_cell(path, "F15"),
-    "PoP End Date"                         = grab_cell(path, "F16"),
-    "Appropriation"                        = "TBD", # Need to fix so that a list is imported
-    "Report Cycle"                         = "TBD", # Need to fix so that a list is imported
+    "Task Order/Deliver Order/Lot Number"  = grab_cell(path, "R12"),
+    "Period of Performance Start Date"     = grab_cell(path, "F15"),
+    "Period of Performance End Date"       = grab_cell(path, "F16"),
+    "Appropriation"                        = stringr::str_c(sep = ", ",
+      if (is.na(grab_cell(path, "I8"))) NULL else "RDT&E",
+      if (is.na(grab_cell(path, "K9"))) NULL else "PROCUREMENT",
+      if (is.na(grab_cell(path, "M8"))) NULL else "O&M"),
+    "Report Cycle"                         = stringr::str_c(sep = ", ",
+       if (is.na(grab_cell(path, "M15"))) NULL else "INITIAL",
+       if (is.na(grab_cell(path, "M16"))) NULL else "INTERIM",
+       if (is.na(grab_cell(path, "M17"))) NULL else "FINAL"),
     "Submission Number"                    = grab_cell(path, "O15"),
     "Resubmission Number"                  = grab_cell(path, "Q16"),
     "Report As Of"                         = grab_cell(path, "R15"),
