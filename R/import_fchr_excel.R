@@ -15,43 +15,10 @@
 #'    includes all of the submission's metadata in two columns.
 #' @export
 
-import_CSDR_1921_1 <- function(path) {
+import_fchr_excel <- function(path) {
 
   # Import the pipe! ----------------------------------------------------------
   `%>%` <- magrittr::`%>%`
-
-  # Specify 1921-1 column types and mark that merged columns are skipped. -----
-  CSDR_1921_1_col_types <- c(
-    "text",    # Col B
-    "skip",    # Because of merged cells
-    "skip",    # Because of merged cells
-    "skip",    # Because of merged cells
-    "skip",    # Because of merged cells
-    "skip",    # Because of merged cells
-    "skip",    # Because of merged cells
-    "skip",    # Because of merged cells
-    "skip",    # Because of merged cells
-    "numeric", # Col K
-    "skip",    # Because of merged cells
-    "numeric", # Col M
-    "skip",    # Because of merged cells
-    "numeric", # Col O
-    "numeric", # Col P
-    "skip",    # Because of merged cells
-    "numeric", # Col R
-    "numeric"  # Col S
-  )
-
-  # Provide column names for imported 1921-1 columns. -------------------------
-  fchr_excel_col_names <- c(
-    "Functional Data Element",                               # LOOKUP
-    "Costs and Hours Incurred To Date - Nonrecurring",       # "NonrecurringCostsToDate"
-    "Costs and Hours Incurred To Date - Recurring",          # "RecurringCostsToDate"
-    "Costs and Hours Incurred To Date - Total",              # "TotalCostsToDate"
-    "Costs and Hours Incurred At Completion - Nonrecurring", # "NonrecurringCostsAtCompletion"
-    "Costs and Hours Incurred At Completion - Recurring",    # "RecurringCostsAtCompletion"
-    "Costs and Hours Incurred At Completion - Total"         # "TotalCostsAtCompletion"
-  )
 
   # Create a function to help get data from individual Excel cells. -----------
   grab_cell <- function(path, cell_range) {
@@ -124,36 +91,68 @@ import_CSDR_1921_1 <- function(path) {
     names_to = "metadata_field",
     values_to = "repoted_value")
 
+  # Specify FCHR column types and mark that merged columns are skipped. -------
+  fchr_col_types <- c(
+    "text",    # Col B
+    "skip",    # Because of merged cells
+    "skip",    # Because of merged cells
+    "skip",    # Because of merged cells
+    "skip",    # Because of merged cells
+    "skip",    # Because of merged cells
+    "skip",    # Because of merged cells
+    "skip",    # Because of merged cells
+    "skip",    # Because of merged cells
+    "numeric", # Col K
+    "skip",    # Because of merged cells
+    "numeric", # Col M
+    "skip",    # Because of merged cells
+    "numeric", # Col O
+    "numeric", # Col P
+    "skip",    # Because of merged cells
+    "numeric", # Col R
+    "numeric"  # Col S
+  )
 
-  # # Import all 1921-1 worksheets and combine into a tibble. -------------------
-  # CSDR_1921_1 <-
-  #   path %>%
-  #   readxl::excel_sheets() %>%
-  #   purrr::set_names() %>%
-  #   purrr::map_df(~suppressWarnings(
-  #     readxl::read_excel(
-  #       path = path,
-  #       sheet = .x,
-  #       range = readxl::cell_limits(c(26, 2), c(51, 19)),
-  #       col_types = CSDR_1921_1_col_types,
-  #       col_names = CSDR_1921_1_col_names
-  #     )),
-  #     .id = "sheet") %>%
-  #   dplyr::rename("source_worksheet_title" = sheet)
-  #
-  # # Remove Functional Category rows then add them as a column. ----------------
-  # CSDR_1921_1 <-
-  #   CSDR_1921_1 %>%
-  #   dplyr::filter(!(
-  #     `Functional Data Element` %in% c(
-  #       "ENGINEERING",
-  #       "MANUFACTURING OPERATIONS",
-  #       "MATERIALS",
-  #       "OTHER COSTS",
-  #       "SUMMARY"
-  #     )
-  #   ))
-  #
+  # Provide column names for imported FCHR columns. ---------------------------
+  fchr_excel_col_names <- c(
+    "Functional Data Element",                               # LOOKUP
+    "Costs and Hours Incurred To Date - Nonrecurring",       # "NonrecurringCostsToDate"
+    "Costs and Hours Incurred To Date - Recurring",          # "RecurringCostsToDate"
+    "Costs and Hours Incurred To Date - Total",              # "TotalCostsToDate"
+    "Costs and Hours Incurred At Completion - Nonrecurring", # "NonrecurringCostsAtCompletion"
+    "Costs and Hours Incurred At Completion - Recurring",    # "RecurringCostsAtCompletion"
+    "Costs and Hours Incurred At Completion - Total"         # "TotalCostsAtCompletion"
+  )
+
+  # Import all FCHR worksheets and combine into a tibble. ---------------------
+  CSDR_1921_1 <-
+    path %>%
+    readxl::excel_sheets() %>%
+    purrr::set_names() %>%
+    purrr::map_df(~suppressWarnings(
+      readxl::read_excel(
+        path = path,
+        sheet = .x,
+        range = readxl::cell_limits(c(26, 2), c(51, 19)),
+        col_types = fchr_col_types,
+        col_names = fchr_excel_col_names
+      )),
+      .id = "sheet") %>%
+    dplyr::rename("source_worksheet_title" = sheet)
+
+  # Remove Functional Category rows then add them as a column. ----------------
+  CSDR_1921_1 <-
+    CSDR_1921_1 %>%
+    dplyr::filter(!(
+      `Functional Data Element` %in% c(
+        "ENGINEERING",
+        "MANUFACTURING OPERATIONS",
+        "MATERIALS",
+        "OTHER COSTS",
+        "SUMMARY"
+      )
+    ))
+
   # CSDR_1921_1 <-
   #   CSDR_1921_1 %>% dplyr::mutate(
   #     `Functional Category` = dplyr::case_when(
