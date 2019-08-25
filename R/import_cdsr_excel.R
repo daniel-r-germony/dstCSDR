@@ -19,30 +19,6 @@ import_cdsr_excel <- function(path) {
   # Import the pipe! ----------------------------------------------------------
   `%>%` <- magrittr::`%>%`
 
-  # Read data from the Excel worksheet. ---------------------------------------
-
-  # Specify 1921 column types and mark that merged columns are skipped.
-  cdsr_excel_col_types <- c(
-    "text",
-    "skip", # Because of merged cells
-    "text",
-    "skip", # Because of merged cells
-    "skip", # Because of merged cells
-    "skip", # Because of merged cells
-    "skip", # Because of merged cells
-    "numeric",
-    "skip", # Because of merged cells
-    "numeric",
-    "skip", # Because of merged cells
-    "numeric",
-    "skip", # Because of merged cells
-    "numeric",
-    "numeric",
-    "numeric",
-    "numeric",
-    "numeric"
-  )
-
   # Create a function to help get data from individual Excel cells. -----------
   grab_cell <- function(path, cell_range) {
     cell_value <- readxl::read_excel(
@@ -117,9 +93,29 @@ import_cdsr_excel <- function(path) {
     names_to = "metadata_field",
     values_to = "repoted_value")
 
-  # Import non-metadata and create an object out of it. -----------------------
+  # Specify CDSR column types and mark that merged columns are skipped. -------
+  cdsr_excel_col_types <- c(
+    "text",
+    "skip", # Because of merged cells
+    "text",
+    "skip", # Because of merged cells
+    "skip", # Because of merged cells
+    "skip", # Because of merged cells
+    "skip", # Because of merged cells
+    "numeric",
+    "skip", # Because of merged cells
+    "numeric",
+    "skip", # Because of merged cells
+    "numeric",
+    "skip", # Because of merged cells
+    "numeric",
+    "numeric",
+    "numeric",
+    "numeric",
+    "numeric"
+  )
 
-  # Provide column names for imported 1921 columns. ---------------------------
+  # Provide column names for imported CDSR columns. ---------------------------
   cdsr_excel_col_names <- c(
     "WBS Code",                                    # "WBSElementID"
     "WBS Reporting Element",                       # "WBSElementName"
