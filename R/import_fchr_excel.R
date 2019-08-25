@@ -44,7 +44,7 @@ import_fchr_excel <- function(path) {
   }
 
   # Import metadata and create an object out of it. ---------------------------
-  csdr_excel_metadata  <- tibble::tibble(
+  fchr_excel_metadata  <- tibble::tibble(
     "Security Classification"              = grab_cell(path, "G2"),
     "Major Program Name"                   = grab_cell(path, "F6"),
     "Major Program Phase/Milestone"        = stringr::str_c(sep = ", ",
@@ -125,7 +125,7 @@ import_fchr_excel <- function(path) {
   )
 
   # Import all FCHR worksheets and combine into a tibble. ---------------------
-  CSDR_1921_1 <-
+  fchr_excel_data <-
     path %>%
     readxl::excel_sheets() %>%
     purrr::set_names() %>%
@@ -141,8 +141,8 @@ import_fchr_excel <- function(path) {
     dplyr::rename("source_worksheet_title" = sheet)
 
   # Remove Functional Category rows then add them as a column. ----------------
-  CSDR_1921_1 <-
-    CSDR_1921_1 %>%
+  fchr_excel_data <-
+    fchr_excel_data %>%
     dplyr::filter(!(
       `Functional Data Element` %in% c(
         "ENGINEERING",
@@ -290,7 +290,7 @@ import_fchr_excel <- function(path) {
   #     # "source_worksheet_title"
   #   )
   #
-  # return(CSDR_1921_1)
+  return(list(metadata = fchr_excel_metadata, reported_data = fchr_excel_data))
 
 }
 
