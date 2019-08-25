@@ -43,7 +43,7 @@ import_cdsr_excel <- function(path) {
   }
 
   # Import metadata and create an object out of it. ---------------------------
-  csdr_excel_metadata  <- tibble::tibble(
+  cdsr_excel_metadata  <- tibble::tibble(
     "Security Classification"              = grab_cell(path, "G2"),
     "Major Program Name"                   = grab_cell(path, "H6"),
     "Major Program Phase/Milestone"        = stringr::str_c(sep = ", ",
@@ -156,26 +156,6 @@ import_cdsr_excel <- function(path) {
       tibble::add_row("metadata_field" = cdsr_remark$'metadata_field',
                       "repoted_value"  = cdsr_remark$'repoted_value')
 
-  # # Create a table with only reported data (i.e., no summary elements). -------
-  # CSDR_1921_reported_data <-
-  #   CSDR_1921 %>%
-  #   # Remove "Subtotal Cost" thru "Total Price" rows.
-  #   dplyr::slice(1:(dplyr::n() - 15))
-  #
-  # # Create a table with only summary elements. --------------------------------
-  # CSDR_1921_summary_reporting_elements <-
-  #   CSDR_1921 %>%
-  #   # Remove "Subtotal Cost" thru "Total Price" rows.
-  #   dplyr::slice((dplyr::n() - 10):dplyr::n() - 3) %>%
-  #   dplyr::filter(!is.na(WBS_REPORTING_ELEMENTS)) %>%
-  #   # Remove the columns without data
-  #   dplyr::select(2, # WBS_REPORTING_ELEMENTS
-  #                 6, # TOTAL_COSTS_INCURRED_TO_DATE
-  #                 10 # TOTAL_COSTS_INCURRED_AT_COMPLETION
-  #   ) %>%
-  #   # Rename the first column to something more appropriate
-  #   dplyr::rename("SUMMARY_REPORTING_ELEMENT" = "WBS_REPORTING_ELEMENTS")
-
-  return(list(metadata = csdr_excel_metadata, reported_data = cdsr_excel_data))
+  return(list(metadata = cdsr_excel_metadata, reported_data = cdsr_excel_data))
 
 }
