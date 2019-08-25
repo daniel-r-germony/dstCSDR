@@ -42,6 +42,17 @@ import_CSDR_1921_1 <- function(path) {
     "numeric"  # Col S
   )
 
+  # Provide column names for imported 1921-1 columns. -------------------------
+  fchr_excel_col_names <- c(
+    "Functional Data Element",                               # LOOKUP
+    "Costs and Hours Incurred To Date - Nonrecurring",       # "NonrecurringCostsToDate"
+    "Costs and Hours Incurred To Date - Recurring",          # "RecurringCostsToDate"
+    "Costs and Hours Incurred To Date - Total",              # "TotalCostsToDate"
+    "Costs and Hours Incurred At Completion - Nonrecurring", # "NonrecurringCostsAtCompletion"
+    "Costs and Hours Incurred At Completion - Recurring",    # "RecurringCostsAtCompletion"
+    "Costs and Hours Incurred At Completion - Total"         # "TotalCostsAtCompletion"
+  )
+
   # Create a function to help get data from individual Excel cells. -----------
   grab_cell <- function(path, cell_range) {
     cell_value <- readxl::read_excel(
@@ -113,17 +124,7 @@ import_CSDR_1921_1 <- function(path) {
     names_to = "metadata_field",
     values_to = "repoted_value")
 
-  # # Provide column names for imported 1921-1 columns. -------------------------
-  # CSDR_1921_1_col_names <- c(
-  #   "Functional Data Element",
-  #   "Costs and Hours Incurred To Date - Nonrecurring",
-  #   "Costs and Hours Incurred To Date - Recurring",
-  #   "Costs and Hours Incurred To Date - Total",
-  #   "Costs and Hours Incurred At Completion - Nonrecurring",
-  #   "Costs and Hours Incurred At Completion - Recurring",
-  #   "Costs and Hours Incurred At Completion - Total"
-  # )
-  #
+
   # # Import all 1921-1 worksheets and combine into a tibble. -------------------
   # CSDR_1921_1 <-
   #   path %>%
