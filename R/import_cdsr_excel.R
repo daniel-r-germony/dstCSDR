@@ -112,7 +112,10 @@ import_cdsr_excel <- function(path) {
     "Telephone Number"                     = grab_cell(path, "M19"),
     "Email Address"                        = grab_cell(path, "P19"),
     "Date Prepared"                        = grab_cell(path, "R19")
-  ) %>% tidyr::pivot_longer(everything(), names_to = "metadata_field", values_to = "repoted_value")
+  ) %>% tidyr::pivot_longer(
+    everything(),
+    names_to = "metadata_field",
+    values_to = "repoted_value")
 
   # Import non-metadata and create an object out of it. -----------------------
 
