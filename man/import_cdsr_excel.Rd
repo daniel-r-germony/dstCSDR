@@ -2,7 +2,7 @@
 % Please edit documentation in R/import_cdsr_excel.R
 \name{import_cdsr_excel}
 \alias{import_cdsr_excel}
-\title{import_CSDR_1921}
+\title{import_cdsr_excel}
 \usage{
 import_cdsr_excel(path)
 }
@@ -14,15 +14,15 @@ have columns or rows moved/changed from the standard from (i.e., the
 script assumes a cPet produced/compliant file is provided).}
 }
 \value{
-Returns a list of two tibbles. The first tibble includes each WBS
-element as a row and the repoted data as columns. The second tibble
-includes all of the submission's metadata in two columns.
+Returns a list of two tibbles. The first tibble includes all of the
+submission's metadata in two columns. The second tibble includes each WBS
+element as a row and the repoted data as columns.
 }
 \description{
-Import a CSDR 1921 from Excel into a Tibble
+Import a CSDR CDSR (DD Form 1921) from Excel into a Tibble
 }
 \details{
-Takes a CSDR 1921 Excel worksheet and imports it to a tibble.
+Takes a CSDR CDSR (DD Form 1921) Excel worksheet and imports it to a tibble.
 }
 \author{
 Daniel Germony \email{daniel.r.germony.civ@mail.mil}

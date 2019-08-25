@@ -1,17 +1,17 @@
-#' Import a CSDR 1921 from Excel into a Tibble
+#' Import a CSDR CDSR (DD Form 1921) from Excel into a Tibble
 #'
-#' Takes a CSDR 1921 Excel worksheet and imports it to a tibble.
+#' Takes a CSDR CDSR (DD Form 1921) Excel worksheet and imports it to a tibble.
 #'
-#' @title import_CSDR_1921
+#' @title import_cdsr_excel
 #' @author Daniel Germony \email{daniel.r.germony.civ@@mail.mil}
 #' @param path Required. Path to the xls/xlsx file which contains the CSDR
 #'    1921. Note the Excel file must have the CSDR 1921 data on the first
 #'    worksheet (remove any coversheets prior to using this script) and cannot
 #'    have columns or rows moved/changed from the standard from (i.e., the
 #'    script assumes a cPet produced/compliant file is provided).
-#' @return Returns a list of two tibbles. The first tibble includes each WBS
-#'    element as a row and the repoted data as columns. The second tibble
-#'    includes all of the submission's metadata in two columns.
+#' @return Returns a list of two tibbles. The first tibble includes all of the
+#'    submission's metadata in two columns. The second tibble includes each
+#'    WBS element as a row and the repoted data as columns.
 #' @export
 
 import_cdsr_excel <- function(path) {
