@@ -15,8 +15,8 @@ script assumes a cPet produced/compliant file is provided).}
 }
 \value{
 Returns a list of two tibbles. The first tibble includes all of the
-submission's metadata in two columns. The second tibble includes each WBS
-element as a row and the repoted data as columns.
+submission's metadata in two columns. The second tibble includes each
+WBS element as a row and the repoted data as columns.
 }
 \description{
 Import a CSDR CDSR (DD Form 1921) from Excel into a Tibble
