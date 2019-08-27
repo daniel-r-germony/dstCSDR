@@ -43,7 +43,7 @@ import_cdsr_excel <- function(path) {
   }
 
   # Import metadata and create an object out of it. ---------------------------
-  cdsr_excel_metadata  <- tibble::tibble(
+  metadata  <- tibble::tibble(
     "Security Classification"              = grab_cell(path, "G2"),
     "Major Program Name"                   = grab_cell(path, "H6"),
     "Major Program Phase/Milestone"        = stringr::str_c(sep = ", ",
@@ -129,7 +129,7 @@ import_cdsr_excel <- function(path) {
     "Costs Incurred At Completion - Total"         # "TotalCostsAtCompletion"
   )
 
-  cdsr_excel_data <-
+  cdsr_data <-
     # Suppress import errors from the "22. REMARKS" row.
     suppressWarnings(
       readxl::read_excel(
@@ -144,7 +144,7 @@ import_cdsr_excel <- function(path) {
     )
 
   # Pull "22. REMARKS" and add it to the metadata tibble. ---------------------
-  cdsr_remark <- cdsr_excel_data %>%
+  remark <- cdsr_data %>%
     dplyr::slice(dplyr::n()) %>%
     dplyr::select(1) %>%
     dplyr::rename("Remarks" = "WBS Code") %>%
@@ -152,10 +152,12 @@ import_cdsr_excel <- function(path) {
                         names_to = "metadata_field",
                         values_to = "repoted_value")
 
-  csdr_excel_metadata <- csdr_excel_metadata %>%
-      tibble::add_row("metadata_field" = cdsr_remark$'metadata_field',
-                      "repoted_value"  = cdsr_remark$'repoted_value')
+  metadata <- metadata %>%
+      tibble::add_row("metadata_field" = remark$'metadata_field',
+                      "repoted_value"  = remark$'repoted_value')
 
-  return(list(metadata = cdsr_excel_metadata, reported_data = cdsr_excel_data))
+  return(list(metadata = metadata,
+              reported_data = cdsr_data,
+              summary_reporting_elements = summary_reporting_elements))
 
 }
