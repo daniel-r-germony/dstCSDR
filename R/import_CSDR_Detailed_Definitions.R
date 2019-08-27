@@ -7,8 +7,8 @@
 #' \describe{
 #'   \item{`Short Name`}
 #'   \describe{
-#'      \item{test1}{test 1}
-#'      \item{test2}{test 2}}
+#'      \item{test1}{test1}
+#'      \item{test2}{test2}}
 #'   \item{`Full Name`}{}
 #'   \item{`Unit of Measure`}{}
 #'   \item{`To Date / At Completion`}{}
@@ -51,7 +51,7 @@
 #'       physically inspecting,measuring, testing, or otherwise verifying that
 #'       products and services conform toestablished technical requirements and
 #'       that satisfactory performance is achieved`}
-#'       \item{`Direct Manufacturing Tooling Labor (Hours and Dollars)`}{ `This is a
+#'       \item{`Direct Manufacturing Tooling Labor (Hours and Dollars)`}{`This is a
 #'       Tier 2 (optional) Standard Functional Category applicable to Acquisition
 #'       efforts only. MManufacturing Tooling is a labor cost element of the
 #'       Manufacturing Operations functional category that includes the effort and

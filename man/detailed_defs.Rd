@@ -8,8 +8,8 @@
 \describe{
 \item{\code{Short Name}}
 \describe{
-\item{test1}{test 1}
-\item{test2}{test 2}}
+\item{test1}{test1}
+\item{test2}{test2}}
 \item{\code{Full Name}}{}
 \item{\code{Unit of Measure}}{}
 \item{\code{To Date / At Completion}}{}
@@ -22,7 +22,7 @@
 \item{\code{Direct Manufacturing Other Labor (Hours and Dollars)}}{\code{This is a Tier 1 (required) Standard Functional Category applicable to Acquisition efforts only. The effort expended to manufacture a product or end item that meets any of the Tier 2 definitions below.}
 \describe{
 \item{\code{Direct Manufacturing Support Labor (Hours and Dollars)}}{\code{This is a Tier 2 (optional) Standard Functional Category applicable to Acquisition efforts only. It includes support tothe manufacturing and maintenance processes such as planning, material handling, qualitycontrol, and tool maintenance. Quality control entails checking, physically inspecting,measuring, testing, or otherwise verifying that products and services conform toestablished technical requirements and that satisfactory performance is achieved}}
-\item{\code{Direct Manufacturing Tooling Labor (Hours and Dollars)}}{ \code{This is a Tier 2 (optional) Standard Functional Category applicable to Acquisition efforts only. MManufacturing Tooling is a labor cost element of the Manufacturing Operations functional category that includes the effort and costs expended to acquire, manufacture, maintain, or replace original equipment and manufacturing aids. It does not include the cost of procuring tooling materials or equipment from an external supplier.}}
+\item{\code{Direct Manufacturing Tooling Labor (Hours and Dollars)}}{\code{This is a Tier 2 (optional) Standard Functional Category applicable to Acquisition efforts only. MManufacturing Tooling is a labor cost element of the Manufacturing Operations functional category that includes the effort and costs expended to acquire, manufacture, maintain, or replace original equipment and manufacturing aids. It does not include the cost of procuring tooling materials or equipment from an external supplier.}}
 \item{\code{Direct Manufacturing Other Labor (Hours and Dollars)}}{\code{This is a Tier 2 (optional) Standard Functional Category applicable to Acquisition efforts only. Entries into this category may pertain to Direct Manufacturing Touch, Support, or Tooling Labor if the reporting entity cannot clearly segregate those elements. It may also contain Direct Manufacturing labor elements that do not match the Touch, Support, or Tooling elements above.}}
 }
 }
