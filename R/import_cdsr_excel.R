@@ -156,6 +156,23 @@ import_cdsr_excel <- function(path) {
       tibble::add_row("metadata_field" = remark$'metadata_field',
                       "repoted_value"  = remark$'repoted_value')
 
+  # Pull the summary elements and add them to their own tibble. ---------------
+
+  summary_reporting_elements <- cdsr_data %>%
+    dplyr::filter(is.na(`WBS Code`)) %>%
+    dplyr::select(
+      `WBS Reporting Element`,
+      `Costs Incurred To Date - Total`,
+      `Costs Incurred At Completion - Total`) %>%
+    dplyr::rename(
+      `Summary Reporting Element` = `WBS Reporting Element`) %>%
+    dplyr::filter(!is.na(`Summary Reporting Element`))
+
+  # Remove the remark and summary element rows from the reported data. --------
+
+  cdsr_data <- cdsr_data %>%
+    dplyr::slice(1:(dplyr::n()-15))
+
   return(list(metadata = metadata,
               reported_data = cdsr_data,
               summary_reporting_elements = summary_reporting_elements))
