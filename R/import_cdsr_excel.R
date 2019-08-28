@@ -9,9 +9,11 @@
 #'    worksheet (remove any coversheets prior to using this script) and cannot
 #'    have columns or rows moved/changed from the standard from (i.e., the
 #'    script assumes a cPet produced/compliant file is provided).
-#' @return Returns a list of two tibbles. The first tibble includes all of the
-#'    submission's metadata in two columns. The second tibble includes each
-#'    WBS element as a row and the repoted data as columns.
+#' @return Returns a list of three tibbles. The first tibble includes all of
+#'    the submission's metadata in two columns. The second tibble includes each
+#'    WBS element as a row and the repoted data as columns. The third tibble 
+#'    includes the summary reporting elements (the rows at the bottom of a 
+#'    CDSR with summary cost data and no WBS number).
 #' @export
 
 import_cdsr_excel <- function(path) {
