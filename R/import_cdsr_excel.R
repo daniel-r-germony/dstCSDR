@@ -15,10 +15,10 @@
 #' @export
 
 import_cdsr_excel <- function(path) {
-
+  
   # Import the pipe! ----------------------------------------------------------
   `%>%` <- magrittr::`%>%`
-
+  
   # Create a function to help get data from individual Excel cells. -----------
   grab_cell <- function(path, cell_range) {
     cell_value <- readxl::read_excel(
@@ -27,21 +27,21 @@ import_cdsr_excel <- function(path) {
       range = c(cell_range),
       .name_repair = "minimal"
     )
-
+    
     # Return an NA value if the cell in Excel was blank
     if (nrow(cell_value) == 0)
       return(NA)
-
+    
     # If the Excel cell had a date, it needs special attention to get it type
     # coerced into a char that looks like a date.
     if (lubridate::is.POSIXct(cell_value[[1]])) {
       cell_value[[1]] <- as.character(cell_value[[1]])
     }
-
+    
     # Everything other than NA and dates can get coerced and returned as a char
     return(as.character(cell_value))
   }
-
+  
   # Import metadata and create an object out of it. ---------------------------
   metadata  <- tibble::tibble(
     "Security Classification"              = grab_cell(path, "G2"),
@@ -89,10 +89,10 @@ import_cdsr_excel <- function(path) {
     "Email Address"                        = grab_cell(path, "P19"),
     "Date Prepared"                        = grab_cell(path, "R19")
   ) %>% tidyr::pivot_longer(
-    everything(),
+    tidyr::everything(),
     names_to = "metadata_field",
     values_to = "repoted_value")
-
+  
   # Specify CDSR column types and mark that merged columns are skipped. -------
   cdsr_excel_col_types <- c(
     "text",
@@ -114,7 +114,7 @@ import_cdsr_excel <- function(path) {
     "numeric",
     "numeric"
   )
-
+  
   # Provide column names for imported CDSR columns. ---------------------------
   cdsr_excel_col_names <- c(
     "WBS Code",                                    # "WBSElementID"
@@ -128,7 +128,7 @@ import_cdsr_excel <- function(path) {
     "Costs Incurred At Completion - Recurring",    # "RecurringCostsAtCompletion"
     "Costs Incurred At Completion - Total"         # "TotalCostsAtCompletion"
   )
-
+  
   cdsr_data <-
     # Suppress import errors from the "22. REMARKS" row.
     suppressWarnings(
@@ -142,22 +142,22 @@ import_cdsr_excel <- function(path) {
         # Remove the "DD FORM 1921, MAY 2011" row.
         dplyr::slice(1:(dplyr::n() - 1))
     )
-
+  
   # Pull "22. REMARKS" and add it to the metadata tibble. ---------------------
   remark <- cdsr_data %>%
     dplyr::slice(dplyr::n()) %>%
     dplyr::select(1) %>%
     dplyr::rename("Remarks" = "WBS Code") %>%
-    tidyr::pivot_longer(everything(),
+    tidyr::pivot_longer(tidyr::everything(),
                         names_to = "metadata_field",
                         values_to = "repoted_value")
-
+  
   metadata <- metadata %>%
-      tibble::add_row("metadata_field" = remark$'metadata_field',
-                      "repoted_value"  = remark$'repoted_value')
-
+    tibble::add_row("metadata_field" = remark$'metadata_field',
+                    "repoted_value"  = remark$'repoted_value')
+  
   # Pull the summary elements and add them to their own tibble. ---------------
-
+  
   summary_reporting_elements <- cdsr_data %>%
     dplyr::filter(is.na(`WBS Code`)) %>%
     dplyr::select(
@@ -167,14 +167,14 @@ import_cdsr_excel <- function(path) {
     dplyr::rename(
       `Summary Reporting Element` = `WBS Reporting Element`) %>%
     dplyr::filter(!is.na(`Summary Reporting Element`))
-
+  
   # Remove the remark and summary element rows from the reported data. --------
-
+  
   cdsr_data <- cdsr_data %>%
     dplyr::slice(1:(dplyr::n()-15))
-
+  
   return(list(metadata = metadata,
               reported_data = cdsr_data,
               summary_reporting_elements = summary_reporting_elements))
-
+  
 }
