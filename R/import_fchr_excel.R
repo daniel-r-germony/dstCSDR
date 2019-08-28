@@ -3,7 +3,7 @@
 #' Takes a CSDR Functional Cost-Hour Report (FCHR) (DD Form 1921-1) Excel
 #' worksheet and imports it to a tibble.
 #'
-#' @title import_cdsr_excel
+#' @title import_fchr_excel
 #' @author Daniel Germony \email{daniel.r.germony.civ@@mail.mil}
 #' @param path Required. Path to the xls/xlsx file which contains the CSDR
 #'    FCHR 1921-1. Note the Excel file must have FCHR data on the first
@@ -16,10 +16,10 @@
 #' @export
 
 import_fchr_excel <- function(path) {
-
+  
   # Import the pipe! ----------------------------------------------------------
   `%>%` <- magrittr::`%>%`
-
+  
   # Create a function to help get data from individual Excel cells. -----------
   grab_cell <- function(path, cell_range) {
     cell_value <- readxl::read_excel(
@@ -28,21 +28,21 @@ import_fchr_excel <- function(path) {
       range = c(cell_range),
       .name_repair = "minimal"
     )
-
+    
     # Return an NA value if the cell in Excel was blank
     if (nrow(cell_value) == 0)
       return(NA)
-
+    
     # If the Excel cell had a date, it needs special attention to get it type
     # coerced into a char that looks like a date.
     if (lubridate::is.POSIXct(cell_value[[1]])) {
       cell_value[[1]] <- as.character(cell_value[[1]])
     }
-
+    
     # Everything other than NA and dates can get coerced and returned as a char
     return(as.character(cell_value))
   }
-
+  
   # Import metadata and create an object out of it. ---------------------------
   fchr_excel_metadata  <- tibble::tibble(
     "Security Classification"              = grab_cell(path, "G2"),
@@ -70,10 +70,6 @@ import_fchr_excel <- function(path) {
     "Task Order/Deliver Order/Lot Number"  = grab_cell(path, "S12"),
     "Period of Performance Start Date"     = grab_cell(path, "F15"),
     "Period of Performance End Date"       = grab_cell(path, "F16"),
-    "Appropriation"                        = stringr::str_c(sep = ", ",
-      if (is.na(grab_cell(path, "P21"))) NULL else "RDT&E",
-      if (is.na(grab_cell(path, "P22"))) NULL else "PROCUREMENT",
-      if (is.na(grab_cell(path, "P23"))) NULL else "O&M"),
     "Report Cycle"                         = stringr::str_c(sep = ", ",
       if (is.na(grab_cell(path, "K15"))) NULL else "INITIAL",
       if (is.na(grab_cell(path, "K16"))) NULL else "INTERIM",
@@ -85,12 +81,16 @@ import_fchr_excel <- function(path) {
     "Department"                           = grab_cell(path, "G19"),
     "Telephone Number"                     = grab_cell(path, "K19"),
     "Email Address"                        = grab_cell(path, "O19"),
-    "Date Prepared"                        = grab_cell(path, "S19")
+    "Date Prepared"                        = grab_cell(path, "S19"),
+    "Appropriation"                        = stringr::str_c(sep = ", ",
+      if (is.na(grab_cell(path, "P21"))) NULL else "RDT&E",
+      if (is.na(grab_cell(path, "P22"))) NULL else "PROCUREMENT",
+      if (is.na(grab_cell(path, "P23"))) NULL else "O&M")
   ) %>% tidyr::pivot_longer(
     everything(),
     names_to = "metadata_field",
     values_to = "repoted_value")
-
+  
   # Specify FCHR column types and mark that merged columns are skipped. -------
   fchr_col_types <- c(
     "text",    # Col B
@@ -112,7 +112,7 @@ import_fchr_excel <- function(path) {
     "numeric", # Col R
     "numeric"  # Col S
   )
-
+  
   # Provide column names for imported FCHR columns. ---------------------------
   fchr_excel_col_names <- c(
     "Functional Data Element",                               # LOOKUP
@@ -123,7 +123,7 @@ import_fchr_excel <- function(path) {
     "Costs and Hours Incurred At Completion - Recurring",    # "RecurringCostsAtCompletion"
     "Costs and Hours Incurred At Completion - Total"         # "TotalCostsAtCompletion"
   )
-
+  
   # Import all FCHR worksheets and combine into a tibble. ---------------------
   fchr_excel_data <-
     path %>%
@@ -139,7 +139,7 @@ import_fchr_excel <- function(path) {
       )),
       .id = "sheet") %>%
     dplyr::rename("source_worksheet_title" = sheet)
-
+  
   # Remove Functional Category rows then add them as a column. ----------------
   fchr_excel_data <-
     fchr_excel_data %>%
@@ -152,7 +152,7 @@ import_fchr_excel <- function(path) {
         "SUMMARY"
       )
     ))
-
+  
   # CSDR_1921_1 <-
   #   CSDR_1921_1 %>% dplyr::mutate(
   #     `Functional Category` = dplyr::case_when(
@@ -290,7 +290,8 @@ import_fchr_excel <- function(path) {
   #     # "source_worksheet_title"
   #   )
   #
-  return(list(metadata = fchr_excel_metadata, reported_data = fchr_excel_data))
-
+  return(list(metadata = fchr_excel_metadata, 
+              reported_data = fchr_excel_data))
+  
 }
 
