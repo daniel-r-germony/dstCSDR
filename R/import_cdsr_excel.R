@@ -1,6 +1,7 @@
 #' Import a CSDR CDSR (DD Form 1921) from Excel into a Tibble
 #'
-#' Takes a CSDR CDSR (DD Form 1921) Excel worksheet and imports it to a tibble.
+#' Takes a CSDR CDSR (DD Form 1921) Excel worksheet and imports it to three a 
+#' tibbles.
 #'
 #' @title import_cdsr_excel
 #' @author Daniel Germony \email{daniel.r.germony.civ@@mail.mil}
