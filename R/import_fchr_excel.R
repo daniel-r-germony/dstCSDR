@@ -1,18 +1,21 @@
 #' Import a CSDR FCHR (DD Form 1921-1) from Excel into a Tibble
 #'
 #' Takes a CSDR Functional Cost-Hour Report (FCHR) (DD Form 1921-1) Excel
-#' worksheet and imports it to a tibble.
+#' worksheet and imports it to a set of tibbles.
 #'
 #' @title import_fchr_excel
 #' @author Daniel Germony \email{daniel.r.germony.civ@@mail.mil}
-#' @param path Required. Path to the xls/xlsx file which contains the CSDR
-#'    FCHR 1921-1. Note the Excel file must have FCHR data on the first
-#'    worksheet (remove any coversheets prior to usingthis script) and cannot
-#'    have columns or rows moved/changed from the standard from (i.e., the
+#' @param path Required. Path to the xls/xlsx file which contains the CSDR 
+#'    FCHR 1921-1. Note the Excel file must have FCHR data on the first 
+#'    worksheet (remove any coversheets prior to using this script) and cannot 
+#'    have columns or rows moved/changed from the standard from (i.e., the 
 #'    script assumes a cPet produced/compliant file is provided).
-#' @return Returns a list of two tibbles. The first tibble includes each WBS
-#'    element as a row and the repoted data as columns. The second tibble
-#'    includes all of the submission's metadata in two columns.
+#' @return Returns a list of two tibbles. The first tibble includes all of the 
+#'    submission's metadata in two columns. The second tibble includes each 
+#'    worksheet from the FCHR combined into one long table where each row 
+#'    is a Functional Data Element and the columns include the cost & hours 
+#'    data. Remarks by WBS and a few other columns are included so that the 
+#'    FCHR data is a proper rectangular table.
 #' @export
 
 import_fchr_excel <- function(path) {
@@ -138,7 +141,7 @@ import_fchr_excel <- function(path) {
         col_names = fchr_col_names
       )),
       .id = "sheet") %>%
-    dplyr::rename("WBS Element Code" = sheet)
+    dplyr::rename("source_worksheet_title" = sheet)
   
   # Remove Functional Category rows then add them as a column. ----------------
   fchr_data <-
@@ -218,81 +221,80 @@ import_fchr_excel <- function(path) {
     fchr_data$`Unit of Measure` %>%
     forcats::as_factor()
   
-  # # Create the cell_to_tibble function. ---------------------------------------
-  # # Here we create a function to grab additional data from each worksheet and
-  # # add the data to a tibble along with the source worksheet it came from.
-  # # Later we will use the source worksheet to left_join the additional data
-  # # into the main 1921-1 tibble.
-  # cell_to_tibble <- function(path, range, col_type, col_name) {
-  #   temp_df <- path %>%
-  #     readxl::excel_sheets() %>%
-  #     purrr::set_names() %>%
-  #     purrr::map_df(~ suppressWarnings(
-  #       readxl::read_excel(
-  #         path = path,
-  #         sheet = .x,
-  #         range = range,
-  #         col_types = col_type,
-  #         col_names = col_name
-  #       )
-  #     ),
-  #     .id = "sheet")  %>%
-  #     dplyr::rename("source_worksheet_title" = sheet)
-  #
-  #   return(temp_df)
-  # }
-  #
-  # # Use cell_to_tibble to grab additional data elements from the 1921-1. ------
-  # `WBS Code` <- cell_to_tibble(path, "B21", "text", "WBS Code")
-  # `WBS Reporting Element` <- cell_to_tibble(path, "G21", "text", "WBS Reporting Element")
-  # `Number of Units to Date` <- cell_to_tibble(path, "K22", "numeric", "Number of Units to Date")
-  # `Number of Units At Completion` <- cell_to_tibble(path, "M22", "numeric", "Number of Units At Completion")
-  # Remarks <- cell_to_tibble(path, "B53", "text", "Remarks")
-  #
-  # # Add the additional elements as columns in the 1921-1 tibble. --------------
-  # CSDR_1921_1 <-
-  #   CSDR_1921_1 %>%
-  #   dplyr::left_join(`WBS Code`, by = "source_worksheet_title") %>%
-  #   dplyr::left_join(`WBS Reporting Element`, by = "source_worksheet_title") %>%
-  #   dplyr::left_join(`Number of Units to Date`, by = "source_worksheet_title") %>%
-  #   dplyr::left_join(`Number of Units At Completion`, by = "source_worksheet_title") %>%
-  #   dplyr::left_join(Remarks, by = "source_worksheet_title")
-  #
-  # CSDR_1921_1$`WBS Code` <-
-  #   CSDR_1921_1$`WBS Code` %>%
-  #   forcats::as_factor()
-  #
-  # CSDR_1921_1$`WBS Reporting Element` <-
-  #   CSDR_1921_1$`WBS Reporting Element` %>%
-  #   forcats::as_factor()
-  #
-  # CSDR_1921_1$`Functional Data Element` <-
-  #   CSDR_1921_1$`Functional Data Element` %>%
-  #   forcats::as_factor()
-  #
-  # # Reorder the columns before returning. -------------------------------------
-  # CSDR_1921_1 <-
-  #   CSDR_1921_1 %>%
-  #   dplyr::select(
-  #     "WBS Code",                                              # "WBSElementID"
-  #     "WBS Reporting Element",                                 # "WBSElementName"
-  #     "Functional Category",                                   # "FunctionalCategory"
-  #     "Functional Data Element",                               # "StandardCategory"
-  #     "Unit of Measure",
-  #     "Costs and Hours Incurred To Date - Nonrecurring",       # "NonrecurringCostsToDate"
-  #     "Costs and Hours Incurred To Date - Recurring",          # "RecurringCostsToDate"
-  #     "Costs and Hours Incurred To Date - Total",              # "TotalCostsToDate"
-  #     "Costs and Hours Incurred At Completion - Nonrecurring", # "NonrecurringCostsAtCompletion"
-  #     "Costs and Hours Incurred At Completion - Recurring",    # "RecurringCostsAtCompletion"
-  #     "Costs and Hours Incurred At Completion - Total",        # "TotalCostsAtCompletion"
-  #     "Number of Units to Date",                               # "QuantityToDate"
-  #     "Number of Units At Completion",                         # "QuantityAtCompletion"
-  #     "Remarks"                                                # "WBSElementRemark"
-  #     # "source_worksheet_title"
-  #   )
-  #
+  # Create the cell_to_tibble function. ---------------------------------------
+  # Here we create a function to grab additional data from each worksheet and
+  # add the data to a tibble along with the source worksheet it came from.
+  # Later we will use the source worksheet to left_join the additional data
+  # into the main 1921-1 tibble.
+  cell_to_tibble <- function(path, range, col_type, col_name) {
+    temp_df <- path %>%
+      readxl::excel_sheets() %>%
+      purrr::set_names() %>%
+      purrr::map_df(~ suppressWarnings(
+        readxl::read_excel(
+          path = path,
+          sheet = .x,
+          range = range,
+          col_types = col_type,
+          col_names = col_name
+        )
+      ),
+      .id = "sheet")  %>%
+      dplyr::rename("source_worksheet_title" = sheet)
+  
+    return(temp_df)
+  }
+  
+  # Use cell_to_tibble to grab additional data elements from the 1921-1. ------
+  `WBS Element Code` <- cell_to_tibble(path, "B21", "text", "WBS Element Code")
+  `WBS Reporting Element` <- cell_to_tibble(path, "G21", "text", "WBS Reporting Element")
+  `Number of Units to Date` <- cell_to_tibble(path, "K22", "numeric", "Number of Units to Date")
+  `Number of Units At Completion` <- cell_to_tibble(path, "M22", "numeric", "Number of Units At Completion")
+  Remarks <- cell_to_tibble(path, "B53", "text", "Remarks")
+  
+  # Add the additional elements as columns in the 1921-1 tibble. --------------
+  fchr_data <-
+    fchr_data %>%
+    dplyr::left_join(`WBS Element Code`, by = "source_worksheet_title") %>%
+    dplyr::left_join(`WBS Reporting Element`, by = "source_worksheet_title") %>%
+    dplyr::left_join(`Number of Units to Date`, by = "source_worksheet_title") %>%
+    dplyr::left_join(`Number of Units At Completion`, by = "source_worksheet_title") %>%
+    dplyr::left_join(Remarks, by = "source_worksheet_title")
+  
+  fchr_data$`WBS Element Code` <-
+    fchr_data$`WBS Element Code` %>%
+    forcats::as_factor()
+  
+  fchr_data$`WBS Reporting Element` <-
+    fchr_data$`WBS Reporting Element` %>%
+    forcats::as_factor()
+  
+  fchr_data$`Functional Data Element` <-
+    fchr_data$`Functional Data Element` %>%
+    forcats::as_factor()
+  
+  # Reorder the columns before returning. -------------------------------------
+  fchr_data <-
+    fchr_data %>%
+    dplyr::select(
+      "WBS Element Code",                                      # "WBSElementID"
+      "WBS Reporting Element",                                 # "WBSElementName"
+      "Functional Category",                                   # "FunctionalCategory"
+      "Functional Data Element",                               # "StandardCategory"
+      "Unit of Measure",
+      "Costs and Hours Incurred To Date - Nonrecurring",       # "NonrecurringCostsToDate"
+      "Costs and Hours Incurred To Date - Recurring",          # "RecurringCostsToDate"
+      "Costs and Hours Incurred To Date - Total",              # "TotalCostsToDate"
+      "Costs and Hours Incurred At Completion - Nonrecurring", # "NonrecurringCostsAtCompletion"
+      "Costs and Hours Incurred At Completion - Recurring",    # "RecurringCostsAtCompletion"
+      "Costs and Hours Incurred At Completion - Total",        # "TotalCostsAtCompletion"
+      "Number of Units to Date",                               # "QuantityToDate"
+      "Number of Units At Completion",                         # "QuantityAtCompletion"
+      "Remarks"                                                # "WBSElementRemark"
+    )
+  
   return(list(metadata = metadata, 
-              reported_data = fchr_excel_data))
+              reported_data = fchr_data))
   
 }
 
