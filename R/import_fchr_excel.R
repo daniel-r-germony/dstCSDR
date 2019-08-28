@@ -44,7 +44,7 @@ import_fchr_excel <- function(path) {
   }
   
   # Import metadata and create an object out of it. ---------------------------
-  fchr_excel_metadata  <- tibble::tibble(
+  metadata  <- tibble::tibble(
     "Security Classification"              = grab_cell(path, "G2"),
     "Major Program Name"                   = grab_cell(path, "F6"),
     "Major Program Phase/Milestone"        = stringr::str_c(sep = ", ",
@@ -114,7 +114,7 @@ import_fchr_excel <- function(path) {
   )
   
   # Provide column names for imported FCHR columns. ---------------------------
-  fchr_excel_col_names <- c(
+  fchr_col_names <- c(
     "Functional Data Element",                               # LOOKUP
     "Costs and Hours Incurred To Date - Nonrecurring",       # "NonrecurringCostsToDate"
     "Costs and Hours Incurred To Date - Recurring",          # "RecurringCostsToDate"
@@ -125,7 +125,7 @@ import_fchr_excel <- function(path) {
   )
   
   # Import all FCHR worksheets and combine into a tibble. ---------------------
-  fchr_excel_data <-
+  fchr_data <-
     path %>%
     readxl::excel_sheets() %>%
     purrr::set_names() %>%
@@ -135,14 +135,14 @@ import_fchr_excel <- function(path) {
         sheet = .x,
         range = readxl::cell_limits(c(26, 2), c(51, 19)),
         col_types = fchr_col_types,
-        col_names = fchr_excel_col_names
+        col_names = fchr_col_names
       )),
       .id = "sheet") %>%
-    dplyr::rename("source_worksheet_title" = sheet)
+    dplyr::rename("WBS Element Code" = sheet)
   
   # Remove Functional Category rows then add them as a column. ----------------
-  fchr_excel_data <-
-    fchr_excel_data %>%
+  fchr_data <-
+    fchr_data %>%
     dplyr::filter(!(
       `Functional Data Element` %in% c(
         "ENGINEERING",
@@ -153,70 +153,71 @@ import_fchr_excel <- function(path) {
       )
     ))
   
-  # CSDR_1921_1 <-
-  #   CSDR_1921_1 %>% dplyr::mutate(
-  #     `Functional Category` = dplyr::case_when(
-  #       `Functional Data Element` == "(1) DIRECT ENGINEERING LABOR HOURS" ~ "Engineering",
-  #       `Functional Data Element` == "(2) DIRECT ENGINEERING LABOR DOLLARS" ~ "Engineering",
-  #       `Functional Data Element` == "(3) ENGINEERING OVERHEAD DOLLARS" ~ "Engineering",
-  #       `Functional Data Element` == "(4) TOTAL ENGINEERING DOLLARS" ~ "Summary",
-  #       `Functional Data Element` == "(5) DIRECT TOOLING LABOR HOURS" ~ "Tooling",
-  #       `Functional Data Element` == "(6) DIRECT TOOLING LABOR DOLLARS" ~ "Tooling",
-  #       `Functional Data Element` == "(7) DIRECT TOOLING & EQUIPMENT DOLLARS" ~ "Tooling",
-  #       `Functional Data Element` == "(8) DIRECT QUALITY CONTROL LABOR HOURS" ~ "Quality Control",
-  #       `Functional Data Element` == "(9) DIRECT QUALITY CONTROL LABOR DOLLARS" ~ "Quality Control",
-  #       `Functional Data Element` == "(10) DIRECT MANUFACTURING LABOR HOURS" ~ "Manufacturing",
-  #       `Functional Data Element` == "(11) DIRECT MANUFACTURING LABOR DOLLARS" ~ "Manufacturing",
-  #       `Functional Data Element` == "(12) MANUFACTURING OPERATIONS OVERHEAD DOLLARS (Including Tooling and Quality Control)" ~ "Manufacturing Operations",
-  #       `Functional Data Element` == "(13) TOTAL MANUFACTURING OPERATIONS DOLLARS (Sum of rows 6, 7, 9, 11, and 12)" ~ "Summary",
-  #       `Functional Data Element` == "(14) RAW MATERIAL DOLLARS" ~ "Material",
-  #       `Functional Data Element` == "(15) PURCHASED PARTS DOLLARS" ~ "Material",
-  #       `Functional Data Element` == "(16) PURCHASED EQUIPMENT DOLLARS" ~ "Material",
-  #       `Functional Data Element` == "(17) MATERIAL HANDLING OVERHEAD DOLLARS" ~ "Material",
-  #       `Functional Data Element` == "(18) TOTAL DIRECT-REPORTING SUBCONTRACTOR DOLLARS" ~ "Material",
-  #       `Functional Data Element` == "(19) TOTAL MATERIAL DOLLARS" ~ "Summary",
-  #       `Functional Data Element` == "(20) OTHER COSTS NOT SHOWN ELSEWHERE (Specify in Remarks)" ~ "Other",
-  #       `Functional Data Element` == "(21) TOTAL COST (Direct and Overhead)" ~ "Summary",
-  #       TRUE ~ "REMOVE"
-  #     )
-  #   ) %>%
-  #   dplyr::filter(`Functional Category` != "REMOVE")
-  #
-  # CSDR_1921_1$`Functional Category` <-
-  #   CSDR_1921_1$`Functional Category` %>%
-  #   forcats::as_factor()
-  #
-  # # Add a column to mark unit of measure. -------------------------------------
-  # CSDR_1921_1 <-
-  #   CSDR_1921_1 %>% dplyr::mutate(
-  #     `Unit of Measure` = dplyr::case_when(
-  #       `Functional Data Element` == "(1) DIRECT ENGINEERING LABOR HOURS" ~ "Hours",
-  #       `Functional Data Element` == "(2) DIRECT ENGINEERING LABOR DOLLARS" ~ "TY $K",
-  #       `Functional Data Element` == "(3) ENGINEERING OVERHEAD DOLLARS" ~ "TY $K",
-  #       `Functional Data Element` == "(4) TOTAL ENGINEERING DOLLARS" ~ "TY $K",
-  #       `Functional Data Element` == "(5) DIRECT TOOLING LABOR HOURS" ~ "Hours",
-  #       `Functional Data Element` == "(6) DIRECT TOOLING LABOR DOLLARS" ~ "TY $K",
-  #       `Functional Data Element` == "(7) DIRECT TOOLING & EQUIPMENT DOLLARS" ~ "TY $K",
-  #       `Functional Data Element` == "(8) DIRECT QUALITY CONTROL LABOR HOURS" ~ "Hours",
-  #       `Functional Data Element` == "(9) DIRECT QUALITY CONTROL LABOR DOLLARS" ~ "TY $K",
-  #       `Functional Data Element` == "(10) DIRECT MANUFACTURING LABOR HOURS" ~ "Hours",
-  #       `Functional Data Element` == "(11) DIRECT MANUFACTURING LABOR DOLLARS" ~ "TY $K",
-  #       `Functional Data Element` == "(12) MANUFACTURING OPERATIONS OVERHEAD DOLLARS (Including Tooling and Quality Control)" ~ "TY $K",
-  #       `Functional Data Element` == "(13) TOTAL MANUFACTURING OPERATIONS DOLLARS (Sum of rows 6, 7, 9, 11, and 12)" ~ "TY $K",
-  #       `Functional Data Element` == "(14) RAW MATERIAL DOLLARS" ~ "TY $K",
-  #       `Functional Data Element` == "(15) PURCHASED PARTS DOLLARS" ~ "TY $K",
-  #       `Functional Data Element` == "(16) PURCHASED EQUIPMENT DOLLARS" ~ "TY $K",
-  #       `Functional Data Element` == "(17) MATERIAL HANDLING OVERHEAD DOLLARS" ~ "TY $K",
-  #       `Functional Data Element` == "(18) TOTAL DIRECT-REPORTING SUBCONTRACTOR DOLLARS" ~ "TY $K",
-  #       `Functional Data Element` == "(19) TOTAL MATERIAL DOLLARS" ~ "TY $K",
-  #       `Functional Data Element` == "(20) OTHER COSTS NOT SHOWN ELSEWHERE (Specify in Remarks)" ~ "TY $K",
-  #       `Functional Data Element` == "(21) TOTAL COST (Direct and Overhead)" ~ "TY $K"
-  #     )
-  #   )
-  #
-  # CSDR_1921_1$`Unit of Measure` <-
-  #   CSDR_1921_1$`Unit of Measure` %>%
-  #   forcats::as_factor()
+  fchr_data <-
+    fchr_data %>% dplyr::mutate(
+      `Functional Category` = dplyr::case_when(
+        `Functional Data Element` == "(1) DIRECT ENGINEERING LABOR HOURS" ~ "Engineering",
+        `Functional Data Element` == "(2) DIRECT ENGINEERING LABOR DOLLARS" ~ "Engineering",
+        `Functional Data Element` == "(3) ENGINEERING OVERHEAD DOLLARS" ~ "Engineering",
+        `Functional Data Element` == "(4) TOTAL ENGINEERING DOLLARS" ~ "Summary",
+        `Functional Data Element` == "(5) DIRECT TOOLING LABOR HOURS" ~ "Tooling",
+        `Functional Data Element` == "(6) DIRECT TOOLING LABOR DOLLARS" ~ "Tooling",
+        `Functional Data Element` == "(7) DIRECT TOOLING & EQUIPMENT DOLLARS" ~ "Tooling",
+        `Functional Data Element` == "(8) DIRECT QUALITY CONTROL LABOR HOURS" ~ "Quality Control",
+        `Functional Data Element` == "(9) DIRECT QUALITY CONTROL LABOR DOLLARS" ~ "Quality Control",
+        `Functional Data Element` == "(10) DIRECT MANUFACTURING LABOR HOURS" ~ "Manufacturing",
+        `Functional Data Element` == "(11) DIRECT MANUFACTURING LABOR DOLLARS" ~ "Manufacturing",
+        `Functional Data Element` == "(12) MANUFACTURING OPERATIONS OVERHEAD DOLLARS (Including Tooling and Quality Control)" ~ "Manufacturing Operations",
+        `Functional Data Element` == "(13) TOTAL MANUFACTURING OPERATIONS DOLLARS (Sum of rows 6, 7, 9, 11, and 12)" ~ "Summary",
+        `Functional Data Element` == "(14) RAW MATERIAL DOLLARS" ~ "Material",
+        `Functional Data Element` == "(15) PURCHASED PARTS DOLLARS" ~ "Material",
+        `Functional Data Element` == "(16) PURCHASED EQUIPMENT DOLLARS" ~ "Material",
+        `Functional Data Element` == "(17) MATERIAL HANDLING OVERHEAD DOLLARS" ~ "Material",
+        `Functional Data Element` == "(18) TOTAL DIRECT-REPORTING SUBCONTRACTOR DOLLARS" ~ "Material",
+        `Functional Data Element` == "(19) TOTAL MATERIAL DOLLARS" ~ "Summary",
+        `Functional Data Element` == "(20) OTHER COSTS NOT SHOWN ELSEWHERE (Specify in Remarks)" ~ "Other",
+        `Functional Data Element` == "(21) TOTAL COST (Direct and Overhead)" ~ "Summary",
+        TRUE ~ "REMOVE"
+      )
+    ) %>%
+    dplyr::filter(`Functional Category` != "REMOVE")
+  
+  fchr_data$`Functional Category` <-
+    fchr_data$`Functional Category` %>%
+    forcats::as_factor()
+  
+  # Add a column to mark unit of measure. -------------------------------------
+  fchr_data <-
+    fchr_data %>% dplyr::mutate(
+      `Unit of Measure` = dplyr::case_when(
+        `Functional Data Element` == "(1) DIRECT ENGINEERING LABOR HOURS" ~ "Hours",
+        `Functional Data Element` == "(2) DIRECT ENGINEERING LABOR DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(3) ENGINEERING OVERHEAD DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(4) TOTAL ENGINEERING DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(5) DIRECT TOOLING LABOR HOURS" ~ "Hours",
+        `Functional Data Element` == "(6) DIRECT TOOLING LABOR DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(7) DIRECT TOOLING & EQUIPMENT DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(8) DIRECT QUALITY CONTROL LABOR HOURS" ~ "Hours",
+        `Functional Data Element` == "(9) DIRECT QUALITY CONTROL LABOR DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(10) DIRECT MANUFACTURING LABOR HOURS" ~ "Hours",
+        `Functional Data Element` == "(11) DIRECT MANUFACTURING LABOR DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(12) MANUFACTURING OPERATIONS OVERHEAD DOLLARS (Including Tooling and Quality Control)" ~ "TY $K",
+        `Functional Data Element` == "(13) TOTAL MANUFACTURING OPERATIONS DOLLARS (Sum of rows 6, 7, 9, 11, and 12)" ~ "TY $K",
+        `Functional Data Element` == "(14) RAW MATERIAL DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(15) PURCHASED PARTS DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(16) PURCHASED EQUIPMENT DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(17) MATERIAL HANDLING OVERHEAD DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(18) TOTAL DIRECT-REPORTING SUBCONTRACTOR DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(19) TOTAL MATERIAL DOLLARS" ~ "TY $K",
+        `Functional Data Element` == "(20) OTHER COSTS NOT SHOWN ELSEWHERE (Specify in Remarks)" ~ "TY $K",
+        `Functional Data Element` == "(21) TOTAL COST (Direct and Overhead)" ~ "TY $K"
+      )
+    )
+  
+  fchr_data$`Unit of Measure` <-
+    fchr_data$`Unit of Measure` %>%
+    forcats::as_factor()
+  
   # # Create the cell_to_tibble function. ---------------------------------------
   # # Here we create a function to grab additional data from each worksheet and
   # # add the data to a tibble along with the source worksheet it came from.
@@ -290,7 +291,7 @@ import_fchr_excel <- function(path) {
   #     # "source_worksheet_title"
   #   )
   #
-  return(list(metadata = fchr_excel_metadata, 
+  return(list(metadata = metadata, 
               reported_data = fchr_excel_data))
   
 }
