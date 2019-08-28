@@ -119,7 +119,7 @@ import_cdsr_excel <- function(path) {
   
   # Provide column names for imported CDSR columns. ---------------------------
   cdsr_excel_col_names <- c(
-    "WBS Code",                                    # "WBSElementID"
+    "WBS Element Code",                            # "WBSElementID"
     "WBS Reporting Element",                       # "WBSElementName"
     "Number of Units to Date",                     # "QuantityToDate"
     "Costs Incurred To Date - Nonrecurring",       # "NonrecurringCostsToDate"
@@ -149,7 +149,7 @@ import_cdsr_excel <- function(path) {
   remark <- cdsr_data %>%
     dplyr::slice(dplyr::n()) %>%
     dplyr::select(1) %>%
-    dplyr::rename("Remarks" = "WBS Code") %>%
+    dplyr::rename("Remarks" = "WBS Element Code") %>%
     tidyr::pivot_longer(tidyr::everything(),
                         names_to = "metadata_field",
                         values_to = "repoted_value")
@@ -161,7 +161,7 @@ import_cdsr_excel <- function(path) {
   # Pull the summary elements and add them to their own tibble. ---------------
   
   summary_reporting_elements <- cdsr_data %>%
-    dplyr::filter(is.na(`WBS Code`)) %>%
+    dplyr::filter(is.na(`WBS Element Code`)) %>%
     dplyr::select(
       `WBS Reporting Element`,
       `Costs Incurred To Date - Total`,
