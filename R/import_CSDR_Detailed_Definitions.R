@@ -5,14 +5,86 @@
 #'
 #' @format A tibble of factors with 93 rows and 8 columns:
 #' \describe{
-#'   \item{`Short Name`}
-#'   \describe{
-#'      \item{test1}{test1}
-#'      \item{test2}{test2}}
-#'   \item{`Full Name`}{}
-#'   \item{`Unit of Measure`}{}
+#'   \item{`Short Name`}{`Definition of Short Name`}
+#'   \item{`Full Name`}{`Definition of Short Name`}
+#'   \item{`Unit of Measure`}{`Definition Unit of Measure`}
 #'   \item{`To Date / At Completion`}{}
-#'   \item{`Recurring / Nonrecurring`}{}
+#'   \item{`Recurring / Nonrecurring`}{`The following guidelines for
+#'   distinguishing between recurring and nonrecurring costs apply to all
+#'   reporting contractors (i.e., prime contractors, associate contractors,
+#'   subcontractors, and lower-tier subcontractors) when the definitions have
+#'   not been included in the OSD DDCA Approved CSDR Plan. If the OSD
+#'   DDCAapproved CSDR plan has defined recurring and nonrecurring costs, the
+#'   contractor is required to use those definitions. While these guidelines are
+#'   useful for establishing general boundaries, time reported on recurring and
+#'   nonrecurring tasks should be reported as work is performed. For example,
+#'   technical management tasks should be reported as recurring and nonrecurring
+#'   to reflect the work actually being done rather than aggregated and reported
+#'   as nonrecurring. Also, test activities that will routinely continue into
+#'   production should be recorded as recurring costs.`
+#'   \describe{
+#'        \item{`Recurring Costs`}{`Repetitive elements of development,
+#'        investment, and sustainment costs that may vary with the quantity
+#'        being produced or maintained, irrespective of system life cycle phase
+#'        and appropriation. Recurring cost categories include procurement,
+#'        production and maintenance activities; acceptance testing; maintenance
+#'        and support equipment, training, and data; test articles built to an
+#'        operational configuration; and certain elements of Systems Engineering
+#'        and Program Management (SE/PM). Examples of procurement and production
+#'        activities include fabrication; assembly; procurement of raw
+#'        materials, purchased parts and equipment, and major and minor
+#'        subcontracts; integration; installation and checkout; and quality
+#'        control/assurance (inspection efforts). Examples of recurring
+#'        maintenance and support activities include product and tooling
+#'        maintenance (to restore a product/tool to its original condition);
+#'        production of support and training equipment, initial spares,
+#'        reparable items and simulators; reproduction of maintenance/technical
+#'        data; and courseware updates. Recurring test articles are only those
+#'        units built to a completed operational configuration, including
+#'        full-scale, fatigue/static, and avionics equipment test articles.
+#'        SE/PM activities occur throughout the system life cycle and are
+#'        supportive in nature; as such, these costs take on the characteristics
+#'        of the underlying activities being performed. Examples of recurring
+#'        SE/PM activities include sustaining engineering, logistics support,
+#'        planning, organizing, monitoring, and reporting activities.`}
+#'        \item{`Nonrecurring Costs`}{`Non-repetitive elements of development,
+#'        investment, and sustainment costs that generally do not vary with the
+#'        quantity being produced or maintained, irrespective of system life
+#'        cycle phase and appropriation. Nonrecurring cost categories include
+#'        Product Design and Development (PD&D) activities; System Test and
+#'        Evaluation (ST&E); tooling; pre-production or pre-maintenance
+#'        activities; design and development of support equipment, training, and
+#'        data; and certain elements of Systems Engineering and Program
+#'        Management (SE/PM). Examples of PD&D activities include preliminary,
+#'        critical, prototype and test article design activities, and software
+#'        design and maintenance, regardless of whether the purpose is to
+#'        correct deficiencies or add capabilities. (Note, however, that the
+#'        Cost Working-group Integrated Product Team can require the contractor
+#'        to classify software maintenance costs as recurring if a determination
+#'        is made that such costs are significant for cost-estimating purposes
+#'        and can reasonably be accounted for by the contractor). Examples of
+#'        ST&E activities include test articles built for testing purposes only
+#'        (i.e., units that are not production-representative) such as test
+#'        stands, wind tunnel models, and bench and coupon test articles;
+#'        structural development, static, fatigue, software, and ballistics
+#'        testing; stress analysis; flight, ground, or sea testing of system
+#'        properties; redesign as a result of testing; and retesting efforts.
+#'        Examples of nonrecurring tooling activities include special test
+#'        equipment, special tooling, procurement of initial and rate tooling,
+#'        tool replacement (with the exact same tool), and tool modification (to
+#'        accommodate product configuration changes). Examples of pre-production
+#'        activities include production planning and production line or
+#'        maintenance line set-up. Examples of nonrecurring support equipment,
+#'        training, and data activities include initial equipment design and
+#'        test efforts, test program sets, initial courseware development, and
+#'        simulator development. SE/PM activities occur throughout the system
+#'        life cycle and are supportive in nature; as such, these costs take on
+#'        the characteristics of the underlying activities being performed.
+#'        Examples of nonrecurring SE/PM activities include system development
+#'        and design, testing, planning, organizing, and monitoring
+#'        activities.`}
+#'             }
+#'      }
 #'   \item{`Functional Category`}{}
 #'   \item{`Functional Element`}{
 #'   \describe{

@@ -2,28 +2,31 @@
 % Please edit documentation in R/import_fchr_excel.R
 \name{import_fchr_excel}
 \alias{import_fchr_excel}
-\title{import_cdsr_excel}
+\title{import_fchr_excel}
 \usage{
 import_fchr_excel(path)
 }
 \arguments{
 \item{path}{Required. Path to the xls/xlsx file which contains the CSDR
 FCHR 1921-1. Note the Excel file must have FCHR data on the first
-worksheet (remove any coversheets prior to usingthis script) and cannot
+worksheet (remove any coversheets prior to using this script) and cannot
 have columns or rows moved/changed from the standard from (i.e., the
 script assumes a cPet produced/compliant file is provided).}
 }
 \value{
-Returns a list of two tibbles. The first tibble includes each WBS
-element as a row and the repoted data as columns. The second tibble
-includes all of the submission's metadata in two columns.
+Returns a list of two tibbles. The first tibble includes all of the
+submission's metadata in two columns. The second tibble includes each
+worksheet from the FCHR combined into one long table where each row
+is a Functional Data Element and the columns include the cost & hours
+data. Remarks by WBS and a few other columns are included so that the
+FCHR data is a proper rectangular table.
 }
 \description{
 Import a CSDR FCHR (DD Form 1921-1) from Excel into a Tibble
 }
 \details{
 Takes a CSDR Functional Cost-Hour Report (FCHR) (DD Form 1921-1) Excel
-worksheet and imports it to a tibble.
+worksheet and imports it to a set of tibbles.
 }
 \author{
 Daniel Germony \email{daniel.r.germony.civ@mail.mil}

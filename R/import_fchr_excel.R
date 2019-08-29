@@ -5,24 +5,24 @@
 #'
 #' @title import_fchr_excel
 #' @author Daniel Germony \email{daniel.r.germony.civ@@mail.mil}
-#' @param path Required. Path to the xls/xlsx file which contains the CSDR 
-#'    FCHR 1921-1. Note the Excel file must have FCHR data on the first 
-#'    worksheet (remove any coversheets prior to using this script) and cannot 
-#'    have columns or rows moved/changed from the standard from (i.e., the 
+#' @param path Required. Path to the xls/xlsx file which contains the CSDR
+#'    FCHR 1921-1. Note the Excel file must have FCHR data on the first
+#'    worksheet (remove any coversheets prior to using this script) and cannot
+#'    have columns or rows moved/changed from the standard from (i.e., the
 #'    script assumes a cPet produced/compliant file is provided).
-#' @return Returns a list of two tibbles. The first tibble includes all of the 
-#'    submission's metadata in two columns. The second tibble includes each 
-#'    worksheet from the FCHR combined into one long table where each row 
-#'    is a Functional Data Element and the columns include the cost & hours 
-#'    data. Remarks by WBS and a few other columns are included so that the 
+#' @return Returns a list of two tibbles. The first tibble includes all of the
+#'    submission's metadata in two columns. The second tibble includes each
+#'    worksheet from the FCHR combined into one long table where each row
+#'    is a Functional Data Element and the columns include the cost & hours
+#'    data. Remarks by WBS and a few other columns are included so that the
 #'    FCHR data is a proper rectangular table.
 #' @export
 
 import_fchr_excel <- function(path) {
-  
+
   # Import the pipe! ----------------------------------------------------------
   `%>%` <- magrittr::`%>%`
-  
+
   # Create a function to help get data from individual Excel cells. -----------
   grab_cell <- function(path, cell_range) {
     cell_value <- readxl::read_excel(
@@ -31,21 +31,21 @@ import_fchr_excel <- function(path) {
       range = c(cell_range),
       .name_repair = "minimal"
     )
-    
+
     # Return an NA value if the cell in Excel was blank
     if (nrow(cell_value) == 0)
       return(NA)
-    
+
     # If the Excel cell had a date, it needs special attention to get it type
     # coerced into a char that looks like a date.
     if (lubridate::is.POSIXct(cell_value[[1]])) {
       cell_value[[1]] <- as.character(cell_value[[1]])
     }
-    
+
     # Everything other than NA and dates can get coerced and returned as a char
     return(as.character(cell_value))
   }
-  
+
   # Import metadata and create an object out of it. ---------------------------
   metadata  <- tibble::tibble(
     "Security Classification"              = grab_cell(path, "G2"),
@@ -90,10 +90,10 @@ import_fchr_excel <- function(path) {
       if (is.na(grab_cell(path, "P22"))) NULL else "PROCUREMENT",
       if (is.na(grab_cell(path, "P23"))) NULL else "O&M")
   ) %>% tidyr::pivot_longer(
-    everything(),
+    tidyr::everything(),
     names_to = "metadata_field",
     values_to = "repoted_value")
-  
+
   # Specify FCHR column types and mark that merged columns are skipped. -------
   fchr_col_types <- c(
     "text",    # Col B
@@ -115,7 +115,7 @@ import_fchr_excel <- function(path) {
     "numeric", # Col R
     "numeric"  # Col S
   )
-  
+
   # Provide column names for imported FCHR columns. ---------------------------
   fchr_col_names <- c(
     "Functional Data Element",                               # LOOKUP
@@ -126,7 +126,7 @@ import_fchr_excel <- function(path) {
     "Costs and Hours Incurred At Completion - Recurring",    # "RecurringCostsAtCompletion"
     "Costs and Hours Incurred At Completion - Total"         # "TotalCostsAtCompletion"
   )
-  
+
   # Import all FCHR worksheets and combine into a tibble. ---------------------
   fchr_data <-
     path %>%
@@ -142,7 +142,7 @@ import_fchr_excel <- function(path) {
       )),
       .id = "sheet") %>%
     dplyr::rename("source_worksheet_title" = sheet)
-  
+
   # Remove Functional Category rows then add them as a column. ----------------
   fchr_data <-
     fchr_data %>%
@@ -155,7 +155,7 @@ import_fchr_excel <- function(path) {
         "SUMMARY"
       )
     ))
-  
+
   fchr_data <-
     fchr_data %>% dplyr::mutate(
       `Functional Category` = dplyr::case_when(
@@ -184,11 +184,11 @@ import_fchr_excel <- function(path) {
       )
     ) %>%
     dplyr::filter(`Functional Category` != "REMOVE")
-  
+
   fchr_data$`Functional Category` <-
     fchr_data$`Functional Category` %>%
     forcats::as_factor()
-  
+
   # Add a column to mark unit of measure. -------------------------------------
   fchr_data <-
     fchr_data %>% dplyr::mutate(
@@ -216,11 +216,11 @@ import_fchr_excel <- function(path) {
         `Functional Data Element` == "(21) TOTAL COST (Direct and Overhead)" ~ "TY $K"
       )
     )
-  
+
   fchr_data$`Unit of Measure` <-
     fchr_data$`Unit of Measure` %>%
     forcats::as_factor()
-  
+
   # Create the cell_to_tibble function. ---------------------------------------
   # Here we create a function to grab additional data from each worksheet and
   # add the data to a tibble along with the source worksheet it came from.
@@ -241,17 +241,17 @@ import_fchr_excel <- function(path) {
       ),
       .id = "sheet")  %>%
       dplyr::rename("source_worksheet_title" = sheet)
-  
+
     return(temp_df)
   }
-  
+
   # Use cell_to_tibble to grab additional data elements from the 1921-1. ------
   `WBS Element Code` <- cell_to_tibble(path, "B21", "text", "WBS Element Code")
   `WBS Reporting Element` <- cell_to_tibble(path, "G21", "text", "WBS Reporting Element")
   `Number of Units to Date` <- cell_to_tibble(path, "K22", "numeric", "Number of Units to Date")
   `Number of Units At Completion` <- cell_to_tibble(path, "M22", "numeric", "Number of Units At Completion")
   Remarks <- cell_to_tibble(path, "B53", "text", "Remarks")
-  
+
   # Add the additional elements as columns in the 1921-1 tibble. --------------
   fchr_data <-
     fchr_data %>%
@@ -260,19 +260,19 @@ import_fchr_excel <- function(path) {
     dplyr::left_join(`Number of Units to Date`, by = "source_worksheet_title") %>%
     dplyr::left_join(`Number of Units At Completion`, by = "source_worksheet_title") %>%
     dplyr::left_join(Remarks, by = "source_worksheet_title")
-  
+
   fchr_data$`WBS Element Code` <-
     fchr_data$`WBS Element Code` %>%
     forcats::as_factor()
-  
+
   fchr_data$`WBS Reporting Element` <-
     fchr_data$`WBS Reporting Element` %>%
     forcats::as_factor()
-  
+
   fchr_data$`Functional Data Element` <-
     fchr_data$`Functional Data Element` %>%
     forcats::as_factor()
-  
+
   # Reorder the columns before returning. -------------------------------------
   fchr_data <-
     fchr_data %>%
@@ -292,9 +292,9 @@ import_fchr_excel <- function(path) {
       "Number of Units At Completion",                         # "QuantityAtCompletion"
       "Remarks"                                                # "WBSElementRemark"
     )
-  
-  return(list(metadata = metadata, 
+
+  return(list(metadata = metadata,
               reported_data = fchr_data))
-  
+
 }
 

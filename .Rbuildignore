@@ -1,6 +1,5 @@
 ^project\.Rproj$
 ^\.Rproj\.user$
-^LICENSE\.md$
 ^README\.Rmd$
 ^cran-comments\.md$
 ^\.github$
@@ -10,3 +9,6 @@
 ^dstCSDR\.Rcheck$
 ^dstCSDR.*\.tar\.gz$
 ^dstCSDR.*\.tgz$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
