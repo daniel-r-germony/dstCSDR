@@ -20,11 +20,8 @@
 
 import_fchr_excel <- function(path) {
 
-  # Import the pipe! ----------------------------------------------------------
-  `%>%` <- magrittr::`%>%`
-
   # Create a function to help get data from individual Excel cells. -----------
-  grab_cell <- function(path, cell_range) {
+  .grab_cell <- function(path, cell_range) {
     cell_value <- readxl::read_excel(
       path = path,
       col_names = FALSE,
@@ -48,54 +45,54 @@ import_fchr_excel <- function(path) {
 
   # Import metadata and create an object out of it. ---------------------------
   metadata  <- tibble::tibble(
-    "Security Classification"              = grab_cell(path, "G2"),
-    "Major Program Name"                   = grab_cell(path, "F6"),
+    "Security Classification"              = .grab_cell(path, "G2"),
+    "Major Program Name"                   = .grab_cell(path, "F6"),
     "Major Program Phase/Milestone"        = stringr::str_c(sep = ", ",
-      if (is.na(grab_cell(path, "B8"))) NULL else "Pre-A",
-      if (is.na(grab_cell(path, "B9"))) NULL else "A",
-      if (is.na(grab_cell(path, "D8"))) NULL else "B",
-      if (is.na(grab_cell(path, "D9"))) NULL else "C-LRIP",
-      if (is.na(grab_cell(path, "F8"))) NULL else "C-FRP",
-      if (is.na(grab_cell(path, "F9"))) NULL else "O&S"),
-    "Prime Mission Product"                = grab_cell(path, "H9"),
+      if (is.na(.grab_cell(path, "B8"))) NULL else "Pre-A",
+      if (is.na(.grab_cell(path, "B9"))) NULL else "A",
+      if (is.na(.grab_cell(path, "D8"))) NULL else "B",
+      if (is.na(.grab_cell(path, "D9"))) NULL else "C-LRIP",
+      if (is.na(.grab_cell(path, "F8"))) NULL else "C-FRP",
+      if (is.na(.grab_cell(path, "F9"))) NULL else "O&S"),
+    "Prime Mission Product"                = .grab_cell(path, "H9"),
     "Reporting Organization Type"          = stringr::str_c(sep = ", ",
-      if (is.na(grab_cell(path, "I8"))) NULL else "PRIME / ASSOCIATE CONTRACTOR",
-      if (is.na(grab_cell(path, "K9"))) NULL else "DIRECT-REPORTING SUBCONTRACTOR",
-      if (is.na(grab_cell(path, "M8"))) NULL else "GOVERNMENT"),
-    "Organization Name & Address"          = grab_cell(path, "O9"),
-    "Division Name  & Address"             = grab_cell(path, "R9"),
-    "Approved Plan Number"                 = grab_cell(path, "T9"),
-    "Customer"                             = grab_cell(path, "B12"),
-    "Contract No"                          = grab_cell(path, "M12"),
-    "Latest Modification"                  = grab_cell(path, "M13"),
-    "Solicitation No"                      = grab_cell(path, "P12"),
-    "Contract Name"                        = grab_cell(path, "P13"),
-    "Task Order/Deliver Order/Lot Number"  = grab_cell(path, "S12"),
-    "Period of Performance Start Date"     = grab_cell(path, "F15"),
-    "Period of Performance End Date"       = grab_cell(path, "F16"),
+      if (is.na(.grab_cell(path, "I8"))) NULL else "PRIME / ASSOCIATE CONTRACTOR",
+      if (is.na(.grab_cell(path, "K9"))) NULL else "DIRECT-REPORTING SUBCONTRACTOR",
+      if (is.na(.grab_cell(path, "M8"))) NULL else "GOVERNMENT"),
+    "Organization Name & Address"          = .grab_cell(path, "O9"),
+    "Division Name  & Address"             = .grab_cell(path, "R9"),
+    "Approved Plan Number"                 = .grab_cell(path, "T9"),
+    "Customer"                             = .grab_cell(path, "B12"),
+    "Contract No"                          = .grab_cell(path, "M12"),
+    "Latest Modification"                  = .grab_cell(path, "M13"),
+    "Solicitation No"                      = .grab_cell(path, "P12"),
+    "Contract Name"                        = .grab_cell(path, "P13"),
+    "Task Order/Deliver Order/Lot Number"  = .grab_cell(path, "S12"),
+    "Period of Performance Start Date"     = .grab_cell(path, "F15"),
+    "Period of Performance End Date"       = .grab_cell(path, "F16"),
     "Report Cycle"                         = stringr::str_c(sep = ", ",
-      if (is.na(grab_cell(path, "K15"))) NULL else "INITIAL",
-      if (is.na(grab_cell(path, "K16"))) NULL else "INTERIM",
-      if (is.na(grab_cell(path, "K17"))) NULL else "FINAL"),
-    "Submission Number"                    = grab_cell(path, "M15"),
-    "Resubmission Number"                  = grab_cell(path, "P16"),
-    "Report As Of"                         = grab_cell(path, "S15"),
-    "Point of Contact Name"                = grab_cell(path, "B19"),
-    "Department"                           = grab_cell(path, "G19"),
-    "Telephone Number"                     = grab_cell(path, "K19"),
-    "Email Address"                        = grab_cell(path, "O19"),
-    "Date Prepared"                        = grab_cell(path, "S19"),
+      if (is.na(.grab_cell(path, "K15"))) NULL else "INITIAL",
+      if (is.na(.grab_cell(path, "K16"))) NULL else "INTERIM",
+      if (is.na(.grab_cell(path, "K17"))) NULL else "FINAL"),
+    "Submission Number"                    = .grab_cell(path, "M15"),
+    "Resubmission Number"                  = .grab_cell(path, "P16"),
+    "Report As Of"                         = .grab_cell(path, "S15"),
+    "Point of Contact Name"                = .grab_cell(path, "B19"),
+    "Department"                           = .grab_cell(path, "G19"),
+    "Telephone Number"                     = .grab_cell(path, "K19"),
+    "Email Address"                        = .grab_cell(path, "O19"),
+    "Date Prepared"                        = .grab_cell(path, "S19"),
     "Appropriation"                        = stringr::str_c(sep = ", ",
-      if (is.na(grab_cell(path, "P21"))) NULL else "RDT&E",
-      if (is.na(grab_cell(path, "P22"))) NULL else "PROCUREMENT",
-      if (is.na(grab_cell(path, "P23"))) NULL else "O&M")
+      if (is.na(.grab_cell(path, "P21"))) NULL else "RDT&E",
+      if (is.na(.grab_cell(path, "P22"))) NULL else "PROCUREMENT",
+      if (is.na(.grab_cell(path, "P23"))) NULL else "O&M")
   ) %>% tidyr::pivot_longer(
     tidyr::everything(),
     names_to = "metadata_field",
     values_to = "repoted_value")
 
   # Specify FCHR column types and mark that merged columns are skipped. -------
-  fchr_col_types <- c(
+  .fchr_col_types <- c(
     "text",    # Col B
     "skip",    # Because of merged cells
     "skip",    # Because of merged cells
@@ -117,7 +114,7 @@ import_fchr_excel <- function(path) {
   )
 
   # Provide column names for imported FCHR columns. ---------------------------
-  fchr_col_names <- c(
+  .fchr_col_names <- c(
     "Functional Data Element",                               # LOOKUP
     "Costs and Hours Incurred To Date - Nonrecurring",       # "NonrecurringCostsToDate"
     "Costs and Hours Incurred To Date - Recurring",          # "RecurringCostsToDate"
@@ -137,17 +134,17 @@ import_fchr_excel <- function(path) {
         path = path,
         sheet = .x,
         range = readxl::cell_limits(c(26, 2), c(51, 19)),
-        col_types = fchr_col_types,
-        col_names = fchr_col_names
+        col_types = .fchr_col_types,
+        col_names = .fchr_col_names
       )),
       .id = "sheet") %>%
-    dplyr::rename("source_worksheet_title" = sheet)
+    dplyr::rename("source_worksheet_title" = .data$sheet)
 
   # Remove Functional Category rows then add them as a column. ----------------
   fchr_data <-
     fchr_data %>%
     dplyr::filter(!(
-      `Functional Data Element` %in% c(
+      .data$`Functional Data Element` %in% c(
         "ENGINEERING",
         "MANUFACTURING OPERATIONS",
         "MATERIALS",
@@ -159,31 +156,31 @@ import_fchr_excel <- function(path) {
   fchr_data <-
     fchr_data %>% dplyr::mutate(
       `Functional Category` = dplyr::case_when(
-        `Functional Data Element` == "(1) DIRECT ENGINEERING LABOR HOURS" ~ "Engineering",
-        `Functional Data Element` == "(2) DIRECT ENGINEERING LABOR DOLLARS" ~ "Engineering",
-        `Functional Data Element` == "(3) ENGINEERING OVERHEAD DOLLARS" ~ "Engineering",
-        `Functional Data Element` == "(4) TOTAL ENGINEERING DOLLARS" ~ "Summary",
-        `Functional Data Element` == "(5) DIRECT TOOLING LABOR HOURS" ~ "Tooling",
-        `Functional Data Element` == "(6) DIRECT TOOLING LABOR DOLLARS" ~ "Tooling",
-        `Functional Data Element` == "(7) DIRECT TOOLING & EQUIPMENT DOLLARS" ~ "Tooling",
-        `Functional Data Element` == "(8) DIRECT QUALITY CONTROL LABOR HOURS" ~ "Quality Control",
-        `Functional Data Element` == "(9) DIRECT QUALITY CONTROL LABOR DOLLARS" ~ "Quality Control",
-        `Functional Data Element` == "(10) DIRECT MANUFACTURING LABOR HOURS" ~ "Manufacturing",
-        `Functional Data Element` == "(11) DIRECT MANUFACTURING LABOR DOLLARS" ~ "Manufacturing",
-        `Functional Data Element` == "(12) MANUFACTURING OPERATIONS OVERHEAD DOLLARS (Including Tooling and Quality Control)" ~ "Manufacturing Operations",
-        `Functional Data Element` == "(13) TOTAL MANUFACTURING OPERATIONS DOLLARS (Sum of rows 6, 7, 9, 11, and 12)" ~ "Summary",
-        `Functional Data Element` == "(14) RAW MATERIAL DOLLARS" ~ "Material",
-        `Functional Data Element` == "(15) PURCHASED PARTS DOLLARS" ~ "Material",
-        `Functional Data Element` == "(16) PURCHASED EQUIPMENT DOLLARS" ~ "Material",
-        `Functional Data Element` == "(17) MATERIAL HANDLING OVERHEAD DOLLARS" ~ "Material",
-        `Functional Data Element` == "(18) TOTAL DIRECT-REPORTING SUBCONTRACTOR DOLLARS" ~ "Material",
-        `Functional Data Element` == "(19) TOTAL MATERIAL DOLLARS" ~ "Summary",
-        `Functional Data Element` == "(20) OTHER COSTS NOT SHOWN ELSEWHERE (Specify in Remarks)" ~ "Other",
-        `Functional Data Element` == "(21) TOTAL COST (Direct and Overhead)" ~ "Summary",
+        .data$`Functional Data Element` == "(1) DIRECT ENGINEERING LABOR HOURS" ~ "Engineering",
+        .data$`Functional Data Element` == "(2) DIRECT ENGINEERING LABOR DOLLARS" ~ "Engineering",
+        .data$`Functional Data Element` == "(3) ENGINEERING OVERHEAD DOLLARS" ~ "Engineering",
+        .data$`Functional Data Element` == "(4) TOTAL ENGINEERING DOLLARS" ~ "Summary",
+        .data$`Functional Data Element` == "(5) DIRECT TOOLING LABOR HOURS" ~ "Tooling",
+        .data$`Functional Data Element` == "(6) DIRECT TOOLING LABOR DOLLARS" ~ "Tooling",
+        .data$`Functional Data Element` == "(7) DIRECT TOOLING & EQUIPMENT DOLLARS" ~ "Tooling",
+        .data$`Functional Data Element` == "(8) DIRECT QUALITY CONTROL LABOR HOURS" ~ "Quality Control",
+        .data$`Functional Data Element` == "(9) DIRECT QUALITY CONTROL LABOR DOLLARS" ~ "Quality Control",
+        .data$`Functional Data Element` == "(10) DIRECT MANUFACTURING LABOR HOURS" ~ "Manufacturing",
+        .data$`Functional Data Element` == "(11) DIRECT MANUFACTURING LABOR DOLLARS" ~ "Manufacturing",
+        .data$`Functional Data Element` == "(12) MANUFACTURING OPERATIONS OVERHEAD DOLLARS (Including Tooling and Quality Control)" ~ "Manufacturing Operations",
+        .data$`Functional Data Element` == "(13) TOTAL MANUFACTURING OPERATIONS DOLLARS (Sum of rows 6, 7, 9, 11, and 12)" ~ "Summary",
+        .data$`Functional Data Element` == "(14) RAW MATERIAL DOLLARS" ~ "Material",
+        .data$`Functional Data Element` == "(15) PURCHASED PARTS DOLLARS" ~ "Material",
+        .data$`Functional Data Element` == "(16) PURCHASED EQUIPMENT DOLLARS" ~ "Material",
+        .data$`Functional Data Element` == "(17) MATERIAL HANDLING OVERHEAD DOLLARS" ~ "Material",
+        .data$`Functional Data Element` == "(18) TOTAL DIRECT-REPORTING SUBCONTRACTOR DOLLARS" ~ "Material",
+        .data$`Functional Data Element` == "(19) TOTAL MATERIAL DOLLARS" ~ "Summary",
+        .data$`Functional Data Element` == "(20) OTHER COSTS NOT SHOWN ELSEWHERE (Specify in Remarks)" ~ "Other",
+        .data$`Functional Data Element` == "(21) TOTAL COST (Direct and Overhead)" ~ "Summary",
         TRUE ~ "REMOVE"
       )
     ) %>%
-    dplyr::filter(`Functional Category` != "REMOVE")
+    dplyr::filter(.data$`Functional Category` != "REMOVE")
 
   fchr_data$`Functional Category` <-
     fchr_data$`Functional Category` %>%
@@ -193,27 +190,27 @@ import_fchr_excel <- function(path) {
   fchr_data <-
     fchr_data %>% dplyr::mutate(
       `Unit of Measure` = dplyr::case_when(
-        `Functional Data Element` == "(1) DIRECT ENGINEERING LABOR HOURS" ~ "Hours",
-        `Functional Data Element` == "(2) DIRECT ENGINEERING LABOR DOLLARS" ~ "TY $K",
-        `Functional Data Element` == "(3) ENGINEERING OVERHEAD DOLLARS" ~ "TY $K",
-        `Functional Data Element` == "(4) TOTAL ENGINEERING DOLLARS" ~ "TY $K",
-        `Functional Data Element` == "(5) DIRECT TOOLING LABOR HOURS" ~ "Hours",
-        `Functional Data Element` == "(6) DIRECT TOOLING LABOR DOLLARS" ~ "TY $K",
-        `Functional Data Element` == "(7) DIRECT TOOLING & EQUIPMENT DOLLARS" ~ "TY $K",
-        `Functional Data Element` == "(8) DIRECT QUALITY CONTROL LABOR HOURS" ~ "Hours",
-        `Functional Data Element` == "(9) DIRECT QUALITY CONTROL LABOR DOLLARS" ~ "TY $K",
-        `Functional Data Element` == "(10) DIRECT MANUFACTURING LABOR HOURS" ~ "Hours",
-        `Functional Data Element` == "(11) DIRECT MANUFACTURING LABOR DOLLARS" ~ "TY $K",
-        `Functional Data Element` == "(12) MANUFACTURING OPERATIONS OVERHEAD DOLLARS (Including Tooling and Quality Control)" ~ "TY $K",
-        `Functional Data Element` == "(13) TOTAL MANUFACTURING OPERATIONS DOLLARS (Sum of rows 6, 7, 9, 11, and 12)" ~ "TY $K",
-        `Functional Data Element` == "(14) RAW MATERIAL DOLLARS" ~ "TY $K",
-        `Functional Data Element` == "(15) PURCHASED PARTS DOLLARS" ~ "TY $K",
-        `Functional Data Element` == "(16) PURCHASED EQUIPMENT DOLLARS" ~ "TY $K",
-        `Functional Data Element` == "(17) MATERIAL HANDLING OVERHEAD DOLLARS" ~ "TY $K",
-        `Functional Data Element` == "(18) TOTAL DIRECT-REPORTING SUBCONTRACTOR DOLLARS" ~ "TY $K",
-        `Functional Data Element` == "(19) TOTAL MATERIAL DOLLARS" ~ "TY $K",
-        `Functional Data Element` == "(20) OTHER COSTS NOT SHOWN ELSEWHERE (Specify in Remarks)" ~ "TY $K",
-        `Functional Data Element` == "(21) TOTAL COST (Direct and Overhead)" ~ "TY $K"
+        .data$`Functional Data Element` == "(1) DIRECT ENGINEERING LABOR HOURS" ~ "Hours",
+        .data$`Functional Data Element` == "(2) DIRECT ENGINEERING LABOR DOLLARS" ~ "TY $K",
+        .data$`Functional Data Element` == "(3) ENGINEERING OVERHEAD DOLLARS" ~ "TY $K",
+        .data$`Functional Data Element` == "(4) TOTAL ENGINEERING DOLLARS" ~ "TY $K",
+        .data$`Functional Data Element` == "(5) DIRECT TOOLING LABOR HOURS" ~ "Hours",
+        .data$`Functional Data Element` == "(6) DIRECT TOOLING LABOR DOLLARS" ~ "TY $K",
+        .data$`Functional Data Element` == "(7) DIRECT TOOLING & EQUIPMENT DOLLARS" ~ "TY $K",
+        .data$`Functional Data Element` == "(8) DIRECT QUALITY CONTROL LABOR HOURS" ~ "Hours",
+        .data$`Functional Data Element` == "(9) DIRECT QUALITY CONTROL LABOR DOLLARS" ~ "TY $K",
+        .data$`Functional Data Element` == "(10) DIRECT MANUFACTURING LABOR HOURS" ~ "Hours",
+        .data$`Functional Data Element` == "(11) DIRECT MANUFACTURING LABOR DOLLARS" ~ "TY $K",
+        .data$`Functional Data Element` == "(12) MANUFACTURING OPERATIONS OVERHEAD DOLLARS (Including Tooling and Quality Control)" ~ "TY $K",
+        .data$`Functional Data Element` == "(13) TOTAL MANUFACTURING OPERATIONS DOLLARS (Sum of rows 6, 7, 9, 11, and 12)" ~ "TY $K",
+        .data$`Functional Data Element` == "(14) RAW MATERIAL DOLLARS" ~ "TY $K",
+        .data$`Functional Data Element` == "(15) PURCHASED PARTS DOLLARS" ~ "TY $K",
+        .data$`Functional Data Element` == "(16) PURCHASED EQUIPMENT DOLLARS" ~ "TY $K",
+        .data$`Functional Data Element` == "(17) MATERIAL HANDLING OVERHEAD DOLLARS" ~ "TY $K",
+        .data$`Functional Data Element` == "(18) TOTAL DIRECT-REPORTING SUBCONTRACTOR DOLLARS" ~ "TY $K",
+        .data$`Functional Data Element` == "(19) TOTAL MATERIAL DOLLARS" ~ "TY $K",
+        .data$`Functional Data Element` == "(20) OTHER COSTS NOT SHOWN ELSEWHERE (Specify in Remarks)" ~ "TY $K",
+        .data$`Functional Data Element` == "(21) TOTAL COST (Direct and Overhead)" ~ "TY $K"
       )
     )
 
@@ -226,7 +223,7 @@ import_fchr_excel <- function(path) {
   # add the data to a tibble along with the source worksheet it came from.
   # Later we will use the source worksheet to left_join the additional data
   # into the main 1921-1 tibble.
-  cell_to_tibble <- function(path, range, col_type, col_name) {
+  .cell_to_tibble <- function(path, range, col_type, col_name) {
     temp_df <- path %>%
       readxl::excel_sheets() %>%
       purrr::set_names() %>%
@@ -240,17 +237,17 @@ import_fchr_excel <- function(path) {
         )
       ),
       .id = "sheet")  %>%
-      dplyr::rename("source_worksheet_title" = sheet)
+      dplyr::rename("source_worksheet_title" = .data$sheet)
 
     return(temp_df)
   }
 
   # Use cell_to_tibble to grab additional data elements from the 1921-1. ------
-  `WBS Element Code` <- cell_to_tibble(path, "B21", "text", "WBS Element Code")
-  `WBS Reporting Element` <- cell_to_tibble(path, "G21", "text", "WBS Reporting Element")
-  `Number of Units to Date` <- cell_to_tibble(path, "K22", "numeric", "Number of Units to Date")
-  `Number of Units At Completion` <- cell_to_tibble(path, "M22", "numeric", "Number of Units At Completion")
-  Remarks <- cell_to_tibble(path, "B53", "text", "Remarks")
+  `WBS Element Code` <- .cell_to_tibble(path, "B21", "text", "WBS Element Code")
+  `WBS Reporting Element` <- .cell_to_tibble(path, "G21", "text", "WBS Reporting Element")
+  `Number of Units to Date` <- .cell_to_tibble(path, "K22", "numeric", "Number of Units to Date")
+  `Number of Units At Completion` <- .cell_to_tibble(path, "M22", "numeric", "Number of Units At Completion")
+  Remarks <- .cell_to_tibble(path, "B53", "text", "Remarks")
 
   # Add the additional elements as columns in the 1921-1 tibble. --------------
   fchr_data <-
