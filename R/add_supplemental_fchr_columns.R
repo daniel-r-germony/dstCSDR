@@ -45,7 +45,7 @@ add_supplemental_fchr_columns <- function(fchr_object) {
         .data$`Reported Data Field` == "Costs and Hours Incurred At Completion - Nonrecurring" ~ "Nonrecurring",
         .data$`Reported Data Field` == "Costs and Hours Incurred At Completion - Recurring" ~ "Recurring",
         .data$`Reported Data Field` == "Costs and Hours Incurred At Completion - Total" ~ "Total",
-        TRUE ~ "ERROR"
+        TRUE ~ NA_character_
       )
     )
 
@@ -64,7 +64,7 @@ add_supplemental_fchr_columns <- function(fchr_object) {
         .data$`Reported Data Field` == "Costs and Hours Incurred At Completion - Nonrecurring" ~ "At Completion",
         .data$`Reported Data Field` == "Costs and Hours Incurred At Completion - Recurring" ~ "At Completion",
         .data$`Reported Data Field` == "Costs and Hours Incurred At Completion - Total" ~ "At Completion",
-        TRUE ~ "ERROR"
+        TRUE ~ NA_character_
       )
     )
 
@@ -96,7 +96,8 @@ add_supplemental_fchr_columns <- function(fchr_object) {
         .data$`Functional Data Element` == "(18) TOTAL DIRECT-REPORTING SUBCONTRACTOR DOLLARS" ~ "18",
         .data$`Functional Data Element` == "(19) TOTAL MATERIAL DOLLARS" ~ "19",
         .data$`Functional Data Element` == "(20) OTHER COSTS NOT SHOWN ELSEWHERE (Specify in Remarks)" ~ "20",
-        .data$`Functional Data Element` == "(21) TOTAL COST (Direct and Overhead)" ~ "21"
+        .data$`Functional Data Element` == "(21) TOTAL COST (Direct and Overhead)" ~ "21",
+        TRUE ~ NA_character_
       )
     )
 
@@ -128,7 +129,8 @@ add_supplemental_fchr_columns <- function(fchr_object) {
         .data$`Functional Data Element` == "(18) TOTAL DIRECT-REPORTING SUBCONTRACTOR DOLLARS" ~ "Direct-Reporting Subcontractor",
         .data$`Functional Data Element` == "(19) TOTAL MATERIAL DOLLARS" ~ "Summary",
         .data$`Functional Data Element` == "(20) OTHER COSTS NOT SHOWN ELSEWHERE (Specify in Remarks)" ~ "Other Costs Not Shown Elsewhere",
-        .data$`Functional Data Element` == "(21) TOTAL COST (Direct and Overhead)" ~ "Summary"
+        .data$`Functional Data Element` == "(21) TOTAL COST (Direct and Overhead)" ~ "Summary",
+        TRUE ~ NA_character_
       )
     )
   fchr_plus[["reported_data"]]$`Functional Element` <-
@@ -159,12 +161,466 @@ add_supplemental_fchr_columns <- function(fchr_object) {
         .data$`Functional Data Element` == "(18) TOTAL DIRECT-REPORTING SUBCONTRACTOR DOLLARS" ~ "Material",
         .data$`Functional Data Element` == "(19) TOTAL MATERIAL DOLLARS" ~ "Material",
         .data$`Functional Data Element` == "(20) OTHER COSTS NOT SHOWN ELSEWHERE (Specify in Remarks)" ~ "Other",
-        .data$`Functional Data Element` == "(21) TOTAL COST (Direct and Overhead)" ~ "Summary"
+        .data$`Functional Data Element` == "(21) TOTAL COST (Direct and Overhead)" ~ "Summary",
+        TRUE ~ NA_character_
       )
     )
   fchr_plus[["reported_data"]]$`Functional Category` <-
     fchr_plus[["reported_data"]]$`Functional Category` %>%
     forcats::as_factor()
+
+  # Add "Short Name" column. --------------------------------------------------
+  # This section is badly in need of refactoring with the add of a function.
+  fchr_plus[["reported_data"]] <-
+    fchr_plus[["reported_data"]] %>% dplyr::mutate(
+      "Short Name" = dplyr::case_when(
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Summary" &
+          .data$`Functional Element`       == "Summary"
+        ~ "NR $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Summary" &
+          .data$`Functional Element`       == "Summary"
+        ~ "NR $ TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Direct Engineering Labor"
+        ~ "NR Direct Eng $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Direct Engineering Labor"
+        ~ "NR Direct Eng $ TD",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Direct Engineering Labor"
+        ~ "NR Eng Hrs AC",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Direct Engineering Labor"
+        ~ "NR Eng Hrs TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Manufacturing" &
+          .data$`Functional Element`       == "Direct Manufacturing Labor"
+        ~ "NR MFG Direct $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Manufacturing" &
+          .data$`Functional Element`       == "Direct Manufacturing Labor"
+        ~ "NR MFG Direct $ TD",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Manufacturing" &
+          .data$`Functional Element`       == "Direct Manufacturing Labor"
+        ~ "NR MFG Hrs AC",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Manufacturing" &
+          .data$`Functional Element`       == "Direct Manufacturing Labor"
+        ~ "NR MFG Hrs TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Quality Control" &
+          .data$`Functional Element`       == "Direct Quality Control Labor"
+        ~ "NR QC Direct $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Quality Control" &
+          .data$`Functional Element`       == "Direct Quality Control Labor"
+        ~ "NR QC Direct $ TD",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Quality Control" &
+          .data$`Functional Element`       == "Direct Quality Control Labor"
+        ~ "NR QC Hrs AC",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Quality Control" &
+          .data$`Functional Element`       == "Direct Quality Control Labor"
+        ~ "NR QC Hrs TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Tooling" &
+          .data$`Functional Element`       == "Direct Tooling & Equipment"
+        ~ "NR Tool/Equip $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Tooling" &
+          .data$`Functional Element`       == "Direct Tooling & Equipment"
+        ~ "NR Tool/Equip $ TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Tooling" &
+          .data$`Functional Element`       == "Direct Tooling Labor"
+        ~ "NR Tool Direct $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Tooling" &
+          .data$`Functional Element`       == "Direct Tooling Labor"
+        ~ "NR Tool Direct $ TD",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Tooling" &
+          .data$`Functional Element`       == "Direct Tooling Labor"
+        ~ "NR Tool Hrs AC",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Tooling" &
+          .data$`Functional Element`       == "Direct Tooling Labor"
+        ~ "NR Tool Hrs TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Material" &
+          .data$`Functional Element`       == "Direct-Reporting Subcontractor"
+        ~ "NR Direct Rep Sub $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Material" &
+          .data$`Functional Element`       == "Direct-Reporting Subcontractor"
+        ~ "NR Direct Rep Sub $ TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Engineering Overhead"
+        ~ "NR Eng OH $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Engineering Overhead"
+        ~ "NR Eng OH $ TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Manufacturing Operations" &
+          .data$`Functional Element`       == "Manufacturing Operations Overhead"
+        ~ "NR MFG Ops OH $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Manufacturing Operations" &
+          .data$`Functional Element`       == "Manufacturing Operations Overhead"
+        ~ "NR MFG Ops OH $ TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Material" &
+          .data$`Functional Element`       == "Material Handling/Overhead"
+        ~ "NR Mat OH $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Material" &
+          .data$`Functional Element`       == "Material Handling/Overhead"
+        ~ "NR Mat OH $ TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Other" &
+          .data$`Functional Element`       == "Other Costs Not Shown Elsewhere"
+        ~ "NR Other $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Other" &
+          .data$`Functional Element`       == "Other Costs Not Shown Elsewhere"
+        ~ "NR Other $ TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Material" &
+          .data$`Functional Element`       == "Purchased Equipment"
+        ~ "NR Purch Equip $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Material" &
+          .data$`Functional Element`       == "Purchased Equipment"
+        ~ "NR Purch Equip $ TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Material" &
+          .data$`Functional Element`       == "Purchased Parts"
+        ~ "NR Purch Parts $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Material" &
+          .data$`Functional Element`       == "Purchased Parts"
+        ~ "NR Purch Parts $ TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Material" &
+          .data$`Functional Element`       == "Raw Material"
+        ~ "NR Raw Mat $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Material" &
+          .data$`Functional Element`       == "Raw Material"
+        ~ "NR Raw Mat $ TD",
+        .data$`Unit of Measure`            == "Quantity" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Summary" &
+          .data$`Functional Element`       == "Summary"
+        ~ "Units AC",
+        .data$`Unit of Measure`            == "Quantity" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Summary" &
+          .data$`Functional Element`       == "Summary"
+        ~ "Units TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Summary" &
+          .data$`Functional Element`       == "Summary"
+        ~ "Rec $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Summary" &
+          .data$`Functional Element`       == "Summary"
+        ~ "Rec $ TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Direct Engineering Labor"
+        ~ "Rec Direct Eng $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Direct Engineering Labor"
+        ~ "Rec Direct Eng $ TD",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Direct Engineering Labor"
+        ~ "Rec Eng Hrs AC",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Direct Engineering Labor"
+        ~ "Rec Eng Hrs TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Manufacturing" &
+          .data$`Functional Element`       == "Direct Manufacturing Labor"
+        ~ "Rec MFG Direct $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Manufacturing" &
+          .data$`Functional Element`       == "Direct Manufacturing Labor"
+        ~ "Rec MFG Direct $ TD",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Manufacturing" &
+          .data$`Functional Element`       == "Direct Manufacturing Labor"
+        ~ "Rec MFG Hrs AC",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Manufacturing" &
+          .data$`Functional Element`       == "Direct Manufacturing Labor"
+        ~ "Rec MFG Hrs TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Quality Control" &
+          .data$`Functional Element`       == "Direct Quality Control Labor"
+        ~ "Rec QC Direct $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Quality Control" &
+          .data$`Functional Element`       == "Direct Quality Control Labor"
+        ~ "Rec QC Direct $ TD",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Quality Control" &
+          .data$`Functional Element`       == "Direct Quality Control Labor"
+        ~ "Rec QC Hrs AC",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Quality Control" &
+          .data$`Functional Element`       == "Direct Quality Control Labor"
+        ~ "Rec QC Hrs TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Tooling" &
+          .data$`Functional Element`       == "Direct Tooling & Equipment"
+        ~ "Rec Tool/Equip $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Tooling" &
+          .data$`Functional Element`       == "Direct Tooling & Equipment"
+        ~ "Rec Tool/Equip $ TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Tooling" &
+          .data$`Functional Element`       == "Direct Tooling Labor"
+        ~ "Rec Tool Direct $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Tooling" &
+          .data$`Functional Element`       == "Direct Tooling Labor"
+        ~ "Rec Tool Direct $ TD",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Tooling" &
+          .data$`Functional Element`       == "Direct Tooling Labor"
+        ~ "Rec Tool Hrs AC",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Tooling" &
+          .data$`Functional Element`       == "Direct Tooling Labor"
+        ~ "Rec Tool Hrs TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Material" &
+          .data$`Functional Element`       == "Direct-Reporting Subcontractor"
+        ~ "Rec Direct Rep Sub $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To DaSte" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Material" &
+          .data$`Functional Element`       == "Direct-Reporting Subcontractor"
+        ~ "Rec Direct Rep Sub $ TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Engineering Overhead"
+        ~ "Rec Eng OH $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Engineering Overhead"
+        ~ "Rec Eng OH $ TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Manufacturing Operations" &
+          .data$`Functional Element`       == "Manufacturing Operations Overhead"
+        ~ "Rec MFG Ops OH $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Manufacturing Operations" &
+          .data$`Functional Element`       == "Manufacturing Operations Overhead"
+        ~ "Rec MFG Ops OH $ TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Material" &
+          .data$`Functional Element`       == "Material Handling/Overhead"
+        ~ "Rec Mat OH $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Material" &
+          .data$`Functional Element`       == "Material Handling/Overhead"
+        ~ "Rec Mat OH $ TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Other" &
+          .data$`Functional Element`       == "Other Costs Not Shown Elsewhere"
+        ~ "Rec Other $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Other" &
+          .data$`Functional Element`       == "Other Costs Not Shown Elsewhere"
+        ~ "Rec Other $ TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Material" &
+          .data$`Functional Element`       == "Purchased Equipment"
+        ~ "Rec Purch Equip $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Material" &
+          .data$`Functional Element`       == "Purchased Equipment"
+        ~ "Rec Purch Equip $ TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Material" &
+          .data$`Functional Element`       == "Purchased Parts"
+        ~ "Rec Purch Parts $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Material" &
+          .data$`Functional Element`       == "Purchased Parts"
+        ~ "Rec Purch Parts $ TD",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Material" &
+          .data$`Functional Element`       == "Raw Material"
+        ~ "Rec Raw Mat $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Recurring" &
+          .data$`Functional Category`      == "Material" &
+          .data$`Functional Element`       == "Raw Material"
+        ~ "Rec Raw Mat $ TD",
+        TRUE ~ NA_character_
+      )
+    )
 
   # Reorder columns before return. --------------------------------------------
   # Reorder the columns.
@@ -184,12 +640,13 @@ add_supplemental_fchr_columns <- function(fchr_object) {
       "Reported Data Value",
       "Number of Units to Date",
       "Number of Units At Completion",
-      "Remarks"
+      "Remarks",
+      "Short Name"
     ) %>%
-    dplyr::arrange(`WBS Element Code`,
-                   `To Date / At Completion`,
-                   `Recurring / Nonrecurring`,
-                   `Functional Data Element Number`)
+    dplyr::arrange(.data$`WBS Element Code`,
+                   .data$`To Date / At Completion`,
+                   .data$`Recurring / Nonrecurring`,
+                   .data$`Functional Data Element Number`)
 
   return(fchr_plus)
 }
