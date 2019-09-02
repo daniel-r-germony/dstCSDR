@@ -166,6 +166,107 @@ add_supplemental_fchr_columns <- function(fchr_object) {
     fchr_plus[["reported_data"]]$`Functional Category` %>%
     forcats::as_factor()
 
+  # Add "Short Name" column. --------------------------------------------------
+  fchr_plus[["reported_data"]] <-
+    fchr_plus[["reported_data"]] %>% dplyr::mutate(
+      "Short Name" = dplyr::case_when(
+
+        # Summary -------------------------------------------------------------
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Summary" &
+          .data$`Functional Element`       == "Summary"
+        ~ "NR $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Summary" &
+          .data$`Functional Element`       == "Summary"
+        ~ "NR $ TD",
+
+        # Direct Engineering Labor --------------------------------------------
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Direct Engineering Labor"
+        ~ "NR Direct Eng $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Direct Engineering Labor"
+        ~ "NR Direct Eng $ TD",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Direct Engineering Labor"
+        ~ "NR Eng Hrs AC",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Direct Engineering Labor"
+        ~ "NR Eng Hrs TD",
+
+        # Direct Manufacturing Labor ------------------------------------------
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Direct Manufacturing Labor"
+        ~ "NR MFG Direct $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Direct Manufacturing Labor"
+        ~ "NR MFG Direct $ TD",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Direct Manufacturing Labor"
+        ~ "NR MFG Hrs AC",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Direct Manufacturing Labor"
+        ~ "NR MFG Hrs AC",
+
+        # Direct Quality Control Labor ----------------------------------------
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Direct Quality Control Labor"
+        ~ "NR QC Direct $ AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Direct Quality Control Labor"
+        ~ "NR QC Direct $ TD",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Direct Quality Control Labor"
+        ~ "NR QC Hrs AC",
+        .data$`Unit of Measure`            == "Hours" &
+          .data$`To Date / At Completion`  == "To Date" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Direct Quality Control Labor"
+        ~ "NR QC Hrs AC",
+
+        TRUE ~ ""
+      )
+    )
+
   # Reorder columns before return. --------------------------------------------
   # Reorder the columns.
   fchr_plus[["reported_data"]] <-
@@ -184,7 +285,8 @@ add_supplemental_fchr_columns <- function(fchr_object) {
       "Reported Data Value",
       "Number of Units to Date",
       "Number of Units At Completion",
-      "Remarks"
+      "Remarks",
+      "Short Name"
     ) %>%
     dplyr::arrange(`WBS Element Code`,
                    `To Date / At Completion`,
