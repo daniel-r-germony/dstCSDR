@@ -1,14 +1,21 @@
 #' Add Supplemental Columns to a CDSR FCHR (DD Form 1921-1) Tibble
 #'
-#' Takes a CSDR Functional Cost-Hour Report (FCHR) (DD Form 1921-1) tibble and
-#' adds supplemental columns to allow for additional/easier sorting/filtering.
+#' Takes a CSDR Functional Cost-Hour Report (FCHR) (DD Form 1921-1) object and
+#' adds supplemental columns to the to the \code{`reported_data`} tibble to
+#' allow for additional/easier sorting/filtering.
 #'
 #' @title add_supplemental_fchr_columns
 #' @author Daniel Germony \email{daniel.r.germony.civ@@mail.mil}
-#' @param fchr_object Required. A tibble of CSDR 1921-1 data that has been
-#'   imported using the \code{import_CSDR_1921()} function.
-#' @return Returns a modified tibble of the CSDR 1921-1 data with additional
-#'   columns added.
+#' @param fchr_object Required. A list object of CSDR FCHR 1921-1 data that has
+#'   been imported using the \code{import_cdsr_excel()} function.
+#' @return Adds the following columns to the \code{`reported_data`} tibble:
+#'   \enumerate{
+#'     \item Functional Category
+#'     \item Recurring / Nonrecurring
+#'     \item To Date / At Completion
+#'     \item Functional Element
+#'     \item Functional Data Element Number
+#'     }
 #' @export
 
 add_supplemental_fchr_columns <- function(fchr_object) {
@@ -27,7 +34,7 @@ add_supplemental_fchr_columns <- function(fchr_object) {
     fchr_plus[["reported_data"]]$`Reported Data Field` %>%
     forcats::as_factor()
 
-  # ADD "Recurring / Nonrecurring" column. ---------------------------
+  # Add Recurring / Nonrecurring" column. ---------------------------
   fchr_plus[["reported_data"]] <-
     fchr_plus[["reported_data"]] %>%
     dplyr::mutate(
@@ -167,13 +174,13 @@ add_supplemental_fchr_columns <- function(fchr_object) {
       "WBS Element Code",
       "WBS Reporting Element",
       "Functional Category",
-      "Unit of Measure",
-      "Reported Data Field",
-      "Recurring / Nonrecurring",
-      "To Date / At Completion",
-      "Functional Data Element",
       "Functional Element",
       "Functional Data Element Number",
+      "Functional Data Element",
+      "Recurring / Nonrecurring",
+      "To Date / At Completion",
+      "Reported Data Field",
+      "Unit of Measure",
       "Reported Data Value",
       "Number of Units to Date",
       "Number of Units At Completion",

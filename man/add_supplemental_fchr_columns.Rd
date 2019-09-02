@@ -7,19 +7,26 @@
 add_supplemental_fchr_columns(fchr_object)
 }
 \arguments{
-\item{fchr_object}{Required. A tibble of CSDR 1921-1 data that has been
-imported using the \code{import_CSDR_1921()} function.}
+\item{fchr_object}{Required. A list object of CSDR FCHR 1921-1 data that has
+been imported using the \code{import_cdsr_excel()} function.}
 }
 \value{
-Returns a modified tibble of the CSDR 1921-1 data with additional
-columns added.
+Adds the following columns to the \code{`reported_data`} tibble:
+\enumerate{
+\item Functional Category
+\item Recurring / Nonrecurring
+\item To Date / At Completion
+\item Functional Element
+\item Functional Data Element Number
+}
 }
 \description{
 Add Supplemental Columns to a CDSR FCHR (DD Form 1921-1) Tibble
 }
 \details{
-Takes a CSDR Functional Cost-Hour Report (FCHR) (DD Form 1921-1) tibble and
-adds supplemental columns to allow for additional/easier sorting/filtering.
+Takes a CSDR Functional Cost-Hour Report (FCHR) (DD Form 1921-1) object and
+adds supplemental columns to the to the \code{`reported_data`} tibble to
+allow for additional/easier sorting/filtering.
 }
 \author{
 Daniel Germony \email{daniel.r.germony.civ@mail.mil}
