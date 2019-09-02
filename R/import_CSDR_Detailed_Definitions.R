@@ -588,7 +588,7 @@ col_types <- readr::cols(
 )
 
 detailed_defs <-
-  readr::read_csv("extdata/Detailed_Definitions.csv",
+  readr::read_csv("inst/extdata/Detailed_Definitions.csv",
                   col_types = col_types,
                   na = "N/A")
 
