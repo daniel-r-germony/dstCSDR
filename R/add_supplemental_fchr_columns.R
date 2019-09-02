@@ -1,4 +1,4 @@
-#' Add Supplemental Columns to a CDSR CFHR (DD Form 1921-1) Tibble
+#' Add Supplemental Columns to a CDSR FCHR (DD Form 1921-1) Tibble
 #'
 #' Takes a CSDR Functional Cost-Hour Report (FCHR) (DD Form 1921-1) tibble and
 #' adds supplemental columns to allow for additional/easier sorting/filtering.
