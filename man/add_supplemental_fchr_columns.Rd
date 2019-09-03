@@ -18,6 +18,7 @@ Adds the following columns to the \code{`reported_data`} tibble:
 \item To Date / At Completion
 \item Functional Element
 \item Functional Data Element Number
+\item Short Name
 }
 }
 \description{
