@@ -2,7 +2,7 @@
 #'
 #' Takes a CSDR FlexFile Flat File csv and imports it to a tibble.
 #'
-#' @title import_flexfile_ff
+#' @title import_ff_flatfile
 #' @author Daniel Germony \email{daniel.r.germony.civ@@mail.mil}
 #' @param path Required. Path to the csv file which contains the CSDR FlexFile
 #'    flat file.
@@ -15,7 +15,7 @@ import_flexfile_flatfile <- function(path) {                  ### CSDR Cost and 
   flexfile_flatfile <-                                        ### File Format Specification
     readr::read_csv(                                          ### Version 1.0 (2019-03-05)
       file = path,                                              # Data Type / Nullable
-      col_types = cols(                                         # --------- / --------
+      col_types = readr::cols(                                         # --------- / --------
         OrderOrLot_ID                   = readr::col_character(),      # StringID  / No
         OrderOrLot_Name                 = readr::col_character(),      # String    / No
         CLIN_ID                         = readr::col_character(),      # StringID  / No
