@@ -637,6 +637,9 @@ add_supplemental_fchr_columns <- function(fchr_object) {
         TRUE ~ NA_character_
       )
     )
+  fchr_plus[["reported_data"]]$`Short Name` <-
+    fchr_plus[["reported_data"]]$`Short Name` %>%
+    forcats::as_factor()
 
   # Reorder columns before return. --------------------------------------------
   # Reorder the columns.
