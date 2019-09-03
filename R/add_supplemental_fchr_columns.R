@@ -15,6 +15,7 @@
 #'     \item To Date / At Completion
 #'     \item Functional Element
 #'     \item Functional Data Element Number
+#'     \item Short Name
 #'     }
 #' @export
 
@@ -214,18 +215,24 @@ add_supplemental_fchr_columns <- function(fchr_object) {
           .data$`To Date / At Completion`  == "At Completion" &
           .data$`Recurring / Nonrecurring` == "Nonrecurring" &
           .data$`Functional Category`      == "Manufacturing" &
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Engineering" &
           .data$`Functional Element`       == "Direct Manufacturing Labor"
         ~ "NR MFG Direct $ AC",
         .data$`Unit of Measure`            == "TY $K" &
           .data$`To Date / At Completion`  == "To Date" &
           .data$`Recurring / Nonrecurring` == "Nonrecurring" &
           .data$`Functional Category`      == "Manufacturing" &
+          .data$`Functional Category`      == "Engineering" &
           .data$`Functional Element`       == "Direct Manufacturing Labor"
         ~ "NR MFG Direct $ TD",
         .data$`Unit of Measure`            == "Hours" &
           .data$`To Date / At Completion`  == "At Completion" &
           .data$`Recurring / Nonrecurring` == "Nonrecurring" &
           .data$`Functional Category`      == "Manufacturing" &
+          .data$`Functional Category`      == "Engineering" &
           .data$`Functional Element`       == "Direct Manufacturing Labor"
         ~ "NR MFG Hrs AC",
         .data$`Unit of Measure`            == "Hours" &
@@ -238,18 +245,27 @@ add_supplemental_fchr_columns <- function(fchr_object) {
           .data$`To Date / At Completion`  == "At Completion" &
           .data$`Recurring / Nonrecurring` == "Nonrecurring" &
           .data$`Functional Category`      == "Quality Control" &
+          .data$`Functional Category`      == "Engineering" &
+          .data$`Functional Element`       == "Direct Manufacturing Labor"
+        ~ "NR MFG Hrs AC",
+        .data$`Unit of Measure`            == "TY $K" &
+          .data$`To Date / At Completion`  == "At Completion" &
+          .data$`Recurring / Nonrecurring` == "Nonrecurring" &
+          .data$`Functional Category`      == "Engineering" &
           .data$`Functional Element`       == "Direct Quality Control Labor"
         ~ "NR QC Direct $ AC",
         .data$`Unit of Measure`            == "TY $K" &
           .data$`To Date / At Completion`  == "To Date" &
           .data$`Recurring / Nonrecurring` == "Nonrecurring" &
           .data$`Functional Category`      == "Quality Control" &
+          .data$`Functional Category`      == "Engineering" &
           .data$`Functional Element`       == "Direct Quality Control Labor"
         ~ "NR QC Direct $ TD",
         .data$`Unit of Measure`            == "Hours" &
           .data$`To Date / At Completion`  == "At Completion" &
           .data$`Recurring / Nonrecurring` == "Nonrecurring" &
           .data$`Functional Category`      == "Quality Control" &
+          .data$`Functional Category`      == "Engineering" &
           .data$`Functional Element`       == "Direct Quality Control Labor"
         ~ "NR QC Hrs AC",
         .data$`Unit of Measure`            == "Hours" &
