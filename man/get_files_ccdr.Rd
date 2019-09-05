@@ -16,6 +16,8 @@ A 6 column table (tbl_df) of XML files and their type (e.g., 1921, 1921-1).
 For a given directory (i.e., file path), return a recursive list of all CSDR XML files.
 }
 \examples{
+\dontrun{\donttest{
 file_path <- system.file("extdata", package = "dstCSDR")
 get_files_ccdr(file_path)
+}}
 }

@@ -20,8 +20,10 @@ A list of two tables (tbl_df): \cr
 Parse the data for a given file name with a valid extension (i.e., '1921_1.xml').
 }
 \examples{
+\dontrun{\donttest{
 file_path <- paste0(system.file("extdata", package = "costTools"), "/CCDR_Data/")
 get_files_ccdr(file_path)
 
 cost_report_2 <- read_xml_fchr(paste0(file_path, ccdr_files$dir[2], ccdr_files$file[2]))
+}}
 }

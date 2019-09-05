@@ -10,8 +10,10 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{\donttest{
 #' file_path <- system.file("extdata", package = "dstCSDR")
 #' get_files_ccdr(file_path)
+#' }}
 get_files_ccdr <- function(file_path) {
 
   ccdr_xml_ext <- tibble::tibble(ext = c("1921.xml", "1921_1.xml", "1921_1P1.xml"),
@@ -52,10 +54,12 @@ get_files_ccdr <- function(file_path) {
 #' @export
 #'
 #' @examples
+#' \dontrun{\donttest{
 #' file_path <- system.file("extdata", package = "dstCSDR")
 #' get_files_ccdr(file_path)
 #'
 #' cost_report_1 <- read_xml_ccdr(paste0(file_path, ccdr_files$file[1]))
+#' }}
 read_xml_ccdr <- function(file_path) {
 
   xml_data <- XML::xmlParse(file_path)
@@ -181,10 +185,12 @@ read_xml_ccdr_summary <- function(xml_root) {
 #' @export
 #'
 #' @examples
+#' \dontrun{\donttest{
 #' file_path <- paste0(system.file("extdata", package = "costTools"), "/CCDR_Data/")
 #' get_files_ccdr(file_path)
 #'
 #' cost_report_2 <- read_xml_fchr(paste0(file_path, ccdr_files$dir[2], ccdr_files$file[2]))
+#' }}
 read_xml_fchr <- function(file_path) {
 
   xml_data <- XML::xmlParse(file_path)

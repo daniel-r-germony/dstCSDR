@@ -21,8 +21,10 @@ A list of three tables (tbl_df): \cr
 Parse the data for a given file name with a valid extension (i.e., '1921.xml').
 }
 \examples{
+\dontrun{\donttest{
 file_path <- system.file("extdata", package = "dstCSDR")
 get_files_ccdr(file_path)
 
 cost_report_1 <- read_xml_ccdr(paste0(file_path, ccdr_files$file[1]))
+}}
 }
