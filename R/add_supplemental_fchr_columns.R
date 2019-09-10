@@ -2,12 +2,16 @@
 #'
 #' Takes a CSDR Functional Cost-Hour Report (FCHR) (DD Form 1921-1) object and
 #' adds supplemental columns to the to the \code{`reported_data`} tibble to
-#' allow for additional/easier sorting/filtering.
+#' allow for additional/easier sorting/filtering. The
 #'
 #' @title add_supplemental_fchr_columns
 #' @author Daniel Germony \email{daniel.r.germony.civ@@mail.mil}
 #' @param fchr_object Required. A list object of CSDR FCHR 1921-1 data that has
 #'   been imported using the \code{import_cdsr_excel()} function.
+#' @param already_gathered Optional. Indicates if the \code{fchr_object} has
+#'   already been gathered using the \code{gather_fchr()} fucntion or not. Use
+#'   \code{TRUE} if it has already been gathered (the default) and \code{FALSE}
+#'   otherwise.
 #' @return Adds the following columns to the \code{`reported_data`} tibble:
 #'   \enumerate{
 #'     \item Functional Category
@@ -16,24 +20,17 @@
 #'     \item Functional Element
 #'     \item Functional Data Element Number
 #'     \item Short Name
-#'     }
+#'   }
 #' @export
 
-add_supplemental_fchr_columns <- function(fchr_object) {
+add_supplemental_fchr_columns <- function(fchr_object, already_gathered = TRUE) {
 
   fchr_plus <- fchr_object
 
-  # Gather the 1921-1 data. ---------------------------------------------------
-  fchr_plus[["reported_data"]] <- fchr_object[["reported_data"]] %>%
-    tidyr::gather(
-      key = "Reported Data Field",
-      value = "Reported Data Value",
-      .data$`Costs and Hours Incurred To Date - Nonrecurring`:.data$`Costs and Hours Incurred At Completion - Total`
-    )
-
-  fchr_plus[["reported_data"]]$`Reported Data Field` <-
-    fchr_plus[["reported_data"]]$`Reported Data Field` %>%
-    forcats::as_factor()
+  # Gather FCHR object if the users says it has not already been gathered. ----
+  if (already_gathered == FALSE) {
+    fchr_plus <- fchr_plus %>% dstCSDR::gather_fchr()
+  }
 
   # Add Recurring / Nonrecurring" column. ---------------------------
   fchr_plus[["reported_data"]] <-

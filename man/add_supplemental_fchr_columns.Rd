@@ -4,11 +4,16 @@
 \alias{add_supplemental_fchr_columns}
 \title{add_supplemental_fchr_columns}
 \usage{
-add_supplemental_fchr_columns(fchr_object)
+add_supplemental_fchr_columns(fchr_object, already_gathered = TRUE)
 }
 \arguments{
 \item{fchr_object}{Required. A list object of CSDR FCHR 1921-1 data that has
 been imported using the \code{import_cdsr_excel()} function.}
+
+\item{already_gathered}{Optional. Indicates if the \code{fchr_object} has
+already been gathered using the \code{gather_fchr()} fucntion or not. Use
+\code{TRUE} if it has already been gathered (the default) and \code{FALSE}
+otherwise.}
 }
 \value{
 Adds the following columns to the \code{`reported_data`} tibble:
@@ -27,7 +32,7 @@ Add Supplemental Columns to a CDSR FCHR (DD Form 1921-1) Tibble
 \details{
 Takes a CSDR Functional Cost-Hour Report (FCHR) (DD Form 1921-1) object and
 adds supplemental columns to the to the \code{`reported_data`} tibble to
-allow for additional/easier sorting/filtering.
+allow for additional/easier sorting/filtering. The
 }
 \author{
 Daniel Germony \email{daniel.r.germony.civ@mail.mil}
