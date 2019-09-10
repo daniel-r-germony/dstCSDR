@@ -42,6 +42,7 @@ added? Set to \code{TRUE} by default.}
 \item{add_short_name}{Optional. Should a "Short Name" column be added? Set to
 \code{TRUE} by default.}
 
+<<<<<<< HEAD
 \item{add_prog_name}{Optional. Should a "Major Program Name" column be added? Set to \code{TRUE} by default.}
 
 \item{add_prog_phase}{Optional. Should a "Major Program Phase/Milestone" column be added? Set to \code{TRUE} by default.}
@@ -91,6 +92,57 @@ added? Set to \code{TRUE} by default.}
 \item{add_prep_date}{Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.}
 
 \item{add_appn}{Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.}
+=======
+\item{add_prog_name}{Optional.}
+
+\item{add_prog_phase}{Optional.}
+
+\item{add_pmp}{Optional.}
+
+\item{add_rep_org_type}{Optional.}
+
+\item{add_rep_org_address}{Optional.}
+
+\item{add_rep_divison_name}{Optional.}
+
+\item{add_plan_numb}{Optional.}
+
+\item{add_customer}{Optional.}
+
+\item{add_k_numb}{Optional.}
+
+\item{add_last_mod_numb}{Optional.}
+
+\item{add_solicition_numb}{Optional.}
+
+\item{add_k_name}{Optional.}
+
+\item{add_order_numb}{Optional.}
+
+\item{add_pop_start_date}{Optional.}
+
+\item{add_pop_end_date}{Optional.}
+
+\item{add_report_cycle}{Optional.}
+
+\item{add_sub_numb}{Optional.}
+
+\item{add_resub_numb}{Optional.}
+
+\item{add_as_of_date}{Optional.}
+
+\item{add_poc_name}{Optional.}
+
+\item{add_poc_department}{Optional.}
+
+\item{add_poc_phone}{Optional.}
+
+\item{add_poc_email}{Optional.}
+
+\item{add_prep_date}{Optional.}
+
+\item{add_appn}{Optional.}
+>>>>>>> e3b22534f02d0f362912122b3a7b38f750690586
 
 \item{already_gathered}{Optional. Indicates if the \code{fchr_object} has
 already been gathered using the \code{gather_fchr()} function or not. Use

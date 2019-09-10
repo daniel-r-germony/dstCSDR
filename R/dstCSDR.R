@@ -9,5 +9,6 @@
 #' @name dstCSDR
 #' @importFrom dplyr %>%
 #' @importFrom rlang .data
+#' @importFrom stats setNames
 NULL
 
