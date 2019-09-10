@@ -7,7 +7,18 @@
 add_supplemental_fchr_columns(fchr_object, add_func_cat = TRUE,
   add_func_el = TRUE, add_func_data_el_numb = TRUE,
   add_rec_nr = TRUE, add_to_ac = TRUE, add_short_name = TRUE,
-  already_gathered = TRUE)
+  add_prog_name = FALSE, add_prog_phase = FALSE, add_pmp = FALSE,
+  add_rep_org_type = FALSE, add_rep_org_address = FALSE,
+  add_rep_divison_name = FALSE, add_plan_numb = TRUE,
+  add_customer = FALSE, add_k_numb = FALSE,
+  add_last_mod_numb = FALSE, add_solicition_numb = FALSE,
+  add_k_name = FALSE, add_order_numb = FALSE,
+  add_pop_start_date = TRUE, add_pop_end_date = TRUE,
+  add_report_cycle = FALSE, add_sub_numb = TRUE,
+  add_resub_numb = TRUE, add_as_of_date = FALSE,
+  add_poc_name = FALSE, add_poc_department = FALSE,
+  add_poc_phone = FALSE, add_poc_email = FALSE,
+  add_prep_date = FALSE, add_appn = FALSE, already_gathered = TRUE)
 }
 \arguments{
 \item{fchr_object}{Required. A list object of CSDR FCHR 1921-1 data that has
@@ -30,6 +41,56 @@ added? Set to \code{TRUE} by default.}
 
 \item{add_short_name}{Optional. Should a "Short Name" column be added? Set to
 \code{TRUE} by default.}
+
+\item{add_prog_name}{Optional.}
+
+\item{add_prog_phase}{Optional.}
+
+\item{add_pmp}{Optional.}
+
+\item{add_rep_org_type}{Optional.}
+
+\item{add_rep_org_address}{Optional.}
+
+\item{add_rep_divison_name}{Optional.}
+
+\item{add_plan_numb}{Optional.}
+
+\item{add_customer}{Optional.}
+
+\item{add_k_numb}{Optional.}
+
+\item{add_last_mod_numb}{Optional.}
+
+\item{add_solicition_numb}{Optional.}
+
+\item{add_k_name}{Optional.}
+
+\item{add_order_numb}{Optional.}
+
+\item{add_pop_start_date}{Optional.}
+
+\item{add_pop_end_date}{Optional.}
+
+\item{add_report_cycle}{Optional.}
+
+\item{add_sub_numb}{Optional.}
+
+\item{add_resub_numb}{Optional.}
+
+\item{add_as_of_date}{Optional.}
+
+\item{add_poc_name}{Optional.}
+
+\item{add_poc_department}{Optional.}
+
+\item{add_poc_phone}{Optional.}
+
+\item{add_poc_email}{Optional.}
+
+\item{add_prep_date}{Optional.}
+
+\item{add_appn}{Optional.}
 
 \item{already_gathered}{Optional. Indicates if the \code{fchr_object} has
 already been gathered using the \code{gather_fchr()} function or not. Use

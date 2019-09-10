@@ -24,6 +24,31 @@
 #'   added? Set to \code{TRUE} by default.
 #' @param add_short_name Optional. Should a "Short Name" column be added? Set to
 #'   \code{TRUE} by default.
+#' @param add_prog_name Optional. Should a "Major Program Name" column be added? Set to \code{TRUE} by default.
+#' @param add_prog_phase Optional. Should a "Major Program Phase/Milestone" column be added? Set to \code{TRUE} by default.
+#' @param add_pmp Optional. Should a "Prime Mission Product" column be added? Set to \code{TRUE} by default.
+#' @param add_rep_org_type Optional. Should a "Reporting Organization Type" column be added? Set to \code{TRUE} by default.
+#' @param add_rep_org_address Optional. Should a "Organization Name & Address" column be added? Set to \code{TRUE} by default.
+#' @param add_rep_divison_name Optional. Should a "Approved Plan Number" column be added? Set to \code{TRUE} by default.
+#' @param add_plan_numb Optional. Should a "Approved Plan Number" column be added? Set to \code{TRUE} by default.
+#' @param add_customer Optional. Should a "Customer" column be added? Set to \code{TRUE} by default.
+#' @param add_k_numb Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.
+#' @param add_last_mod_numb Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.
+#' @param add_solicition_numb Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.
+#' @param add_k_name Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.
+#' @param add_order_numb Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.
+#' @param add_pop_start_date Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.
+#' @param add_pop_end_date Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.
+#' @param add_report_cycle Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.
+#' @param add_sub_numb Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.
+#' @param add_resub_numb Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.
+#' @param add_as_of_date Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.
+#' @param add_poc_name Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.
+#' @param add_poc_department Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.
+#' @param add_poc_phone Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.
+#' @param add_poc_email Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.
+#' @param add_prep_date Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.
+#' @param add_appn Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.
 #' @param already_gathered Optional. Indicates if the \code{fchr_object} has
 #'   already been gathered using the \code{gather_fchr()} function or not. Use
 #'   \code{TRUE} if it has already been gathered (the default) and \code{FALSE}
@@ -47,6 +72,31 @@ add_supplemental_fchr_columns <- function(fchr_object,
                                           add_rec_nr            = TRUE,
                                           add_to_ac             = TRUE,
                                           add_short_name        = TRUE,
+                                          add_prog_name         = FALSE,
+                                          add_prog_phase        = FALSE,
+                                          add_pmp               = FALSE,
+                                          add_rep_org_type      = FALSE,
+                                          add_rep_org_address   = FALSE,
+                                          add_rep_divison_name  = FALSE,
+                                          add_plan_numb         = TRUE,
+                                          add_customer          = FALSE,
+                                          add_k_numb            = FALSE,
+                                          add_last_mod_numb     = FALSE,
+                                          add_solicition_numb   = FALSE,
+                                          add_k_name            = FALSE,
+                                          add_order_numb        = FALSE,
+                                          add_pop_start_date    = TRUE,
+                                          add_pop_end_date      = TRUE,
+                                          add_report_cycle      = FALSE,
+                                          add_sub_numb          = TRUE,
+                                          add_resub_numb        = TRUE,
+                                          add_as_of_date        = FALSE,
+                                          add_poc_name          = FALSE,
+                                          add_poc_department    = FALSE,
+                                          add_poc_phone         = FALSE,
+                                          add_poc_email         = FALSE,
+                                          add_prep_date         = FALSE,
+                                          add_appn              = FALSE,
                                           already_gathered      = TRUE) {
 
   # Custom Functions ----------------------------------------------------------
@@ -57,12 +107,12 @@ add_supplemental_fchr_columns <- function(fchr_object,
 
     fchr_object[[2]] <-
       fchr_object[[2]] %>%
-      mutate(
+      dplyr::mutate(
         {{ field }} :=
-          pivot_wider(fchr_object[["metadata"]],
+          tidyr::pivot_wider(fchr_object[["metadata"]],
                       names_from  = metadata_field,
                       values_from = repoted_value) %>%
-          select({{ field }}) %>%
+          dplyr::select({{ field }}) %>%
           as.character()
       )
 
@@ -680,8 +730,7 @@ add_supplemental_fchr_columns <- function(fchr_object,
     fchr_object[["reported_data"]]$`Short Name` %>%
     forcats::as_factor()
 
-  # Reorder columns before return. --------------------------------------------
-  # Reorder the columns.
+  # Reorder non-metadata columns. ---------------------------------------------
   fchr_object[["reported_data"]] <-
     fchr_object[["reported_data"]] %>%
     dplyr::select(
@@ -706,7 +755,7 @@ add_supplemental_fchr_columns <- function(fchr_object,
                    .data$`Recurring / Nonrecurring`,
                    .data$`Functional Data Element Number`)
 
-  # Remove columns the user marked as FALSE -----------------------------------
+  # Remove non-metadata columns the user marked as FALSE ----------------------
   # Functional Category
   if (add_func_cat == FALSE) {
     fchr_object[["reported_data"]] <-
@@ -748,6 +797,34 @@ add_supplemental_fchr_columns <- function(fchr_object,
       fchr_object[["reported_data"]] %>%
       dplyr::select(-.data$`Short Name`)
   }
+
+  # Add metadata columns ------------------------------------------------------
+
+  if (add_prog_name        == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Major Program Name`)}
+  if (add_prog_phase       == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Major Program Phase/Milestone`)}
+  if (add_pmp              == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Prime Mission Product`)}
+  if (add_rep_org_type     == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Reporting Organization Type`)}
+  if (add_rep_org_address  == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Organization Name & Address`)}
+  if (add_rep_divison_name == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Division Name  & Address`)}
+  if (add_plan_numb        == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Approved Plan Number`)}
+  if (add_customer         == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Customer`)}
+  if (add_k_numb           == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Contract No`)}
+  if (add_last_mod_numb    == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Latest Modification`)}
+  if (add_solicition_numb  == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Solicitation No`)}
+  if (add_k_name           == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Contract Name`)}
+  if (add_order_numb       == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Task Order/Deliver Order/Lot Number`)}
+  if (add_pop_start_date   == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Period of Performance Start Date`)}
+  if (add_pop_end_date     == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Period of Performance End Date`)}
+  if (add_report_cycle     == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Report Cycle`)}
+  if (add_sub_numb         == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Submission Number`)}
+  if (add_resub_numb       == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Resubmission Number`)}
+  if (add_as_of_date       == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Report As Of`)}
+  if (add_poc_name         == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Point of Contact Name`)}
+  if (add_poc_department   == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Department`)}
+  if (add_poc_phone        == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Telephone Number`)}
+  if (add_poc_email        == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Email Address`)}
+  if (add_prep_date        == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Date Prepared`)}
+  if (add_appn             == TRUE) {fchr_object <- .mutate_metadata(fchr_object, `Appropriation`)}
 
   return(fchr_object)
 }
