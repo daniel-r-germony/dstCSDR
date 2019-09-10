@@ -2,28 +2,52 @@
 #'
 #' Takes a CSDR Functional Cost-Hour Report (FCHR) (DD Form 1921-1) object and
 #' adds supplemental columns to the to the \code{`reported_data`} tibble to
-#' allow for additional/easier sorting/filtering. The
+#' allow for additional/easier sorting/filtering. The user can specify which
+#' column(s) are not added by passing \code{FALSE} to the various \code{add_*}
+#' parameters. The user can also gather the FCHR (DD Form 1921-1) object on the
+#' fly using  \code{already_gathered = FALSE} parameter if the FCHR object has
+#' not already been gathered using the \code{gather_fchr()} function.
 #'
 #' @title add_supplemental_fchr_columns
 #' @author Daniel Germony \email{daniel.r.germony.civ@@mail.mil}
 #' @param fchr_object Required. A list object of CSDR FCHR 1921-1 data that has
 #'   been imported using the \code{import_cdsr_excel()} function.
+#' @param add_func_cat Optional. Should a "Functional Category" be added? Set to
+#'   \code{TRUE} by default.
+#' @param add_func_el Optional. Should a "Functional Element" column be added?
+#'   Set to \code{TRUE} by default.
+#' @param add_func_data_el_numb Optional. Should a "Functional Data Element
+#'   Number" column be added? Set to \code{TRUE} by default.
+#' @param add_rec_nr Optional. Should a "Recurring / Nonrecurring" column be
+#'   added? Set to \code{TRUE} by default.
+#' @param add_to_ac Optional. Should a "To Date / At Completion" column be
+#'   added? Set to \code{TRUE} by default.
+#' @param add_short_name Optional. Should a "Short Name" column be added? Set to
+#'   \code{TRUE} by default.
 #' @param already_gathered Optional. Indicates if the \code{fchr_object} has
-#'   already been gathered using the \code{gather_fchr()} fucntion or not. Use
+#'   already been gathered using the \code{gather_fchr()} function or not. Use
 #'   \code{TRUE} if it has already been gathered (the default) and \code{FALSE}
 #'   otherwise.
-#' @return Adds the following columns to the \code{`reported_data`} tibble:
+#' @return Adds the following columns to the \code{`reported_data`} tibble by
+#'   default/unless the user passes \code{FALSE} to the \code{add_*} parameter:
 #'   \enumerate{
 #'     \item Functional Category
-#'     \item Recurring / Nonrecurring
-#'     \item To Date / At Completion
 #'     \item Functional Element
 #'     \item Functional Data Element Number
+#'     \item Recurring / Nonrecurring
+#'     \item To Date / At Completion
 #'     \item Short Name
 #'   }
 #' @export
 
-add_supplemental_fchr_columns <- function(fchr_object, already_gathered = TRUE) {
+add_supplemental_fchr_columns <- function(fchr_object,
+                                          add_func_cat          = TRUE,
+                                          add_func_el           = TRUE,
+                                          add_func_data_el_numb = TRUE,
+                                          add_rec_nr            = TRUE,
+                                          add_to_ac             = TRUE,
+                                          add_short_name        = TRUE,
+                                          already_gathered      = TRUE) {
 
   fchr_plus <- fchr_object
 
@@ -663,6 +687,49 @@ add_supplemental_fchr_columns <- function(fchr_object, already_gathered = TRUE) 
                    .data$`To Date / At Completion`,
                    .data$`Recurring / Nonrecurring`,
                    .data$`Functional Data Element Number`)
+
+  # Remove columns the user marked as FALSE -----------------------------------
+  # Functional Category
+  if (add_func_cat == FALSE) {
+    fchr_plus[["reported_data"]] <-
+      fchr_plus[["reported_data"]] %>%
+      dplyr::select(-.data$`Functional Category`)
+  }
+
+  # Functional Element
+  if (add_func_el == FALSE) {
+    fchr_plus[["reported_data"]] <-
+      fchr_plus[["reported_data"]] %>%
+      dplyr::select(-.data$`Functional Element`)
+  }
+
+  # Functional Data Element Number
+  if (add_func_data_el_numb == FALSE) {
+    fchr_plus[["reported_data"]] <-
+      fchr_plus[["reported_data"]] %>%
+      dplyr::select(-.data$`Functional Data Element Number`)
+  }
+
+  # Recurring / Nonrecurring
+  if (add_rec_nr == FALSE) {
+    fchr_plus[["reported_data"]] <-
+      fchr_plus[["reported_data"]] %>%
+      dplyr::select(-.data$`Recurring / Nonrecurring`)
+  }
+
+  # To Date / At Completion
+  if (add_to_ac == FALSE) {
+    fchr_plus[["reported_data"]] <-
+      fchr_plus[["reported_data"]] %>%
+      dplyr::select(-.data$`To Date / At Completion`)
+  }
+
+  # Short Name
+  if (add_short_name == FALSE) {
+    fchr_plus[["reported_data"]] <-
+      fchr_plus[["reported_data"]] %>%
+      dplyr::select(-.data$`Short Name`)
+  }
 
   return(fchr_plus)
 }
