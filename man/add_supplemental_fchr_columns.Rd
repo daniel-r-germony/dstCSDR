@@ -42,107 +42,80 @@ added? Set to \code{TRUE} by default.}
 \item{add_short_name}{Optional. Should a "Short Name" column be added? Set to
 \code{TRUE} by default.}
 
-<<<<<<< HEAD
-\item{add_prog_name}{Optional. Should a "Major Program Name" column be added? Set to \code{TRUE} by default.}
+\item{add_prog_name}{Optional. Should a "Major Program Name" column be added?
+Set to \code{TRUE} by default.}
 
-\item{add_prog_phase}{Optional. Should a "Major Program Phase/Milestone" column be added? Set to \code{TRUE} by default.}
+\item{add_prog_phase}{Optional. Should a "Major Program Phase/Milestone"
+column be added? Set to \code{TRUE} by default.}
 
-\item{add_pmp}{Optional. Should a "Prime Mission Product" column be added? Set to \code{TRUE} by default.}
+\item{add_pmp}{Optional. Should a "Prime Mission Product" column be added?
+Set to \code{TRUE} by default.}
 
-\item{add_rep_org_type}{Optional. Should a "Reporting Organization Type" column be added? Set to \code{TRUE} by default.}
+\item{add_rep_org_type}{Optional. Should a "Reporting Organization Type"
+column be added? Set to \code{TRUE} by default.}
 
-\item{add_rep_org_address}{Optional. Should a "Organization Name & Address" column be added? Set to \code{TRUE} by default.}
+\item{add_rep_org_address}{Optional. Should a "Organization Name & Address"
+column be added? Set to \code{TRUE} by default.}
 
-\item{add_rep_divison_name}{Optional. Should a "Approved Plan Number" column be added? Set to \code{TRUE} by default.}
+\item{add_rep_divison_name}{Optional. Should a "Approved Plan Number" column
+be added? Set to \code{TRUE} by default.}
 
-\item{add_plan_numb}{Optional. Should a "Approved Plan Number" column be added? Set to \code{TRUE} by default.}
+\item{add_plan_numb}{Optional. Should a "Approved Plan Number" column be
+added? Set to \code{TRUE} by default.}
 
-\item{add_customer}{Optional. Should a "Customer" column be added? Set to \code{TRUE} by default.}
+\item{add_customer}{Optional. Should a "Customer" column be added? Set to
+\code{TRUE} by default.}
 
-\item{add_k_numb}{Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.}
+\item{add_k_numb}{Optional. Should a "Contract No" column be added? Set to
+\code{TRUE} by default.}
 
-\item{add_last_mod_numb}{Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.}
+\item{add_last_mod_numb}{Optional. Should a "Latest Modification" column be
+added? Set to \code{TRUE} by default.}
 
-\item{add_solicition_numb}{Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.}
+\item{add_solicition_numb}{Optional. Should a "Solicitation No" column be
+added? Set to \code{TRUE} by default.}
 
-\item{add_k_name}{Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.}
+\item{add_k_name}{Optional. Should a "Contract Name" column be added? Set to
+\code{TRUE} by default.}
 
-\item{add_order_numb}{Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.}
+\item{add_order_numb}{Optional. Should a "Task Order/Deliver Order/Lot
+Number" column be added? Set to \code{TRUE} by default.}
 
-\item{add_pop_start_date}{Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.}
+\item{add_pop_start_date}{Optional. Should a "Period of Performance Start
+Date" column be added? Set to \code{TRUE} by default.}
 
-\item{add_pop_end_date}{Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.}
+\item{add_pop_end_date}{Optional. Should a "Period of Performance End Date"
+column be added? Set to \code{TRUE} by default.}
 
-\item{add_report_cycle}{Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.}
+\item{add_report_cycle}{Optional. Should a "Report Cycle" column be added?
+Set to \code{TRUE} by default.}
 
-\item{add_sub_numb}{Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.}
+\item{add_sub_numb}{Optional. Should a "Submission Number" column be added?
+Set to \code{TRUE} by default.}
 
-\item{add_resub_numb}{Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.}
+\item{add_resub_numb}{Optional. Should a "Resubmission Number" column be
+added? Set to \code{TRUE} by default.}
 
-\item{add_as_of_date}{Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.}
+\item{add_as_of_date}{Optional. Should a "Report As Of" column be added? Set
+to \code{TRUE} by default.}
 
-\item{add_poc_name}{Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.}
+\item{add_poc_name}{Optional. Should a "Point of Contact Name" column be
+added? Set to \code{TRUE} by default.}
 
-\item{add_poc_department}{Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.}
+\item{add_poc_department}{Optional. Should a "Department" column be added?
+Set to \code{TRUE} by default.}
 
-\item{add_poc_phone}{Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.}
+\item{add_poc_phone}{Optional. Should a "Telephone Number" column be added?
+Set to \code{TRUE} by default.}
 
-\item{add_poc_email}{Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.}
+\item{add_poc_email}{Optional. Should a "Email Address" column be added? Set
+to \code{TRUE} by default.}
 
-\item{add_prep_date}{Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.}
+\item{add_prep_date}{Optional. Should a "Date Prepared" column be added? Set
+to \code{TRUE} by default.}
 
-\item{add_appn}{Optional. Should a "xxx" column be added? Set to \code{TRUE} by default.}
-=======
-\item{add_prog_name}{Optional.}
-
-\item{add_prog_phase}{Optional.}
-
-\item{add_pmp}{Optional.}
-
-\item{add_rep_org_type}{Optional.}
-
-\item{add_rep_org_address}{Optional.}
-
-\item{add_rep_divison_name}{Optional.}
-
-\item{add_plan_numb}{Optional.}
-
-\item{add_customer}{Optional.}
-
-\item{add_k_numb}{Optional.}
-
-\item{add_last_mod_numb}{Optional.}
-
-\item{add_solicition_numb}{Optional.}
-
-\item{add_k_name}{Optional.}
-
-\item{add_order_numb}{Optional.}
-
-\item{add_pop_start_date}{Optional.}
-
-\item{add_pop_end_date}{Optional.}
-
-\item{add_report_cycle}{Optional.}
-
-\item{add_sub_numb}{Optional.}
-
-\item{add_resub_numb}{Optional.}
-
-\item{add_as_of_date}{Optional.}
-
-\item{add_poc_name}{Optional.}
-
-\item{add_poc_department}{Optional.}
-
-\item{add_poc_phone}{Optional.}
-
-\item{add_poc_email}{Optional.}
-
-\item{add_prep_date}{Optional.}
-
-\item{add_appn}{Optional.}
->>>>>>> e3b22534f02d0f362912122b3a7b38f750690586
+\item{add_appn}{Optional. Should a "Appropriation" column be added? Set to
+\code{TRUE} by default.}
 
 \item{already_gathered}{Optional. Indicates if the \code{fchr_object} has
 already been gathered using the \code{gather_fchr()} function or not. Use
@@ -150,16 +123,10 @@ already been gathered using the \code{gather_fchr()} function or not. Use
 otherwise.}
 }
 \value{
-Adds the following columns to the \code{`reported_data`} tibble by
-default/unless the user passes \code{FALSE} to the \code{add_*} parameter:
-\enumerate{
-\item Functional Category
-\item Functional Element
-\item Functional Data Element Number
-\item Recurring / Nonrecurring
-\item To Date / At Completion
-\item Short Name
-}
+Returns a list of two tibbles; the first tibble includes submission
+metdata from a CDSR FCHR (DD Form 1921-1) and the second includes the
+reported data from the submission in which each row is a Functional Data
+Element for each WBS in the submission.
 }
 \description{
 Add Supplemental Columns to a CDSR FCHR (DD Form 1921-1) Tibble
