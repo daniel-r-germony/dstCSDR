@@ -49,16 +49,34 @@ add_supplemental_fchr_columns <- function(fchr_object,
                                           add_short_name        = TRUE,
                                           already_gathered      = TRUE) {
 
-  fchr_plus <- fchr_object
+  # Custom Functions ----------------------------------------------------------
+
+  # This function is used later to pull metadata from the metadata table and
+  # insert/mutate it onto new columns of the main FCHR table.
+  .mutate_metadata <- function(fchr_object, field) {
+
+    fchr_object[[2]] <-
+      fchr_object[[2]] %>%
+      mutate(
+        {{ field }} :=
+          pivot_wider(fchr_object[["metadata"]],
+                      names_from  = metadata_field,
+                      values_from = repoted_value) %>%
+          select({{ field }}) %>%
+          as.character()
+      )
+
+    return(fchr_object)
+  }
 
   # Gather FCHR object if the users says it has not already been gathered. ----
   if (already_gathered == FALSE) {
-    fchr_plus <- fchr_plus %>% dstCSDR::gather_fchr()
+    fchr_object <- fchr_object %>% dstCSDR::gather_fchr()
   }
 
   # Add Recurring / Nonrecurring" column. ---------------------------
-  fchr_plus[["reported_data"]] <-
-    fchr_plus[["reported_data"]] %>%
+  fchr_object[["reported_data"]] <-
+    fchr_object[["reported_data"]] %>%
     dplyr::mutate(
       "Recurring / Nonrecurring" = dplyr::case_when(
         .data$`Reported Data Field` == "Costs and Hours Incurred To Date - Nonrecurring" ~ "Nonrecurring",
@@ -71,13 +89,13 @@ add_supplemental_fchr_columns <- function(fchr_object,
       )
     )
 
-  fchr_plus[["reported_data"]]$`Recurring / Nonrecurring` <-
-    fchr_plus[["reported_data"]]$`Recurring / Nonrecurring` %>%
+  fchr_object[["reported_data"]]$`Recurring / Nonrecurring` <-
+    fchr_object[["reported_data"]]$`Recurring / Nonrecurring` %>%
     forcats::as_factor()
 
   # Add "To Date / At Completion" column. --------------------------------------
-  fchr_plus[["reported_data"]] <-
-    fchr_plus[["reported_data"]] %>%
+  fchr_object[["reported_data"]] <-
+    fchr_object[["reported_data"]] %>%
     dplyr::mutate(
       "To Date / At Completion" = dplyr::case_when(
         .data$`Reported Data Field` == "Costs and Hours Incurred To Date - Nonrecurring" ~ "To Date",
@@ -90,13 +108,13 @@ add_supplemental_fchr_columns <- function(fchr_object,
       )
     )
 
-  fchr_plus[["reported_data"]]$`To Date / At Completion` <-
-    fchr_plus[["reported_data"]]$`To Date / At Completion` %>%
+  fchr_object[["reported_data"]]$`To Date / At Completion` <-
+    fchr_object[["reported_data"]]$`To Date / At Completion` %>%
     forcats::as_factor()
 
   # Add "Functional Data Element Number" column. ------------------------------
-  fchr_plus[["reported_data"]] <-
-    fchr_plus[["reported_data"]] %>% dplyr::mutate(
+  fchr_object[["reported_data"]] <-
+    fchr_object[["reported_data"]] %>% dplyr::mutate(
       "Functional Data Element Number" = dplyr::case_when(
         .data$`Functional Data Element` == "(1) DIRECT ENGINEERING LABOR HOURS" ~ "1",
         .data$`Functional Data Element` == "(2) DIRECT ENGINEERING LABOR DOLLARS" ~ "2",
@@ -123,13 +141,13 @@ add_supplemental_fchr_columns <- function(fchr_object,
       )
     )
 
-  fchr_plus[["reported_data"]]$`Functional Data Element Number` <-
-    fchr_plus[["reported_data"]]$`Functional Data Element Number` %>%
+  fchr_object[["reported_data"]]$`Functional Data Element Number` <-
+    fchr_object[["reported_data"]]$`Functional Data Element Number` %>%
     forcats::as_factor()
 
   # Add "Functional Element" column. ---------------------------------------------------
-  fchr_plus[["reported_data"]] <-
-    fchr_plus[["reported_data"]] %>% dplyr::mutate(
+  fchr_object[["reported_data"]] <-
+    fchr_object[["reported_data"]] %>% dplyr::mutate(
       "Functional Element" = dplyr::case_when(
         .data$`Functional Data Element` == "(1) DIRECT ENGINEERING LABOR HOURS" ~ "Direct Engineering Labor",
         .data$`Functional Data Element` == "(2) DIRECT ENGINEERING LABOR DOLLARS" ~ "Direct Engineering Labor",
@@ -155,13 +173,13 @@ add_supplemental_fchr_columns <- function(fchr_object,
         TRUE ~ NA_character_
       )
     )
-  fchr_plus[["reported_data"]]$`Functional Element` <-
-    fchr_plus[["reported_data"]]$`Functional Element` %>%
+  fchr_object[["reported_data"]]$`Functional Element` <-
+    fchr_object[["reported_data"]]$`Functional Element` %>%
     forcats::as_factor()
 
   # Add "Functional Category" column. ---------------------------------------------------
-  fchr_plus[["reported_data"]] <-
-    fchr_plus[["reported_data"]] %>% dplyr::mutate(
+  fchr_object[["reported_data"]] <-
+    fchr_object[["reported_data"]] %>% dplyr::mutate(
       "Functional Category" = dplyr::case_when(
         .data$`Functional Data Element` == "(1) DIRECT ENGINEERING LABOR HOURS" ~ "Engineering",
         .data$`Functional Data Element` == "(2) DIRECT ENGINEERING LABOR DOLLARS" ~ "Engineering",
@@ -187,14 +205,14 @@ add_supplemental_fchr_columns <- function(fchr_object,
         TRUE ~ NA_character_
       )
     )
-  fchr_plus[["reported_data"]]$`Functional Category` <-
-    fchr_plus[["reported_data"]]$`Functional Category` %>%
+  fchr_object[["reported_data"]]$`Functional Category` <-
+    fchr_object[["reported_data"]]$`Functional Category` %>%
     forcats::as_factor()
 
   # Add "Short Name" column. --------------------------------------------------
   # This section is badly in need of refactoring with the add of a function.
-  fchr_plus[["reported_data"]] <-
-    fchr_plus[["reported_data"]] %>% dplyr::mutate(
+  fchr_object[["reported_data"]] <-
+    fchr_object[["reported_data"]] %>% dplyr::mutate(
       "Short Name" = dplyr::case_when(
         .data$`Unit of Measure`            == "TY $K" &
           .data$`To Date / At Completion`  == "At Completion" &
@@ -658,14 +676,14 @@ add_supplemental_fchr_columns <- function(fchr_object,
         TRUE ~ NA_character_
       )
     )
-  fchr_plus[["reported_data"]]$`Short Name` <-
-    fchr_plus[["reported_data"]]$`Short Name` %>%
+  fchr_object[["reported_data"]]$`Short Name` <-
+    fchr_object[["reported_data"]]$`Short Name` %>%
     forcats::as_factor()
 
   # Reorder columns before return. --------------------------------------------
   # Reorder the columns.
-  fchr_plus[["reported_data"]] <-
-    fchr_plus[["reported_data"]] %>%
+  fchr_object[["reported_data"]] <-
+    fchr_object[["reported_data"]] %>%
     dplyr::select(
       "WBS Element Code",
       "WBS Reporting Element",
@@ -691,45 +709,45 @@ add_supplemental_fchr_columns <- function(fchr_object,
   # Remove columns the user marked as FALSE -----------------------------------
   # Functional Category
   if (add_func_cat == FALSE) {
-    fchr_plus[["reported_data"]] <-
-      fchr_plus[["reported_data"]] %>%
+    fchr_object[["reported_data"]] <-
+      fchr_object[["reported_data"]] %>%
       dplyr::select(-.data$`Functional Category`)
   }
 
   # Functional Element
   if (add_func_el == FALSE) {
-    fchr_plus[["reported_data"]] <-
-      fchr_plus[["reported_data"]] %>%
+    fchr_object[["reported_data"]] <-
+      fchr_object[["reported_data"]] %>%
       dplyr::select(-.data$`Functional Element`)
   }
 
   # Functional Data Element Number
   if (add_func_data_el_numb == FALSE) {
-    fchr_plus[["reported_data"]] <-
-      fchr_plus[["reported_data"]] %>%
+    fchr_object[["reported_data"]] <-
+      fchr_object[["reported_data"]] %>%
       dplyr::select(-.data$`Functional Data Element Number`)
   }
 
   # Recurring / Nonrecurring
   if (add_rec_nr == FALSE) {
-    fchr_plus[["reported_data"]] <-
-      fchr_plus[["reported_data"]] %>%
+    fchr_object[["reported_data"]] <-
+      fchr_object[["reported_data"]] %>%
       dplyr::select(-.data$`Recurring / Nonrecurring`)
   }
 
   # To Date / At Completion
   if (add_to_ac == FALSE) {
-    fchr_plus[["reported_data"]] <-
-      fchr_plus[["reported_data"]] %>%
+    fchr_object[["reported_data"]] <-
+      fchr_object[["reported_data"]] %>%
       dplyr::select(-.data$`To Date / At Completion`)
   }
 
   # Short Name
   if (add_short_name == FALSE) {
-    fchr_plus[["reported_data"]] <-
-      fchr_plus[["reported_data"]] %>%
+    fchr_object[["reported_data"]] <-
+      fchr_object[["reported_data"]] %>%
       dplyr::select(-.data$`Short Name`)
   }
 
-  return(fchr_plus)
+  return(fchr_object)
 }
