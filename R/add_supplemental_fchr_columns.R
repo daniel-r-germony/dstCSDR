@@ -126,6 +126,8 @@ add_supplemental_fchr_columns <- function(fchr_object,
 
     field <- dplyr::enquo(field)
 
+    field <- dplyr::enquo(field)
+
     fchr_object[[2]] <-
       fchr_object[[2]] %>%
       dplyr::mutate(
