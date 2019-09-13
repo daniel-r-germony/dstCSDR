@@ -125,14 +125,16 @@ add_supplemental_fchr_columns <- function(fchr_object,
   .mutate_metadata <- function(fchr_object, field) {
     # TODO: Refactor away the ":=" operator since it gets devtools::check() grumpy.
 
+    field <- dplyr::enquo(field)
+
     fchr_object[[2]] <-
       fchr_object[[2]] %>%
       dplyr::mutate(
-        {{ field }} :=
+        !! field :=
           tidyr::pivot_wider(fchr_object[["metadata"]],
                       names_from  = .data$metadata_field,
                       values_from = .data$repoted_value) %>%
-          dplyr::select({{ field }}) %>%
+          dplyr::select(!! field) %>%
           as.character()
       )
 
