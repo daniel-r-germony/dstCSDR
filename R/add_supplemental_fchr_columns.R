@@ -123,16 +123,17 @@ add_supplemental_fchr_columns <- function(fchr_object,
   # This function is used later to pull metadata from the metadata table and
   # insert/mutate it onto new columns of the main FCHR table.
   .mutate_metadata <- function(fchr_object, field) {
-    # TODO: Refactor away the ":=" operator since it gets devtools::check() grumpy.
+
+    field <- dplyr::enquo(field)
 
     fchr_object[[2]] <-
       fchr_object[[2]] %>%
       dplyr::mutate(
-        {{ field }} :=
+        !! field :=
           tidyr::pivot_wider(fchr_object[["metadata"]],
                       names_from  = .data$metadata_field,
                       values_from = .data$repoted_value) %>%
-          dplyr::select({{ field }}) %>%
+          dplyr::select(!! field) %>%
           as.character()
       )
 
@@ -820,31 +821,31 @@ add_supplemental_fchr_columns <- function(fchr_object,
 
   # Add metadata columns ------------------------------------------------------
 
-  if (add_prog_name        == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Major Program Name`)}
-  if (add_prog_phase       == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Major Program Phase/Milestone`)}
-  if (add_pmp              == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Prime Mission Product`)}
-  if (add_rep_org_type     == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Reporting Organization Type`)}
-  if (add_rep_org_address  == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Organization Name & Address`)}
-  if (add_rep_divison_name == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Division Name  & Address`)}
-  if (add_plan_numb        == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Approved Plan Number`)}
-  if (add_customer         == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Customer`)}
-  if (add_k_numb           == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Contract No`)}
-  if (add_last_mod_numb    == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Latest Modification`)}
-  if (add_solicition_numb  == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Solicitation No`)}
-  if (add_k_name           == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Contract Name`)}
-  if (add_order_numb       == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Task Order/Deliver Order/Lot Number`)}
-  if (add_pop_start_date   == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Period of Performance Start Date`)}
-  if (add_pop_end_date     == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Period of Performance End Date`)}
-  if (add_report_cycle     == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Report Cycle`)}
-  if (add_sub_numb         == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Submission Number`)}
-  if (add_resub_numb       == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Resubmission Number`)}
-  if (add_as_of_date       == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Report As Of`)}
-  if (add_poc_name         == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Point of Contact Name`)}
-  if (add_poc_department   == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Department`)}
-  if (add_poc_phone        == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Telephone Number`)}
-  if (add_poc_email        == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Email Address`)}
-  if (add_prep_date        == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Date Prepared`)}
-  if (add_appn             == TRUE) {fchr_object <- .mutate_metadata(fchr_object, .data$`Appropriation`)}
+  if (add_prog_name        == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Major Program Name")}
+  if (add_prog_phase       == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Major Program Phase/Milestone")}
+  if (add_pmp              == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Prime Mission Product")}
+  if (add_rep_org_type     == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Reporting Organization Type")}
+  if (add_rep_org_address  == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Organization Name & Address")}
+  if (add_rep_divison_name == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Division Name  & Address")}
+  if (add_plan_numb        == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Approved Plan Number")}
+  if (add_customer         == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Customer")}
+  if (add_k_numb           == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Contract No")}
+  if (add_last_mod_numb    == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Latest Modification")}
+  if (add_solicition_numb  == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Solicitation No")}
+  if (add_k_name           == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Contract Name")}
+  if (add_order_numb       == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Task Order/Deliver Order/Lot Number")}
+  if (add_pop_start_date   == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Period of Performance Start Date")}
+  if (add_pop_end_date     == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Period of Performance End Date")}
+  if (add_report_cycle     == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Report Cycle")}
+  if (add_sub_numb         == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Submission Number")}
+  if (add_resub_numb       == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Resubmission Number")}
+  if (add_as_of_date       == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Report As Of")}
+  if (add_poc_name         == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Point of Contact Name")}
+  if (add_poc_department   == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Department")}
+  if (add_poc_phone        == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Telephone Number")}
+  if (add_poc_email        == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Email Address")}
+  if (add_prep_date        == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Date Prepared")}
+  if (add_appn             == TRUE) {fchr_object <- .mutate_metadata(fchr_object, "Appropriation")}
 
   return(fchr_object)
 }
