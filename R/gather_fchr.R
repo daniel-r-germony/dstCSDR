@@ -19,7 +19,8 @@ gather_fchr <- function(fchr_object) {
   fchr_gathered <- fchr_object
 
   # Gather the 1921-1 data. ---------------------------------------------------
-  fchr_gathered[["reported_data"]] <- fchr_gathered[["reported_data"]] %>%
+  fchr_gathered[["reported_data"]] <-
+    fchr_gathered[["reported_data"]] %>%
     tidyr::gather(
       key = "Reported Data Field",
       value = "Reported Data Value",
