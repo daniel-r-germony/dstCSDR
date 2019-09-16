@@ -16,78 +16,54 @@
 #'    includes the summary reporting elements (the rows at the bottom of a
 #'    CDSR with summary cost data and no WBS number).
 #' @export
-
 import_cdsr_excel <- function(path) {
-
-  # Create a function to help get data from individual Excel cells. -----------
-  .grab_cell <- function(path, cell_range) {
-    cell_value <- readxl::read_excel(
-      path = path,
-      col_names = FALSE,
-      range = c(cell_range),
-      .name_repair = "minimal"
-    )
-
-    # Return an NA value if the cell in Excel was blank
-    if (nrow(cell_value) == 0)
-      return(NA)
-
-    # If the Excel cell had a date, it needs special attention to get it type
-    # coerced into a char that looks like a date.
-    if (lubridate::is.POSIXct(cell_value[[1]])) {
-      cell_value[[1]] <- as.character(cell_value[[1]])
-    }
-
-    # Everything other than NA and dates can get coerced and returned as a char
-    return(as.character(cell_value))
-  }
 
   # Import metadata and create an object out of it. ---------------------------
   metadata  <- tibble::tibble(
-    "Security Classification"              = .grab_cell(path, "G2"),
-    "Major Program Name"                   = .grab_cell(path, "H6"),
+    "Security Classification"              = dstCSDR::.grab_cell(path, "G2"),
+    "Major Program Name"                   = dstCSDR::.grab_cell(path, "H6"),
     "Major Program Phase/Milestone"        = stringr::str_c(sep = ", ",
-      if (is.na(.grab_cell(path, "B8"))) NULL else "Pre-A",
-      if (is.na(.grab_cell(path, "B9"))) NULL else "A",
-      if (is.na(.grab_cell(path, "D8"))) NULL else "B",
-      if (is.na(.grab_cell(path, "D9"))) NULL else "C-LRIP",
-      if (is.na(.grab_cell(path, "F8"))) NULL else "C-FRP",
-      if (is.na(.grab_cell(path, "F9"))) NULL else "O&S"),
-    "Prime Mission Product"                = .grab_cell(path, "H9"),
+      if (is.na(dstCSDR::.grab_cell(path, "B8"))) NULL else "Pre-A",
+      if (is.na(dstCSDR::.grab_cell(path, "B9"))) NULL else "A",
+      if (is.na(dstCSDR::.grab_cell(path, "D8"))) NULL else "B",
+      if (is.na(dstCSDR::.grab_cell(path, "D9"))) NULL else "C-LRIP",
+      if (is.na(dstCSDR::.grab_cell(path, "F8"))) NULL else "C-FRP",
+      if (is.na(dstCSDR::.grab_cell(path, "F9"))) NULL else "O&S"),
+    "Prime Mission Product"                = dstCSDR::.grab_cell(path, "H9"),
     "Reporting Organization Type"          = stringr::str_c(sep = ", ",
-      if (is.na(.grab_cell(path, "I8"))) NULL else "PRIME / ASSOCIATE CONTRACTOR",
-      if (is.na(.grab_cell(path, "K9"))) NULL else "DIRECT-REPORTING SUBCONTRACTOR",
-      if (is.na(.grab_cell(path, "M8"))) NULL else "GOVERNMENT"),
-    "Organization Name & Address"          = .grab_cell(path, "O9"),
-    "Division Name  & Address"             = .grab_cell(path, "Q9"),
-    "Approved Plan Number"                 = .grab_cell(path, "S9"),
-    "Customer"                             = .grab_cell(path, "B13"),
-    "Contract Type"                        = .grab_cell(path, "F12"),
-    "Contract Price"                       = .grab_cell(path, "H12"),
-    "Contract Ceiling"                     = .grab_cell(path, "I13"),
-    "Contract No"                          = .grab_cell(path, "M12"),
-    "Latest Modification"                  = .grab_cell(path, "M13"),
-    "Solicitation No"                      = .grab_cell(path, "P12"),
-    "Contract Name"                        = .grab_cell(path, "P13"),
-    "Task Order/Deliver Order/Lot Number"  = .grab_cell(path, "R12"),
-    "Period of Performance Start Date"     = .grab_cell(path, "F15"),
-    "Period of Performance End Date"       = .grab_cell(path, "F16"),
+      if (is.na(dstCSDR::.grab_cell(path, "I8"))) NULL else "PRIME / ASSOCIATE CONTRACTOR",
+      if (is.na(dstCSDR::.grab_cell(path, "K9"))) NULL else "DIRECT-REPORTING SUBCONTRACTOR",
+      if (is.na(dstCSDR::.grab_cell(path, "M8"))) NULL else "GOVERNMENT"),
+    "Organization Name & Address"          = dstCSDR::.grab_cell(path, "O9"),
+    "Division Name  & Address"             = dstCSDR::.grab_cell(path, "Q9"),
+    "Approved Plan Number"                 = dstCSDR::.grab_cell(path, "S9"),
+    "Customer"                             = dstCSDR::.grab_cell(path, "B13"),
+    "Contract Type"                        = dstCSDR::.grab_cell(path, "F12"),
+    "Contract Price"                       = dstCSDR::.grab_cell(path, "H12"),
+    "Contract Ceiling"                     = dstCSDR::.grab_cell(path, "I13"),
+    "Contract No"                          = dstCSDR::.grab_cell(path, "M12"),
+    "Latest Modification"                  = dstCSDR::.grab_cell(path, "M13"),
+    "Solicitation No"                      = dstCSDR::.grab_cell(path, "P12"),
+    "Contract Name"                        = dstCSDR::.grab_cell(path, "P13"),
+    "Task Order/Deliver Order/Lot Number"  = dstCSDR::.grab_cell(path, "R12"),
+    "Period of Performance Start Date"     = dstCSDR::.grab_cell(path, "F15"),
+    "Period of Performance End Date"       = dstCSDR::.grab_cell(path, "F16"),
     "Appropriation"                        = stringr::str_c(sep = ", ",
-      if (is.na(.grab_cell(path, "I8"))) NULL else "RDT&E",
-      if (is.na(.grab_cell(path, "K9"))) NULL else "PROCUREMENT",
-      if (is.na(.grab_cell(path, "M8"))) NULL else "O&M"),
+      if (is.na(dstCSDR::.grab_cell(path, "I8"))) NULL else "RDT&E",
+      if (is.na(dstCSDR::.grab_cell(path, "K9"))) NULL else "PROCUREMENT",
+      if (is.na(dstCSDR::.grab_cell(path, "M8"))) NULL else "O&M"),
     "Report Cycle"                         = stringr::str_c(sep = ", ",
-      if (is.na(.grab_cell(path, "M15"))) NULL else "INITIAL",
-      if (is.na(.grab_cell(path, "M16"))) NULL else "INTERIM",
-      if (is.na(.grab_cell(path, "M17"))) NULL else "FINAL"),
-    "Submission Number"                    = .grab_cell(path, "O15"),
-    "Resubmission Number"                  = .grab_cell(path, "Q16"),
-    "Report As Of"                         = .grab_cell(path, "R15"),
-    "Point of Contact Name"                = .grab_cell(path, "B19"),
-    "Department"                           = .grab_cell(path, "I19"),
-    "Telephone Number"                     = .grab_cell(path, "M19"),
-    "Email Address"                        = .grab_cell(path, "P19"),
-    "Date Prepared"                        = .grab_cell(path, "R19")
+      if (is.na(dstCSDR::.grab_cell(path, "M15"))) NULL else "INITIAL",
+      if (is.na(dstCSDR::.grab_cell(path, "M16"))) NULL else "INTERIM",
+      if (is.na(dstCSDR::.grab_cell(path, "M17"))) NULL else "FINAL"),
+    "Submission Number"                    = dstCSDR::.grab_cell(path, "O15"),
+    "Resubmission Number"                  = dstCSDR::.grab_cell(path, "Q16"),
+    "Report As Of"                         = dstCSDR::.grab_cell(path, "R15"),
+    "Point of Contact Name"                = dstCSDR::.grab_cell(path, "B19"),
+    "Department"                           = dstCSDR::.grab_cell(path, "I19"),
+    "Telephone Number"                     = dstCSDR::.grab_cell(path, "M19"),
+    "Email Address"                        = dstCSDR::.grab_cell(path, "P19"),
+    "Date Prepared"                        = dstCSDR::.grab_cell(path, "R19")
   ) %>% tidyr::pivot_longer(
     tidyr::everything(),
     names_to = "metadata_field",
