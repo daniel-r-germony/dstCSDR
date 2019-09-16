@@ -13,7 +13,6 @@
 #'   Hours..." columns converted from columns to rows in a new "Reported Data
 #'   Field" column.
 #' @export
-
 gather_fchr <- function(fchr_object) {
 
   fchr_gathered <- fchr_object
