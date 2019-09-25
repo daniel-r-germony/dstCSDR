@@ -2,21 +2,31 @@
 #'
 #' A function to identify the level assoicated with given WBS Element Code.
 #'
-#' @param wbs_element_code Required.
-#' @param ... Optional. Included in order to be %>% frendly.
+#' @param wbs_element_code Required. A single or vector of WBS Element Codes to
+#'   convert into a WBS level. Can be either character or factor objects.
+#' @param ... Optional. Included in order to be pipe frendly.
 #'
 #' @return Returns an intiger assoicated with WBS Element Code (i.e., 0 for WBS
 #'   = "1.0", 1 for "1.1", 3 for "1.2.2.1")
 #' @export
 
 wbs_code_to_lvl <- function(wbs_element_code, ...) {
+
+  # Trim whitespace for the user in case a WBS Element Code was padded.
+  wbs_element_code <- stringr::str_trim(wbs_element_code)
+
+  # Regex for a WBS Element Code
+  # Starts with a diget, has at least one grouped period & diget, ends with a
+  # diget.
+  wbs_code_regex <- "^(\\d)(\\.\\d)+(\\d)*$"
+
   # Error prevention: Ensure the input is a char or factor, otherwise stop.
   if (!is.character(wbs_element_code) &&
       !is.factor(wbs_element_code)) {
     stop(
       'This fuction only works with character or factor objects!\n',
       'You have provided an object of class: ',
-      class(wbs_element_code[1])
+      class(wbs_element_code)
     )
   }
 
@@ -34,10 +44,6 @@ wbs_code_to_lvl <- function(wbs_element_code, ...) {
       '- 1.2.1.1.5.4.2'
     )
   }
-
-  # Starts with a diget, has at least one grouped period & diget, ends with a
-  # diget.
-  wbs_code_regex <- "^(\\d)(\\.\\d)+(\\d)*$"
 
   # Edge Case: WBS Element Code "1.0" is an edge case that should return level
   # "0" even though it otherwise meets the requirements as a level "1".

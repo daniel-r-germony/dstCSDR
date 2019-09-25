@@ -7,9 +7,10 @@
 wbs_code_to_lvl(wbs_element_code, ...)
 }
 \arguments{
-\item{wbs_element_code}{Required.}
+\item{wbs_element_code}{Required. A single or vector of WBS Element Codes to
+convert into a WBS level. Can be either character or factor objects.}
 
-\item{...}{Optional. Included in order to be %>% frendly.}
+\item{...}{Optional. Included in order to be pipe frendly.}
 }
 \value{
 Returns an intiger assoicated with WBS Element Code (i.e., 0 for WBS
