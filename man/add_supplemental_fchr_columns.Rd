@@ -4,13 +4,13 @@
 \alias{add_supplemental_fchr_columns}
 \title{add_supplemental_fchr_columns}
 \usage{
-add_supplemental_fchr_columns(fchr_object, add_func_cat = TRUE,
-  add_func_el = TRUE, add_func_data_el_numb = TRUE,
-  add_rec_nr = TRUE, add_to_ac = TRUE, add_short_name = TRUE,
-  add_prog_name = FALSE, add_prog_phase = FALSE, add_pmp = FALSE,
-  add_rep_org_type = FALSE, add_rep_org_address = FALSE,
-  add_rep_divison_name = FALSE, add_plan_numb = TRUE,
-  add_customer = FALSE, add_k_numb = FALSE,
+add_supplemental_fchr_columns(fchr_object, add_wbs_el_lvl = TRUE,
+  add_func_cat = TRUE, add_func_el = TRUE,
+  add_func_data_el_numb = TRUE, add_rec_nr = TRUE, add_to_ac = TRUE,
+  add_short_name = TRUE, add_prog_name = FALSE,
+  add_prog_phase = FALSE, add_pmp = FALSE, add_rep_org_type = FALSE,
+  add_rep_org_address = FALSE, add_rep_divison_name = FALSE,
+  add_plan_numb = TRUE, add_customer = FALSE, add_k_numb = FALSE,
   add_last_mod_numb = FALSE, add_solicition_numb = FALSE,
   add_k_name = FALSE, add_order_numb = FALSE,
   add_pop_start_date = TRUE, add_pop_end_date = TRUE,
@@ -23,6 +23,9 @@ add_supplemental_fchr_columns(fchr_object, add_func_cat = TRUE,
 \arguments{
 \item{fchr_object}{Required. A list object of CSDR FCHR 1921-1 data that has
 been imported using the \code{import_cdsr_excel()} function.}
+
+\item{add_wbs_el_lvl}{Optional. Should a "WBS Element Level" column be added?
+Set to \code{TRUE} by default.}
 
 \item{add_func_cat}{Optional. Should a "Functional Category" be added? Set to
 \code{TRUE} by default.}

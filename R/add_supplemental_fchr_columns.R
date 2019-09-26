@@ -12,6 +12,8 @@
 #' @author Daniel Germony \email{daniel.r.germony.civ@@mail.mil}
 #' @param fchr_object Required. A list object of CSDR FCHR 1921-1 data that has
 #'   been imported using the \code{import_cdsr_excel()} function.
+#' @param add_wbs_el_lvl Optional. Should a "WBS Element Level" column be added?
+#'   Set to \code{TRUE} by default.
 #' @param add_func_cat Optional. Should a "Functional Category" be added? Set to
 #'   \code{TRUE} by default.
 #' @param add_func_el Optional. Should a "Functional Element" column be added?
@@ -85,6 +87,7 @@
 #' @export
 
 add_supplemental_fchr_columns <- function(fchr_object,
+                                          add_wbs_el_lvl        = TRUE,
                                           add_func_cat          = TRUE,
                                           add_func_el           = TRUE,
                                           add_func_data_el_numb = TRUE,
@@ -145,7 +148,15 @@ add_supplemental_fchr_columns <- function(fchr_object,
     fchr_object <- fchr_object %>% dstCSDR::gather_fchr()
   }
 
-  # Add Recurring / Nonrecurring" column. ---------------------------
+  # Add WBS Element Level column. ---------------------------------------------
+  fchr_object[["reported_data"]] <-
+    fchr_object[["reported_data"]] %>%
+    dplyr::mutate(
+      "WBS Element Level" = purrr::map_int(
+        fchr_object[["reported_data"]]$`WBS Element Code`,
+        dstCSDR::wbs_code_to_lvl))
+
+  # Add Recurring / Nonrecurring" column. -------------------------------------
   fchr_object[["reported_data"]] <-
     fchr_object[["reported_data"]] %>%
     dplyr::mutate(
@@ -756,6 +767,7 @@ add_supplemental_fchr_columns <- function(fchr_object,
     fchr_object[["reported_data"]] %>%
     dplyr::select(
       "WBS Element Code",
+      "WBS Element Level",
       "WBS Reporting Element",
       "Functional Category",
       "Functional Element",
@@ -777,6 +789,13 @@ add_supplemental_fchr_columns <- function(fchr_object,
                    .data$`Functional Data Element Number`)
 
   # Remove non-metadata columns the user marked as FALSE ----------------------
+  # WBS Element Level
+  if (add_wbs_el_lvl == FALSE) {
+    fchr_object[["reported_data"]] <-
+      fchr_object[["reported_data"]] %>%
+      dplyr::select(-.data$`WBS Element Level`)
+  }
+
   # Functional Category
   if (add_func_cat == FALSE) {
     fchr_object[["reported_data"]] <-
