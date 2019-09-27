@@ -30,6 +30,28 @@ gather_fchr <- function(fchr_object) {
     fchr_gathered[["reported_data"]]$`Reported Data Field` %>%
     forcats::as_factor()
 
+  # Pivot longer the "Units to..." data. --------------------------------------
+  fchr_gathered[["reported_data"]] <-
+    fchr_gathered[["reported_data"]] %>%
+    tidyr::pivot_longer(
+      cols = c("Number of Units to Date", "Number of Units At Completion"),
+      names_prefix = "Number of Units ",
+      values_to = "Number of Units"
+    ) %>%
+    dplyr::mutate(
+      "double_count" = dplyr::case_when(
+        .data$`Reported Data Field` == "Costs and Hours Incurred To Date - Nonrecurring" & .data$name == "At Completion" ~ TRUE,
+        .data$`Reported Data Field` == "Costs and Hours Incurred To Date - Recurring" & .data$name == "At Completion" ~ TRUE,
+        .data$`Reported Data Field` == "Costs and Hours Incurred To Date - Total" & .data$name == "At Completion" ~ TRUE,
+        .data$`Reported Data Field` == "Costs and Hours Incurred At Completion - Nonrecurring" & .data$name == "to Date" ~ TRUE,
+        .data$`Reported Data Field` == "Costs and Hours Incurred At Completion - Recurring" & .data$name == "to Date" ~ TRUE,
+        .data$`Reported Data Field` == "Costs and Hours Incurred At Completion - Total" & .data$name == "to Date" ~ TRUE,
+        TRUE ~ NA
+      )
+    ) %>%
+    dplyr::filter(is.na(.data$double_count)) %>%
+    dplyr::select(-.data$double_count, -.data$name)
+
   # Reorder columns before return. --------------------------------------------
   # Reorder the columns.
   fchr_gathered[["reported_data"]] <-
@@ -42,8 +64,7 @@ gather_fchr <- function(fchr_object) {
       "Reported Data Field",
       "Unit of Measure",
       "Reported Data Value",
-      "Number of Units to Date",
-      "Number of Units At Completion",
+      "Number of Units",
       "Remarks"
     ) %>%
     dplyr::arrange(.data$`WBS Element Code`)
