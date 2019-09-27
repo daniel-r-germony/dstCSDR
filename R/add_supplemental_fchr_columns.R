@@ -778,8 +778,7 @@ add_supplemental_fchr_columns <- function(fchr_object,
       "Reported Data Field",
       "Unit of Measure",
       "Reported Data Value",
-      "Number of Units to Date",
-      "Number of Units At Completion",
+      "Number of Units",
       "Remarks",
       "Short Name"
     ) %>%

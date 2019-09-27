@@ -34,7 +34,8 @@ widen_fchr <- function(fchr_plus_object, ...) {
        -.data$`Functional Data Element Number`,
        -.data$`Unit of Measure`,
        -.data$`Short Name`,
-       -.data$`Reported Data Field`
+       -.data$`Reported Data Field`,
+       -.data$`Number of Units`
     ) %>%
     tidyr::pivot_wider(
       names_from = c(
@@ -47,6 +48,9 @@ widen_fchr <- function(fchr_plus_object, ...) {
       names_sep = " / ",
       values_from = .data$`Reported Data Value`
     )
+
+  # Need to left join number of units to date and at complete into this now that
+  # the gather has been updated.``
 
   return(wider_fchr_plus)
 
