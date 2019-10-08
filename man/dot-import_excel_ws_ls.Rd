@@ -4,12 +4,22 @@
 \alias{.import_excel_ws_ls}
 \title{.import_excel_ws_ls}
 \usage{
-.import_excel_ws_ls(excel_ws_ls)
+.import_excel_ws_ls(excel_ws_ls, skip = 0, col_names = TRUE)
 }
 \arguments{
 \item{excel_ws_ls}{Required. A tibble object created (preferablly) using
 \code{\link[dstCSDR:dot-create_excel_ws_ls]{.create_excel_ws_ls}} which has
 a column of file paths and worksheet titles that will be imported.}
+
+\item{skip}{Optional. Taken from and passed to \code{readxl::read_excel()}:
+Minimum number of rows to skip before reading anything, be it column names
+or data. Leading empty rows are automatically skipped, so this is a lower
+bound. \code{0} by default.}
+
+\item{col_names}{Optional. Taken from and passed to \code{readxl::read_excel()}:
+\code{TRUE} to use the first row as column names, \code{FALSE} to get
+default names, or a character vector giving a name for each column.
+\code{TRUE} by default.}
 }
 \value{
 Returns a tibble with each worksheet listed in the \code{excel_ws_ls}
