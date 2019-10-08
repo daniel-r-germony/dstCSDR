@@ -30,14 +30,12 @@ widen_fchr <- function(fchr_plus_object, ...) {
       .data$`To Date / At Completion`,
       .data$`Functional Data Element Number`
     ) %>%
-    dplyr::select(
-      .data$`WBS Element Code`,
-      .data$`Recurring / Nonrecurring`,
-      .data$`To Date / At Completion`,
-      .data$`Functional Category`,
-      .data$`Functional Element`,
-      .data$`Functional Data Element`,
-      .data$`Reported Data Value`
+     dplyr::select(
+       -.data$`Functional Data Element Number`,
+       -.data$`Unit of Measure`,
+       -.data$`Short Name`,
+       -.data$`Reported Data Field`,
+       -.data$`Number of Units`
     ) %>%
     tidyr::pivot_wider(
       names_from = c(
@@ -49,14 +47,10 @@ widen_fchr <- function(fchr_plus_object, ...) {
       ),
       names_sep = " / ",
       values_from = .data$`Reported Data Value`
-    ) %>%
-    dplyr::left_join(
-      wider_fchr_plus[["reported_data"]] %>%
-        dplyr::select(.data$`WBS Element Code`,
-                      .data$`Remarks`) %>%
-        dplyr::distinct()
-    , by = "WBS Element Code"
     )
+
+  # Need to left join number of units to date and at complete into this now that
+  # the gather has been updated.``
 
   return(wider_fchr_plus)
 

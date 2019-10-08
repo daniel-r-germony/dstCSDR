@@ -4,22 +4,132 @@
 \alias{add_supplemental_fchr_columns}
 \title{add_supplemental_fchr_columns}
 \usage{
-add_supplemental_fchr_columns(fchr_object)
+add_supplemental_fchr_columns(fchr_object, add_wbs_el_lvl = TRUE,
+  add_func_cat = TRUE, add_func_el = TRUE,
+  add_func_data_el_numb = TRUE, add_rec_nr = TRUE, add_to_ac = TRUE,
+  add_short_name = TRUE, add_prog_name = FALSE,
+  add_prog_phase = FALSE, add_pmp = FALSE, add_rep_org_type = FALSE,
+  add_rep_org_address = FALSE, add_rep_divison_name = FALSE,
+  add_plan_numb = TRUE, add_customer = FALSE, add_k_numb = FALSE,
+  add_last_mod_numb = FALSE, add_solicition_numb = FALSE,
+  add_k_name = FALSE, add_order_numb = FALSE,
+  add_pop_start_date = TRUE, add_pop_end_date = TRUE,
+  add_report_cycle = FALSE, add_sub_numb = TRUE,
+  add_resub_numb = TRUE, add_as_of_date = FALSE,
+  add_poc_name = FALSE, add_poc_department = FALSE,
+  add_poc_phone = FALSE, add_poc_email = FALSE,
+  add_prep_date = FALSE, add_appn = FALSE, already_gathered = TRUE)
 }
 \arguments{
 \item{fchr_object}{Required. A list object of CSDR FCHR 1921-1 data that has
 been imported using the \code{import_cdsr_excel()} function.}
+
+\item{add_wbs_el_lvl}{Optional. Should a "WBS Element Level" column be added?
+Set to \code{TRUE} by default.}
+
+\item{add_func_cat}{Optional. Should a "Functional Category" be added? Set to
+\code{TRUE} by default.}
+
+\item{add_func_el}{Optional. Should a "Functional Element" column be added?
+Set to \code{TRUE} by default.}
+
+\item{add_func_data_el_numb}{Optional. Should a "Functional Data Element
+Number" column be added? Set to \code{TRUE} by default.}
+
+\item{add_rec_nr}{Optional. Should a "Recurring / Nonrecurring" column be
+added? Set to \code{TRUE} by default.}
+
+\item{add_to_ac}{Optional. Should a "To Date / At Completion" column be
+added? Set to \code{TRUE} by default.}
+
+\item{add_short_name}{Optional. Should a "Short Name" column be added? Set to
+\code{TRUE} by default.}
+
+\item{add_prog_name}{Optional. Should a "Major Program Name" column be added?
+Set to \code{TRUE} by default.}
+
+\item{add_prog_phase}{Optional. Should a "Major Program Phase/Milestone"
+column be added? Set to \code{TRUE} by default.}
+
+\item{add_pmp}{Optional. Should a "Prime Mission Product" column be added?
+Set to \code{TRUE} by default.}
+
+\item{add_rep_org_type}{Optional. Should a "Reporting Organization Type"
+column be added? Set to \code{TRUE} by default.}
+
+\item{add_rep_org_address}{Optional. Should a "Organization Name & Address"
+column be added? Set to \code{TRUE} by default.}
+
+\item{add_rep_divison_name}{Optional. Should a "Approved Plan Number" column
+be added? Set to \code{TRUE} by default.}
+
+\item{add_plan_numb}{Optional. Should a "Approved Plan Number" column be
+added? Set to \code{TRUE} by default.}
+
+\item{add_customer}{Optional. Should a "Customer" column be added? Set to
+\code{TRUE} by default.}
+
+\item{add_k_numb}{Optional. Should a "Contract No" column be added? Set to
+\code{TRUE} by default.}
+
+\item{add_last_mod_numb}{Optional. Should a "Latest Modification" column be
+added? Set to \code{TRUE} by default.}
+
+\item{add_solicition_numb}{Optional. Should a "Solicitation No" column be
+added? Set to \code{TRUE} by default.}
+
+\item{add_k_name}{Optional. Should a "Contract Name" column be added? Set to
+\code{TRUE} by default.}
+
+\item{add_order_numb}{Optional. Should a "Task Order/Deliver Order/Lot
+Number" column be added? Set to \code{TRUE} by default.}
+
+\item{add_pop_start_date}{Optional. Should a "Period of Performance Start
+Date" column be added? Set to \code{TRUE} by default.}
+
+\item{add_pop_end_date}{Optional. Should a "Period of Performance End Date"
+column be added? Set to \code{TRUE} by default.}
+
+\item{add_report_cycle}{Optional. Should a "Report Cycle" column be added?
+Set to \code{TRUE} by default.}
+
+\item{add_sub_numb}{Optional. Should a "Submission Number" column be added?
+Set to \code{TRUE} by default.}
+
+\item{add_resub_numb}{Optional. Should a "Resubmission Number" column be
+added? Set to \code{TRUE} by default.}
+
+\item{add_as_of_date}{Optional. Should a "Report As Of" column be added? Set
+to \code{TRUE} by default.}
+
+\item{add_poc_name}{Optional. Should a "Point of Contact Name" column be
+added? Set to \code{TRUE} by default.}
+
+\item{add_poc_department}{Optional. Should a "Department" column be added?
+Set to \code{TRUE} by default.}
+
+\item{add_poc_phone}{Optional. Should a "Telephone Number" column be added?
+Set to \code{TRUE} by default.}
+
+\item{add_poc_email}{Optional. Should a "Email Address" column be added? Set
+to \code{TRUE} by default.}
+
+\item{add_prep_date}{Optional. Should a "Date Prepared" column be added? Set
+to \code{TRUE} by default.}
+
+\item{add_appn}{Optional. Should a "Appropriation" column be added? Set to
+\code{TRUE} by default.}
+
+\item{already_gathered}{Optional. Indicates if the \code{fchr_object} has
+already been gathered using the \code{gather_fchr()} function or not. Use
+\code{TRUE} if it has already been gathered (the default) and \code{FALSE}
+otherwise.}
 }
 \value{
-Adds the following columns to the \code{`reported_data`} tibble:
-\enumerate{
-\item Functional Category
-\item Recurring / Nonrecurring
-\item To Date / At Completion
-\item Functional Element
-\item Functional Data Element Number
-\item Short Name
-}
+Returns a list of two tibbles; the first tibble includes submission
+metdata from a CDSR FCHR (DD Form 1921-1) and the second includes the
+reported data from the submission in which each row is a Functional Data
+Element for each WBS in the submission.
 }
 \description{
 Add Supplemental Columns to a CDSR FCHR (DD Form 1921-1) Tibble
@@ -27,7 +137,11 @@ Add Supplemental Columns to a CDSR FCHR (DD Form 1921-1) Tibble
 \details{
 Takes a CSDR Functional Cost-Hour Report (FCHR) (DD Form 1921-1) object and
 adds supplemental columns to the to the \code{`reported_data`} tibble to
-allow for additional/easier sorting/filtering.
+allow for additional/easier sorting/filtering. The user can specify which
+column(s) are not added by passing \code{FALSE} to the various \code{add_*}
+parameters. The user can also gather the FCHR (DD Form 1921-1) object on the
+fly using  \code{already_gathered = FALSE} parameter if the FCHR object has
+not already been gathered using the \code{gather_fchr()} function.
 }
 \author{
 Daniel Germony \email{daniel.r.germony.civ@mail.mil}

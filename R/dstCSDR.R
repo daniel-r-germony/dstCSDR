@@ -8,6 +8,8 @@
 #' @docType package
 #' @name dstCSDR
 #' @importFrom dplyr %>%
+#' @importFrom rlang :=
 #' @importFrom rlang .data
+#' @importFrom stats setNames
 NULL
 
