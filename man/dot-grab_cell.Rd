@@ -20,3 +20,14 @@ blank or as a character otherwise
 A function which pulls the value out of an individual Excel cell and reurns
 it to R.
 }
+\seealso{
+\code{\link[=.create_excel_ws_ls]{.create_excel_ws_ls()}} to create a tibble of files and worksheet
+names.
+
+\code{\link[=.import_excel_ws_ls]{.import_excel_ws_ls()}} for how to import worksheets identfied in
+the tibble created with this function.
+
+Other dstCSDR Import Excel Data Functions: \code{\link{.create_excel_ws_ls}},
+  \code{\link{.import_excel_ws_ls}}
+}
+\concept{dstCSDR Import Excel Data Functions}

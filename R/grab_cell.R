@@ -9,6 +9,11 @@
 #'
 #' @return Returns the value from the Excel file as an "NA" if the cell was
 #'   blank or as a character otherwise
+#' @family dstCSDR Import Excel Data Functions
+#' @seealso [.create_excel_ws_ls()] to create a tibble of files and worksheet
+#'   names.
+#' @seealso [.import_excel_ws_ls()] for how to import worksheets identfied in
+#'   the tibble created with this function.
 #' @export
 .grab_cell <- function(path, cell_range) {
   cell_value <- readxl::read_excel(
