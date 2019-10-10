@@ -4,22 +4,31 @@
 \alias{.import_excel_ws_ls}
 \title{.import_excel_ws_ls}
 \usage{
-.import_excel_ws_ls(excel_ws_ls, skip = 0, col_names = TRUE)
+.import_excel_ws_ls(excel_ws_ls, skip = 0, col_names = TRUE,
+  range = NULL)
 }
 \arguments{
 \item{excel_ws_ls}{Required. A tibble object created (preferablly) using
 \code{\link[dstCSDR:dot-create_excel_ws_ls]{.create_excel_ws_ls}} which has
 a column of file paths and worksheet titles that will be imported.}
 
-\item{skip}{Optional. Taken from and passed to \code{readxl::read_excel()}:
-Minimum number of rows to skip before reading anything, be it column names
-or data. Leading empty rows are automatically skipped, so this is a lower
-bound. \code{0} by default.}
+\item{skip}{Optional. Taken from and passed to
+\code{\link[readxl:read_excel]{read_excel}}: Minimum number of rows to skip
+before reading anything, be it column names or data. Leading empty rows are
+automatically skipped, so this is a lower bound. \code{0} by default.}
 
-\item{col_names}{Optional. Taken from and passed to \code{readxl::read_excel()}:
-\code{TRUE} to use the first row as column names, \code{FALSE} to get
-default names, or a character vector giving a name for each column.
-\code{TRUE} by default.}
+\item{col_names}{Optional. Taken from and passed to
+\code{\link[readxl:read_excel]{read_excel}}: \code{TRUE} to use the first
+row as column names, \code{FALSE} to get default names, or a character
+vector giving a name for each column. \code{TRUE} by default.}
+
+\item{range}{Optional. Taken from and passed to
+\code{\link[readxl:read_excel]{read_excel}}:
+A cell range to read from, as described in
+\code{\link[readxl:cell-specification]{cell specification}}. Includes
+typical Excel ranges like "B3:D87", possibly including the sheet name like
+"Budget!B2:G14", and more. Interpreted strictly, even if the range forces
+the inclusion of leading or trailing empty rows or columns.}
 }
 \value{
 Returns a tibble with each worksheet listed in the \code{excel_ws_ls}
