@@ -16,8 +16,8 @@ is provided, the full file path is returned.
 }
 \description{
 dstCSDR comes with various CSDR related example files in the package's
-\code{inst/extdata} directory. This function is used to return a list of the
-example files or to specify one for you may want to use as an example.
+\code{extdata} directory. This function is used to return a list of the example
+files or to specify one for you may want to use as an example.
 }
 \examples{
 example_dstCSDR_files()

@@ -39,7 +39,7 @@ contract attachments from template documents.
 \examples{
 \dontrun{
 render_cr_docs(
-  params_path = here::here("inst", "cost_reporting_params.xlsx"),
+  params_path = here::here("extdata", "cost_reporting_params.xlsx"),
   output_dir = here::here()
 )}
 }

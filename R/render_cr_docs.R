@@ -31,7 +31,7 @@
 #' @examples
 #' \dontrun{
 #' render_cr_docs(
-#'   params_path = here::here("inst", "cost_reporting_params.xlsx"),
+#'   params_path = here::here("extdata", "cost_reporting_params.xlsx"),
 #'   output_dir = here::here()
 #' )}
 render_cr_docs <- function(params_path = file.choose(), output_dir = choose.dir()) {
@@ -43,8 +43,7 @@ render_cr_docs <- function(params_path = file.choose(), output_dir = choose.dir(
     tidyr::pivot_wider(names_from = params, values_from = `User Input`)
 
   rmarkdown::render(
-    input = here::here("inst", "extdata", "cost_reporting_sow_template.Rmd"),
-    #output = "word_document",
+    input = system.file("extdata", "cost_reporting_sow_template.Rmd", package="dstCSDR"),
     output_file = paste0(
       Sys.Date(), "_", params_from_excel$system_name_abbr, "_cost-reporting-sow.docx"),
     output_dir = if (exists("output_dir")) output_dir else here::here(),
