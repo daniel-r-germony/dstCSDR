@@ -28,8 +28,10 @@ Imports:
 Suggests: 
     testthat (>= 2.2.1),
     openxlsx (>= 4.1.0.1),
-    writexl (>= 1.1)
+    writexl (>= 1.1),
+    knitr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
+VignetteBuilder: knitr

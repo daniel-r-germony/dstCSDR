@@ -1,0 +1,98 @@
+---
+title: "dstCSDR-Basic-ETL"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{dstCSDR-Basic-ETL}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(dstCSDR)
+```
+
+The basic `{dstCSDR}` ETL pipeline lets you import, tidy, and (optionally) return the data back to Excel for further review and processing.  The package comes with same example CSDR files included which we will use in this vignette.  
+
+We can see a list of those example CSDR files using the `dstCSDR::example_dstCSDR_files()` function.
+
+```{r print-example-files}
+example_dstCSDR_files()
+```
+
+If we pass `example_dstCSDR_files()` the name of one of those files, it will give us back a full path to where that file is on our system (this will be helpful in a minute when we import these).  
+
+```{r print-path-to-one-example-file}
+example_dstCSDR_files("Example_CDSR_1921.xls")
+```
+
+
+# On the agenda
+
+In this vignette, we will:  
+
+1.  import an example CSDR (DD Form 1921) and FCHR (DD Form 1921-1) into R,  
+2.  we will tidy the FCHR (DD Form 1921-1),  
+3.  return that data to Excel for further processing.
+
+# Importing CSDR Data
+
+### Import Function Overview
+
+The `{dstCSDR}` package takes a tip from tidyverse packages and utilizes a consistent naming convention when it comes to working with CSDR data.  
+
+Import functions always begin with `import_...` then the type of CSDR deliverable it will import, for example:  
+
+* `import_cdsr_...() # Imports a CDSR (DD Form 1921) file (from a yet unknown file type)`
+* `import_fchr_...() # Imports a FCHR (DD Form 1921-1) file (from a yet unknown file type)`
+
+Finally the function names end with the type of file you are importing that CSDR data from, for example:  
+
+* `import_cdsr_excel() # Imports a CDSR (DD Form 1921) from a source Excel file`
+* `import_fchr_xml() # Imports a FCHR (DD Form 1921-1) from a source XML file`
+
+You then pass the functions the full path (including file name and extension) to where the CSDR file resides on your system, ShareDrive, or network connection.  The below code won't actually run since this location does not actually exist, but hopefully you get the point:  
+
+```{r import-direct-path, eval=FALSE, include=TRUE}
+import_cdsr_excel("C:/Users/john.doe/Documents/CDSR.xls")
+```
+
+
+You could also use `file.choose()` which will create a popup box that you can use to navigate to your file, you could do something like this:  
+
+```{r import-with-file.choose, eval=FALSE, include=TRUE}
+import_cdsr_excel(file.choose())
+```
+
+### Import Function Examples
+
+Let's import the CDSR and FCHR from the example excel files provided with the package.  The `example_dstCSDR_files()` function will return a complete file path if we pass it the name of the file we want to target 
+
+ 
+```{r import}
+cdsr <- import_cdsr_excel(example_dstCSDR_files("Example_CDSR_1921.xls"))
+fchr <- import_fchr_excel(example_dstCSDR_files("Example_FCHR_1921_1.xls"))
+```
+
+# Review of the CSDR Objects That Were Imported
+
+Now that we have imported those files into the `cdsr` and `fchr` objects, what did we actually get?  
+
+`{dstCSDR}` imports CSDRs into list objects where the list (normally) includes one tibble for each major block of data included in any given CSDR deliverable?  
+
+> What does that mean?  
+
+Fair question.  Let's look at the CDSR (DD Form 1921) as an example.
+
+```{r}
+str(cdsr)
+```
+
+
+

@@ -42,3 +42,4 @@ dstCSDR.Rcheck/
 dstCSDR*.tar.gz
 dstCSDR*.tgz
 docs/
+inst/doc
