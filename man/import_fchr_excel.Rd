@@ -28,6 +28,21 @@ Import a CSDR FCHR (DD Form 1921-1) from Excel into a Tibble
 Takes a CSDR Functional Cost-Hour Report (FCHR) (DD Form 1921-1) Excel
 worksheet and imports it to a set of tibbles.
 }
+\examples{
+# Import the example FCHR.
+import_fchr_excel(dstCSDR_files("Example_FCHR_1921-1.xls"))
+
+\dontrun{
+
+# Import a FCHR from a fake user desktop by directly passing the path.
+import_fchr_excel("C:/Users/john.doe/Desktop/DD Form 1921-1 submission.xls")
+
+# Import a FCHR from a fake user desktop by passing a path object.
+fchr_path <- "C:/Users/john.doe/Desktop/DD Form 1921-1 submission.xls"
+import_fchr_excel(fchr_path)
+
+}
+}
 \author{
 Daniel Germony \email{daniel.r.germony.civ@mail.mil}
 }

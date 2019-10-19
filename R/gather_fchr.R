@@ -13,6 +13,20 @@
 #'   Hours..." columns converted from columns to rows in a new "Reported Data
 #'   Field" column.
 #' @export
+#' @examples
+#'
+#' \dontrun{
+#'
+#' # Gather a FCHR object imported from a user desktop.
+#' fchr <- import_fchr_excel("C:/Users/john.doe/Desktop/DD Form 1921-1 submission.xls")
+#' fchr %>% gather_fchr()
+#'
+#' # Import and gather the example FCHR file in one step.
+#' dstCSDR_files("Example_FCHR_1921_1.xls") %>%
+#'   import_fchr_excel() %>%
+#'   gather_fchr()
+#'
+#' }
 gather_fchr <- function(fchr_object) {
 
   fchr_gathered <- fchr_object

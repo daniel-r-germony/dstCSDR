@@ -24,6 +24,21 @@ Report (FCHR) (DD Form 1921-1) object in a new column called "Reported Data
 Field". This longer and narrower version of the FCHR is eaiser to
 pivot/sort/filter.
 }
+\examples{
+
+\dontrun{
+
+# Gather a FCHR object imported from a user desktop.
+fchr <- import_fchr_excel("C:/Users/john.doe/Desktop/DD Form 1921-1 submission.xls")
+fchr \%>\% gather_fchr()
+
+# Import and gather the example FCHR file in one step.
+dstCSDR_files("Example_FCHR_1921_1.xls") \%>\%
+  import_fchr_excel() \%>\%
+  gather_fchr()
+
+}
+}
 \author{
 Daniel Germony \email{daniel.r.germony.civ@mail.mil}
 }
