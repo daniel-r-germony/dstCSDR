@@ -32,15 +32,16 @@
 #' \dontrun{
 #' render_cr_docs(
 #'   params_path = here::here("extdata", "cost_reporting_params.xlsx"),
-#'   output_dir = here::here()
+#'   output_dir = "C:/Users/john.doe/Desktop"
 #' )}
 render_cr_docs <- function(params_path = file.choose(), output_dir = choose.dir()) {
 
   params_from_excel <-
     readxl::read_excel(path = params_path,
                        col_names = TRUE) %>%
-    dplyr::select(params, `User Input`) %>%
-    tidyr::pivot_wider(names_from = params, values_from = `User Input`)
+    dplyr::select(.data$params, .data$`User Input`) %>%
+    tidyr::pivot_wider(names_from = .data$params,
+                       values_from = .data$`User Input`)
 
   rmarkdown::render(
     input = system.file("extdata", "cost_reporting_sow_template.Rmd", package="dstCSDR"),

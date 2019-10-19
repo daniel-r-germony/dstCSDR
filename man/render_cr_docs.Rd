@@ -40,6 +40,6 @@ contract attachments from template documents.
 \dontrun{
 render_cr_docs(
   params_path = here::here("extdata", "cost_reporting_params.xlsx"),
-  output_dir = here::here()
+  output_dir = "C:/Users/john.doe/Desktop"
 )}
 }
