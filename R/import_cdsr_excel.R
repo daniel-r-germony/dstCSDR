@@ -16,6 +16,20 @@
 #'    includes the summary reporting elements (the rows at the bottom of a
 #'    CDSR with summary cost data and no WBS number).
 #' @export
+#' @examples
+#' # Import the example CDSR.
+#' import_cdsr_excel(dstCSDR_files("Example_CDSR_1921.xls"))
+#'
+#' \dontrun{
+#'
+#' # Import a CDSR from a fake user desktop by directly passing the path.
+#' import_cdsr_excel("C:/Users/john.doe/Desktop/DD Form 1921 submission.xls")
+#'
+#' # Import a CDSR from a fake user desktop by passing a path object.
+#' cdsr_path <- "C:/Users/john.doe/Desktop/DD Form 1921 submission.xls"
+#' import_cdsr_excel(cdsr_path)
+#'
+#' }
 import_cdsr_excel <- function(path) {
 
   # Import metadata and create an object out of it. ---------------------------

@@ -27,6 +27,21 @@ Import a CSDR CDSR (DD Form 1921) from Excel into a Tibble
 Takes a CSDR CDSR (DD Form 1921) Excel worksheet and imports it to three a
 tibbles.
 }
+\examples{
+# Import the example CDSR.
+import_cdsr_excel(dstCSDR_files("Example_CDSR_1921.xls"))
+
+\dontrun{
+
+# Import a CDSR from a fake user desktop by directly passing the path.
+import_cdsr_excel("C:/Users/john.doe/Desktop/DD Form 1921 submission.xls")
+
+# Import a CDSR from a fake user desktop by passing a path object.
+cdsr_path <- "C:/Users/john.doe/Desktop/DD Form 1921 submission.xls"
+import_cdsr_excel(cdsr_path)
+
+}
+}
 \author{
 Daniel Germony \email{daniel.r.germony.civ@mail.mil}
 }
