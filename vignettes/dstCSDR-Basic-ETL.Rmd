@@ -23,13 +23,13 @@ The basic `{dstCSDR}` ETL pipeline lets you import, tidy, and (optionally) retur
 We can see a list of those example CSDR files using the `dstCSDR::example_dstCSDR_files()` function.
 
 ```{r print-example-files}
-example_dstCSDR_files()
+dstCSDR_files()
 ```
 
-If we pass `example_dstCSDR_files()` the name of one of those files, it will give us back a full path to where that file is on our system (this will be helpful in a minute when we import these).  
+If we pass `dstCSDR_files()` the name of one of those files, it will give us back a full path to where that file is on our system (this will be helpful in a minute when we import these).  
 
 ```{r print-path-to-one-example-file}
-example_dstCSDR_files("Example_CDSR_1921.xls")
+dstCSDR_files("Example_CDSR_1921.xls")
 ```
 
 
@@ -72,12 +72,12 @@ import_cdsr_excel(file.choose())
 
 ### Import Function Examples
 
-Let's import the CDSR and FCHR from the example excel files provided with the package.  The `example_dstCSDR_files()` function will return a complete file path if we pass it the name of the file we want to target 
+Let's import the CDSR and FCHR from the example excel files provided with the package.  The `dstCSDR_files()` function will return a complete file path if we pass it the name of the file we want to target 
 
  
 ```{r import}
-cdsr <- import_cdsr_excel(example_dstCSDR_files("Example_CDSR_1921.xls"))
-fchr <- import_fchr_excel(example_dstCSDR_files("Example_FCHR_1921_1.xls"))
+cdsr <- import_cdsr_excel(dstCSDR_files("Example_CDSR_1921.xls"))
+fchr <- import_fchr_excel(dstCSDR_files("Example_FCHR_1921_1.xls"))
 ```
 
 # Review of the CSDR Objects That Were Imported
