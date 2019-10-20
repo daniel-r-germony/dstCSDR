@@ -30,7 +30,7 @@ worksheet and imports it to a set of tibbles.
 }
 \examples{
 # Import the example FCHR.
-import_fchr_excel(dstCSDR_files("Example_FCHR_1921-1.xls"))
+import_fchr_excel(dstCSDR_files("Example_FCHR_1921_1.xls"))
 
 \dontrun{
 

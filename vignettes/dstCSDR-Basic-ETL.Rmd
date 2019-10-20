@@ -1,5 +1,5 @@
 ---
-title: "dstCSDR-Basic-ETL"
+title: "{dstCSDR} Basic ETL Pipeline"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{dstCSDR-Basic-ETL}
@@ -16,11 +16,12 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(dstCSDR)
+library(magrittr)   # For %>% 
 ```
 
-The basic `{dstCSDR}` ETL pipeline lets you import, tidy, and (optionally) return the data back to Excel for further review and processing.  The package comes with same example CSDR files included which we will use in this vignette.  
+The basic `{dstCSDR}` ETL pipeline lets you import, tidy, and (optionally) return the data back to Excel for further review and processing.  The package comes with some example CSDR files included which we will use in this vignette.  
 
-We can see a list of those example CSDR files using the `dstCSDR::example_dstCSDR_files()` function.
+We can see a list of those example CSDR files using the `dstCSDR_files()` function.
 
 ```{r print-example-files}
 dstCSDR_files()
@@ -32,8 +33,7 @@ If we pass `dstCSDR_files()` the name of one of those files, it will give us bac
 dstCSDR_files("Example_CDSR_1921.xls")
 ```
 
-
-# On the agenda
+# On the Agenda
 
 In this vignette, we will:  
 
@@ -41,9 +41,9 @@ In this vignette, we will:
 2.  we will tidy the FCHR (DD Form 1921-1),  
 3.  return that data to Excel for further processing.
 
-# Importing CSDR Data
+# 1. Importing CSDR Data
 
-### Import Function Overview
+## Import Function Overview
 
 The `{dstCSDR}` package takes a tip from tidyverse packages and utilizes a consistent naming convention when it comes to working with CSDR data.  
 
@@ -57,30 +57,35 @@ Finally the function names end with the type of file you are importing that CSDR
 * `import_cdsr_excel() # Imports a CDSR (DD Form 1921) from a source Excel file`
 * `import_fchr_xml() # Imports a FCHR (DD Form 1921-1) from a source XML file`
 
-You then pass the functions the full path (including file name and extension) to where the CSDR file resides on your system, ShareDrive, or network connection.  The below code won't actually run since this location does not actually exist, but hopefully you get the point:  
+You then pass the functions the full path (including file name and extension) to where the CSDR file resides on your system, ShareDrive, or network connection.  (The below code won't actually run since this location does not actually exist, but hopefully you get the point.)  
 
 ```{r import-direct-path, eval=FALSE, include=TRUE}
 import_cdsr_excel("C:/Users/john.doe/Documents/CDSR.xls")
 ```
 
-
-You could also use `file.choose()` which will create a popup box that you can use to navigate to your file, you could do something like this:  
+You could also use `file.choose()` which will create a popup box that you can use to navigate to your file.  
 
 ```{r import-with-file.choose, eval=FALSE, include=TRUE}
 import_cdsr_excel(file.choose())
 ```
 
-### Import Function Examples
+## Import Function Examples
 
-Let's import the CDSR and FCHR from the example excel files provided with the package.  The `dstCSDR_files()` function will return a complete file path if we pass it the name of the file we want to target 
+Let's import the CDSR and FCHR from the example Excel files provided with the package.  
 
- 
-```{r import}
+```{r import-cdsr-and-fchr}
 cdsr <- import_cdsr_excel(dstCSDR_files("Example_CDSR_1921.xls"))
 fchr <- import_fchr_excel(dstCSDR_files("Example_FCHR_1921_1.xls"))
 ```
 
-# Review of the CSDR Objects That Were Imported
+This created two new objects in your Global Environment:
+
+* `cdsr` includes the data found in the `Example_CDSR_1921.xls` file.
+* `fchr` includes the data found in the `Example_FCHR_1921_1.xls` file.
+
+Note that the `dstCSDR_files()` function we used above returned the complete file path for each file since we included the file name (with extension) in the `dstCSDR_files()` function call.  If you wanted to import your own data, you would replace "`dstCSDR_files("...")`" with a direct path to your file.
+
+## Review of the Imported CSDR Objects 
 
 Now that we have imported those files into the `cdsr` and `fchr` objects, what did we actually get?  
 
@@ -88,11 +93,50 @@ Now that we have imported those files into the `cdsr` and `fchr` objects, what d
 
 > What does that mean?  
 
-Fair question.  Let's look at the CDSR (DD Form 1921) as an example.
+Fair question.  Let's look at the first level of the `cdsr` object as an example.
 
-```{r}
-str(cdsr)
+```{r str-level-1-cdsr}
+str(cdsr, max.level = 1)
 ```
 
+Above we can see that `cdsr` is comprised of three named tables:
+* `metadata`: Includes the CSDR submission metadata found at the top of the legacy forms.  
+* `reported_data`: Includes reported costs by WBS element (the middle section of the legacy CDSR form).  
+* `summary_reporting_elements`: Includes the summary elements like G&A and fee which are not directly attributable to any one WBS element (the bottom of the legacy CDSR form).  
 
+Here is each of those three tables, one at a time (using `kable()` to print them since that looks nicer than `print()` in HTML):  
 
+## `metadata`
+
+```{r kable-metadata}
+cdsr[["metadata"]] %>% 
+  knitr::kable()
+```
+
+## `reported_data`
+
+```{r kable-reported-data}
+cdsr[["reported_data"]] %>%
+   knitr::kable()
+```
+
+## `summary_reporting_elements`
+
+```{r kable-summary_reporting_elements}
+cdsr[["summary_reporting_elements"]] %>%
+  knitr::kable()
+```
+
+The `fchr` object follows the same pattern:  
+
+```{r str-level-1-fchr}
+str(fchr, max.level = 1)
+```
+
+In fact, the `metadata` object in both `cdsr` and `fchr` will match exactly (assuming the submitter entered the same metadata).
+
+# 2. Tidying the `fchr` Data
+
+The `{dstCSDR}` package imports the CSDR data so that the initial tables look similar to the original CSDR forms.  Those CSDR forms are human readable but that format is not particularly conducive to exploratory data analysis (EDA) or use in R (or even Excel).  
+
+`{dstCSDR}` includes a few functions that transform the CSDR data from its origional format into a tidy table and can combine the reported cost data with the metadata, making it easier to work with multiple submissions at once.
