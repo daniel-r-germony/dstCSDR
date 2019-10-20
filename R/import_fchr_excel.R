@@ -19,7 +19,7 @@
 #' @export
 #' @examples
 #' # Import the example FCHR.
-#' import_fchr_excel(dstCSDR_files("Example_FCHR_1921-1.xls"))
+#' import_fchr_excel(dstCSDR_files("Example_FCHR_1921_1.xls"))
 #'
 #' \dontrun{
 #'
