@@ -23,6 +23,7 @@
 #'     but splits the CDRL document into multiple files (each CSDR CDRL gets
 #'     its own file and each non-CSDR CDRL gets lumped into one file) for
 #'     easier uploading into the CADE PPM.
+#'     }}
 #'
 #' @return Returns nothing to R but does put the following files at the
 #'   \code{output_dir}, dependent on what is passed to the

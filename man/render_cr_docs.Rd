@@ -15,6 +15,21 @@ function call, a file selection box will be opened.}
 \item{output_dir}{Required. A directory path to where the user wants the
 generated files to be placed. If a path is not passed by Windows users, a
 pop-up box will appear. Non-Windows users must pass a directory path.}
+
+\item{files_to_render}{Optional. Specify which files are rendered and how
+they are returned. Options:
+\describe{
+\item{\code{"default"}}{The default value and will render and return the
+following:
+\enumerate{
+\item SOW: All SOW language in one ".docx" file.
+\item CDRLs: All cost reporting CDRLs in one ".docx" file.
+}}
+\item{\code{"PPM_ready"}}{Returns the same files as \code{"default"}
+but splits the CDRL document into multiple files (each CSDR CDRL gets
+its own file and each non-CSDR CDRL gets lumped into one file) for
+easier uploading into the CADE PPM.
+}}}
 }
 \value{
 Returns nothing to R but does put the following files at the
