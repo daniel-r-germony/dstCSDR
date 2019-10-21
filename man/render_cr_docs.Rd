@@ -4,7 +4,8 @@
 \alias{render_cr_docs}
 \title{Create Cost Reporting SOW, CDRLs, Attachments with Params}
 \usage{
-render_cr_docs(params_path = file.choose(), output_dir = choose.dir())
+render_cr_docs(params_path = file.choose(), output_dir = choose.dir(),
+  files_to_render = "default")
 }
 \arguments{
 \item{params_path}{Required. A full path to a filled-in
@@ -17,19 +18,24 @@ pop-up box will appear. Non-Windows users must pass a directory path.}
 }
 \value{
 Returns nothing to R but does put the following files at the
-\code{output_dir}: \enumerate{ \item A Word document with cost reporting
-scope of work language, filled in with the param values from the
-"cost_reporting_params.xlsx" file. \item A Word document with cost
-reporting CDRLs, filled in with the param values from the
-"cost_reporting_params.xlsx" file. \item A partially complete CSDR Plan
-attachment, filled in with the param values from the
-"cost_reporting_params.xlsx" file. \item A partially complete RDT
-attachment, filled in with the param values from the
-"cost_reporting_params.xlsx" file. \item A partially complete LSPD Report
-attachment (if required), filled in with the param values from the
-"cost_reporting_params.xlsx" file. \item A complete AUMC Report attachment
-(if required), filled in with the param values from the
-"cost_reporting_params.xlsx" file. }
+\code{output_dir}, dependent on what is passed to the
+\code{files_to_render} paramater:
+\enumerate{
+\item A Word document with cost reporting scope of work language,
+filled in with the param values from the "cost_reporting_params.xlsx"
+file.
+\item A Word document with cost reporting CDRLs, filled in with the
+param values from the "cost_reporting_params.xlsx" file.
+\item A partially complete CSDR Plan attachment, filled in with the
+param  values from the "cost_reporting_params.xlsx" file.
+\item A partially complete RDT attachment, filled in with the param
+values from the "cost_reporting_params.xlsx" file.
+\item A partially complete LSPD Report attachment (if required),
+filled in with the param values from the "cost_reporting_params.xlsx"
+file.
+\item A complete AUMC Report attachment (if required), filled in with
+the param values from the "cost_reporting_params.xlsx" file.
+}
 }
 \description{
 Imports a pre-formatted and filled in Excel file with info on the planned
@@ -38,8 +44,7 @@ contract attachments from template documents.
 }
 \examples{
 \dontrun{
-render_cr_docs(
-  params_path = here::here("extdata", "cost_reporting_params.xlsx"),
-  output_dir = "C:/Users/john.doe/Desktop"
-)}
+render_cr_docs(params_path = here::here("extdata", "cost_reporting_params.xlsx"),
+               output_dir = "C:/Users/john.doe/Desktop")
+         }
 }
