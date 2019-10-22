@@ -16,7 +16,8 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(dstCSDR)
-library(magrittr)   # For %>% 
+library(tidyverse, quietly = TRUE)
+library(gt)
 ```
 
 The basic `{dstCSDR}` ETL pipeline lets you import, tidy, and (optionally) return the data back to Excel for further review and processing.  The package comes with some example CSDR files included which we will use in this vignette.  
@@ -110,21 +111,24 @@ Here is each of those three tables, one at a time (using `kable()` to print them
 
 ```{r kable-metadata}
 cdsr[["metadata"]] %>% 
-  knitr::kable()
+  gt() %>% 
+  tab_options(column_labels.font.size = 11, table.font.size = 11)
 ```
 
 ## `reported_data`
 
 ```{r kable-reported-data}
 cdsr[["reported_data"]] %>%
-   knitr::kable()
+  gt() %>% 
+  tab_options(column_labels.font.size = 11, table.font.size = 11)
 ```
 
 ## `summary_reporting_elements`
 
 ```{r kable-summary_reporting_elements}
 cdsr[["summary_reporting_elements"]] %>%
-  knitr::kable()
+  gt() %>% 
+  tab_options(column_labels.font.size = 11, table.font.size = 11)
 ```
 
 The `fchr` object follows the same pattern:  
@@ -139,4 +143,35 @@ In fact, the `metadata` object in both `cdsr` and `fchr` will match exactly (ass
 
 The `{dstCSDR}` package imports the CSDR data so that the initial tables look similar to the original CSDR forms.  Those CSDR forms are human readable but that format is not particularly conducive to exploratory data analysis (EDA) or use in R (or even Excel).  
 
-`{dstCSDR}` includes a few functions that transform the CSDR data from its origional format into a tidy table and can combine the reported cost data with the metadata, making it easier to work with multiple submissions at once.
+The `gather_fchr()` and `add_supplemental_fchr_columns()` functions transform the CSDR data from its original format to a tidy/pivot friendly flat file format and combines the reported cost & hours data with reported metadata.  The result is FCHR data in a format that is easier to work with both on its own or with multiple submissions (or multiple program's data) at once.  
+
+Before being transformed, the first few rows of the `fchr` reported data look like this:
+
+```{r native-fchr}
+fchr[["reported_data"]] %>%
+  head() %>% 
+  gt() %>% 
+  tab_options(column_labels.font.size = 11, table.font.size = 11)
+```
+
+That data is very wide (so wide, it likely did not even print very well on your screen).  
+
+The `gather_fchr()` takes the all the "Cost and Hours..." columns and moves them down and two the left so that each row in the new table gives just one record of cost or hours data (vs. seven columns of data like the default `fchr` data).  Here is what that same data looks like after we run it though `gather_fchr()`:  
+
+```{r gathered-fchr}
+fchr %>%
+  gather_fchr() %>%
+  .[["reported_data"]] %>%
+  head() %>%
+  gt() %>% 
+  tab_options(column_labels.font.size = 11, table.font.size = 11)
+  
+```
+
+A close look at the code in the last chunk compared to those that came before revales two notable points:  
+
+1. In all prior chunks, the second list object `"reported_data"` was specified before we printed something but in the last chunk, the whole `fchr` object was passed to `gather_fchr()`.  This is because `gather_fchr()` is expecting to be passed the whole `fchr`, not just the `"reported data"`.  
+
+2. 
+
+Now we have the data in a tall (rather than wide) table which is ready to work with via a pivot table or 
