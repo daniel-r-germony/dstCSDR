@@ -13,8 +13,9 @@ render_cr_docs(params_path = file.choose(), output_dir = choose.dir(),
 function call, a file selection box will be opened.}
 
 \item{output_dir}{Required. A directory path to where the user wants the
-generated files to be placed. If a path is not passed by Windows users, a
-pop-up box will appear. Non-Windows users must pass a directory path.}
+generated files to be placed. If using Windows, a pop-up box will ppear to
+specify an output directory. Non-Windows users must pass a directory path
+in the function call.}
 
 \item{files_to_render}{Optional. Specify which files are rendered and how
 they are returned. Options:
@@ -25,22 +26,22 @@ following:
 \item SOW: All SOW language in one ".docx" file.
 \item CDRLs: All cost reporting CDRLs in one ".docx" file.
 }}
-\item{\code{"PPM_ready"}}{Returns the same files as \code{"default"}
+\item{\code{"cade_ready"}}{Returns the same files as \code{"default"}
 but splits the CDRL document into multiple files (each CSDR CDRL gets
 its own file and each non-CSDR CDRL gets lumped into one file) for
-easier uploading into the CADE PPM.
+easier uploading into the CADE's Program Planning Module.
 }}}
 }
 \value{
-Returns nothing to R but does put the following files at the
+Returns nothing to R but does puts the following files at the
 \code{output_dir}, dependent on what is passed to the
 \code{files_to_render} paramater:
 \enumerate{
 \item A Word document with cost reporting scope of work language,
 filled in with the param values from the "cost_reporting_params.xlsx"
 file.
-\item A Word document with cost reporting CDRLs, filled in with the
-param values from the "cost_reporting_params.xlsx" file.
+\item A Word document or documents with cost reporting CDRLs, filled
+in with the param values from the "cost_reporting_params.xlsx" file.
 \item A partially complete CSDR Plan attachment, filled in with the
 param  values from the "cost_reporting_params.xlsx" file.
 \item A partially complete RDT attachment, filled in with the param
@@ -59,6 +60,13 @@ contract attachments from template documents.
 }
 \examples{
 \dontrun{
+# Render the cost reporting documents and select both the
+# "cost_reporting_params.xlsx" file and output directory using pop-up boxes.
+render_cr_docs()
+
+# Render the cost reporting documents with the default
+# "cost_reporting_params.xlsx" values and put the output on a fake user's
+# desktop.
 render_cr_docs(params_path = here::here("extdata", "cost_reporting_params.xlsx"),
                output_dir = "C:/Users/john.doe/Desktop")
          }
