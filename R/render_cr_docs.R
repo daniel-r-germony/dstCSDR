@@ -80,6 +80,12 @@ render_cr_docs <- function(params_path = file.choose(),
     tidyr::pivot_wider(names_from = .data$params,
                        values_from = .data$`User Input`)
 
+  # Source the .cdrl_block_info.R script to read some of the basic CDRL info
+  # into R (which will be needed in the render step).
+
+  source(here::here("R",".cdrl_block_info.R"),
+         local = TRUE) # `local = TRUE` lets this script access the `params_from_excel`
+
   # Reader the SOW document docx. =============================================
   rmarkdown::render(
     input = system.file("extdata",
