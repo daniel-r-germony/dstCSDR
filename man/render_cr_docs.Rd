@@ -5,7 +5,7 @@
 \title{Create Cost Reporting SOW, CDRLs, Attachments with Params}
 \usage{
 render_cr_docs(params_path = file.choose(), output_dir = choose.dir(),
-  files_to_render = "default")
+  combine_cdrls = TRUE)
 }
 \arguments{
 \item{params_path}{Required. A full path to a filled-in
@@ -17,46 +17,29 @@ generated files to be placed. If using Windows, a pop-up box will ppear to
 specify an output directory. Non-Windows users must pass a directory path
 in the function call.}
 
-\item{files_to_render}{Optional. Specify which files are rendered and how
-they are returned. Options:
+\item{combine_cdrls}{Optional. Should all CDRLs be written into one .docx or
+one .docx per CDRL. Options:
 \describe{
-\item{\code{"default"}}{The default value and will render and return the
-following:
-\enumerate{
-\item SOW: All SOW language in one ".docx" file.
-\item CDRLs: All cost reporting CDRLs in one ".docx" file.
-}}
-\item{\code{"cade_ready"}}{Returns the same files as \code{"default"}
-but splits the CDRL document into multiple files (each CSDR CDRL gets
-its own file and each non-CSDR CDRL gets lumped into one file) for
-easier uploading into the CADE's Program Planning Module.
-}}}
+\item{\code{"TRUE"}}{The CDRLs will be included in one Word file. The
+default.}
+\item{\code{"FALSE"}}{Each CDRL is written to its own Word file.}}}
 }
 \value{
 Returns nothing to R but does puts the following files at the
-\code{output_dir}, dependent on what is passed to the
-\code{files_to_render} paramater:
+\code{output_dir}:
 \enumerate{
-\item A Word document with cost reporting scope of work language,
+\item A Word file (.docx) with cost reporting scope of work language,
 filled in with the param values from the "cost_reporting_params.xlsx"
 file.
-\item A Word document or documents with cost reporting CDRLs, filled
-in with the param values from the "cost_reporting_params.xlsx" file.
-\item A partially complete CSDR Plan attachment, filled in with the
-param  values from the "cost_reporting_params.xlsx" file.
-\item A partially complete RDT attachment, filled in with the param
-values from the "cost_reporting_params.xlsx" file.
-\item A partially complete LSPD Report attachment (if required),
+\item A Word file (.docx) or Word files with cost reporting CDRLs,
 filled in with the param values from the "cost_reporting_params.xlsx"
 file.
-\item A complete AUMC Report attachment (if required), filled in with
-the param values from the "cost_reporting_params.xlsx" file.
 }
 }
 \description{
 Imports a pre-formatted and filled in Excel file with info on the planned
-contract and system then generates a scope of work, CDRLs, and associated
-contract attachments from template documents.
+contract and system then generates a scope of work, CDRLs, and  (comming
+soon) associated contract attachments from template documents.
 }
 \examples{
 \dontrun{
