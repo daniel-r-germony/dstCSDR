@@ -12,6 +12,29 @@ prime_vs_sub <- if (params_from_excel$CSDR_Plan_type == "Contract") {"Contractor
 
 # Block 2: CDRL Titles ========================================================
 
+CWBS_CDRL_title_abbr         <- "CWBS"
+RDT_CDRL_title_abbr          <- "RDT"
+FlexFile_CDRL_title_abbr     <- "FlexFile"
+QtyData_CDRL_title_abbr      <- "Qty"
+CDSR_CDRL_title_abbr         <- "CDSR"
+FCHR_CDRL_title_abbr         <- "FCHR"
+PCR_CDRL_title_abbr          <- "PCR"
+CBDR_CDRL_title_abbr         <- "CBDR"
+SFCHR_CDRL_title_abbr        <- "SFCHR"
+MR_CDRL_title_abbr           <- "MRR"
+TDR_CDRL_title_abbr          <- "TDR"
+SDR_CDRL_title_abbr          <- "SDR"
+SMR_CDRL_title_abbr          <- "SMR"
+ERP_CDRL_title_abbr          <- "SDERPR"
+CFSR_CDRL_title_abbr         <- "CFSR"
+PaCR_CDRL_title_abbr         <- "PaCR"
+LSPD_CDRL_title_abbr         <- "LSPD"
+AUMC_CDRL_title_abbr         <- "AUCM"
+BOM_CDRL_title_abbr          <- "BOM"
+meeting_docs_CDRL_title_abbr <- "PAC"
+
+# Block 2: CDRL Titles ========================================================
+
 CWBS_CDRL_title         <- "Contractor Work Breakdown Structure (CWBS)"
 RDT_CDRL_title          <- "Resource Distribution Table (RDT)"
 FlexFile_CDRL_title     <- "Cost and Hour Report (FlexFile)"
