@@ -1,0 +1,123 @@
+---
+title: "Bill of Materials CDRL"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+version: 0.1.0
+---
+
+A. CONTRACT LINE ITEM NO.........: `r params$cdrl_clin_numb`  
+B. EXHIBIT.......................: `r params$cdrl_exhibit`  
+C. CATEGORY......................: Other.  
+D. SYSTEM/ITEM...................: `r params$prime_mission_product`  
+E. CONTRACT/PR NUMBER............: `r params$contract_numb`  
+F. CONTRACTOR....................: `r params$contractor_name`  
+G. PREPARED BY...................: `r params$cdrl_prepared_by`  
+H. DATE..........................: `r params$cdrl_prepared_date`  
+I. APPROVED BY...................: `r params$cdrl_approved_by`  
+J. DATE..........................: `r params$cdrl_approved_date`  
+01. DATA ITEM NUMBER.............: `r params$BOM_CDRL_numb`  
+02. TITLE OF DATA ITEM...........: `r BOM_CDRL_title`  
+03. SUBTITLE ....................: `r BOM_CDRL_subtitle`  
+04. AUTHORITY....................: `r BOM_CDRL_did`(T) and see Block 16.  
+05. CONTRACT REFERENCE...........:  
+06. REQUIRING OFFICE.............: `r params$program_office_name_abbr`  
+07. DD 250 REQ...................: See Block 16.  
+08. APPROVAL CODE................: None.  
+09. DIST. STATEMENT REQUIRED.....: `r BOM_CDRL_dist`  
+10. FREQUENCY....................: See Block 16.  
+11. AS OF DATE...................: See Block 16.  
+12. DATE OF FIRST SUBMISSION.....: See Block 16.  
+13. DATE OF SUBSEQUENT SUBMISSION: See Block 16.  
+14. DISTRIBUTION.................: See Block 16.  
+15. TOTAL........................: See Block 16.  
+16. REMARKS......................:  
+
+Block 04: The `r prime_vs_sub` shall develop, maintain, and deliver the data item in accordance with `r BOM_CDRL_did` and as tailored in this CDRL.  
+
+The "Requirements" section of the DID is deleted and replaced with the following:  
+
+1. Content: The report shall contain the specified data via an indentured Bill Of Materials (BOM) to include any and all parts that are or were ever included in the `r params$prime_mission_product_abbr`, include all Engineering Change Orders (ECOs), Engineering Change Proposals (ECPs), Value Engineering Change Proposals (VECPs), and other configuration modifications. Data shall be reported at all levels of assembly down to the piece-part level (e.g, nuts, bolts) to include the production level of Assembly (i.e., the level at which parts are integrated and assembled to complete initial production) the field level of sustainment (i.e., the level at which either organic or contractor maintainers  remove and replace parts in order to complete scheduled and unscheduled services), and at the depot level of sustainment (i.e., the level at which either the prime mission product or any sub-assembly could repaired by either the contractor or an organic depot).  
+
+2. Required Information: The report shall be prepared in contractor format and must at a minimum include:  
+i) Contract Number: Self-explanatory.  
+
+ii) Submission Number: Self-explanatory.  
+
+iii) Re-submission Number: A re-submission occurs if prior submission(s) for the submission event were rejected. Enter “0” for original submission. If the report is a re-submission, enter the re-submission number, starting with “1” for the first re-submission, “2” for the second re-submission, and so on.  
+
+iv) As of Date: The date in which the source data used to create the report was current.  
+
+v) Assembly Level: An integer utilized to identify the parent-child hierarchical relationship for all parts listed in the deliverable. Utilize "1" for a highest level of assembly/part number (i.e., the prime mission product), utilize "2" to identify assemblies/part numbers which - when combined - create the highest level of assembly/part number (i.e., assembly level 1). Utilize "3" to identify assemblies/part numbers which - when combined - create the part number listed in the "Parent Part Number" column (i.e., the part number at assembly level 2). Repeat the aforementioned pattern/methodology for assembly levels "4" and greater.  
+
+vi) Army Ordnance Part Number (AOPN): Self-explanatory.  
+
+vii) Part Number (Prime Contractor): The part number the prime contractor uses to identify, track, and manage the part.  
+
+viii) Supplier Name: The name of the subcontractor who supplies the part to the prime contract for additional and/or final assembly into the `r params$prime_mission_product_abbr`. Enter the prime contractors name if produced by the prime contractor.  
+
+ix) Part Number (Subcontractor/Manufacturer): The part number the Subcontractor uses to identify a part. Enter the Part Number (Prime Contractor) if the part is produced by the prime contractor.  
+
+x) Part Nomenclature: The nomenclature the prime contractor utilizes to refer to the part.  
+
+xi) Part Revision Number: A unique value used to track and identify the prior, current, or proposed but not approved designs associated with part number.  
+
+xii) Release Authorization Number: E.g. Engineering Change Proposal Number, Change Order, Change Notice, ERR.  
+
+xiii) Parent Part Number: The drawing or part number of the next higher assembly. Enter “N/A” if no higher level of assembly exists.  
+
+xiv) Change Completion Priority: The priority assigned to complete the design change, from 1 to n where “1” is the highest priority design change, “2” the second highest priority design change, etcetera.  
+
+xv) Part CAGE Code (Prime Contractor): Self-explanatory.  
+
+xvi) Part CAGE Code (Supplier): Self-explanatory.  
+
+xvii) Supplier Data Universal Numbering System (DUNS) Number: Self-explanatory.  
+
+xviii) National Stock Number (NSN): Self-explanatory and as applicable.  
+
+xix) Part Number Status: e.g. Active (used if the row represents the current design), Inactive (used if the row has been superseded by a more current “Active” design), Obsolete (a special form of “Inactive” used to identify that a change in design occurred due to obsolescence rather a performance change). The contractor is encouraged to utilize whatever values it believes will best represent the status of a row but shall provide a data dictionary of utilized terms.  
+
+xx) Quantity by Assembly - Value: The quantity as either an integer (e.g., 1, 2, 3) or floating point number (e.g., 1.5, 0.33) of each item at the specified level of assembly/row.  
+
+xxi) Quantity by Assembly - Unit of Measure: The basis of measurement for "Quantity by Assembly" (e.g., “EA” for each, “IN” for inch). The contractor is encouraged to utilize values found in ASME Y14.38-2007 (or latest addition). If the contractor utilizes any values not found in ASME Y14.38-2007 (or latest addition), the contractor shall provide a data dictionary of utilized terms.  
+
+xxii) Unit Weight - Value: An integer or floating point number which, combined with the "Unit Weight - Unit of Measure", identifies the weight of one unit such that "Unit Weight" multiplied by "Quantity by Assembly" will equal the total weight of the part number in one complete assembly. Mark "NA" on rows which represent software.  
+
+xxiii) Unit Weight - Unit of Measure: The unit of measure (e.g., "kg"" for kilogram) represented in "Unit Weight". The contractor is encouraged to utilize values found in either ASME Y14.38-2007 (or latest addition) or IEEE Standard Letter Symbols for Units of Measurement, Std 260.1™-2004 (or latest addition). If the contractor utilizes any values not found in ASME Y14.38-2007 (or latest addition) or IEEE Standard Letter Symbols for Units of Measurement, Std 260.1™-2004 (or latest addition), the contractor shall provide a data dictionary of utilized terms. Mark "NA" on rows which represent software.  
+
+xxiv) Production Level of Assembly (Yes/Below/Above): “Yes” if the row represents a level of assembly integrated into the final system on the assembly line or the AOPN starts with “57k”. “Below” if the row is part of a higher level assembly which is otherwise integrated into the final system on the assembly line.  “Above” if the row represents a level of assembly higher than what is integrated into the final system on the assembly line.  
+
+xxv) Sustainment Level of Assembly (Yes/Below/Above): Write “Yes” if the AOPN starts with anything other than “57k” or the row represents a level of assembly at which the system may be disassembled for the purposes of schedule or unscheduled service (i.e., the part is a consumable or a reparable). “Below” if the row is part of a higher level assembly which will not be disassembled for the purposes of schedule or unscheduled service. “Above” if the row represents a level of assembly higher than what may be removed and replaced as part of scheduled or unscheduled service.  
+
+xxvi) End-Item Nomenclature: Identify the name of the End-Item the row is associated with.  
+
+xxvii) WBS Number: The WBS number of the lowest applicable level Product Orientated WBS element from the `r params$CSDR_Plan_attch_numb` - CSDR Plan.  
+
+xxviii) WBS Name: The name of the lowest applicable level Product Orientated WBS element from the `r params$CSDR_Plan_attch_numb` - CSDR Plan.  
+
+xxix) Unit Cost: The unit cost for the part in the contractor’s accounting system or as provided on a quote/purchase order or as estimated by the contractor. This value represents the direct internal cost for the contractor to procure or assembly/manufacture the part number and does not include any overhead or cost loaders which are document via the contractor’s CAS Disclosure Statement. The contractor shall update this value at least once annually.  
+
+xxx) Unit Cost Source: The source of the data provided for “Unit Price” (e.g., quote/purchase order number, estimate).  
+
+xxxi) Unit Price: A representative sale price for the row. This value is the “Unit Cost” plus all associated loaders and overheads documented via the contractor’s Cost Accounting Standards (CAS) Disclosure Statement which would represent the sale price which the government may pay the contractor to procure the part number identified on the row. The contractor shall identify which forward rate pricing loaders, overheads, and profit/fee were utilized to calculate the row from “Unit Cost” to “Unit Price”. The contractor shall update this value at least once annually.  
+
+xxxii) Unit Price Basis of Estimate: The planned procurement quantity of the item utilized when developing the unit price (e.g., if the unit price is from a supplier quote, what quantity of the part was quoted). If using a standard price accounting system, enter the average quantity used to establish the standard price and mark that the unit price is a standard price.  
+
+xxxiii) Buy Type: E.g., Commercial-Off-the-Shelf (COTS), Government-Off-The-Shelf (GOTS), modified COTS/GOTS, Developmental Item, Government Furnished Equipment, other (specific with description).  
+
+xxxiv) Hardware or Software: Self-explanatory.  
+
+xxxv) Asserted Rights and Source Controls: Identify what rights and source controls the contractor has and is asserting on the part number identified on the row.  
+
+Block 07: When submitted with a CSDR deliverable, the DCARC office will issue a letter stating if the submission to the DCARC website has been accepted or rejected. Deliverables will be reviewed for technical content and/or format. Should the Government require the data item to be corrected after its delivery the contractor shall resubmit an update within 15 calendar days after receipt of Government comments.  
+
+Block 10, 11, 12, and 13: The contractor shall submit reports at frequencies specified in Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan and with each ECP, at weekly Integrated Product Team (IPT) meetings, at Program Management Review (PMR) meetings, at the Initial Design Review meeting, and at the Final Design Review meeting.  
+
+Block 14: The `r prime_vs_sub` shall submit files electronically using the CADE website. Data submitters shall register through the CADE website and possess a DoD-approved ECA digital certificate or DoD-issued CAC to obtain a CADE Portal account and be authorized to upload CSDR content. Users can obtain access by submitting user information about themselves and their organizations to the CADE Portal and requesting a CSDR submitter user role. After the registration information has been verified, CAPE shall authorize the user account and requested roles. All CADE Portal accounts shall be renewed at least annually.  
+
+`r params$submission_instructions`  
+
+17. PRICE GROUP..................: N/A  
+18. ESTIMATED TOTAL PRICE........: N/A  

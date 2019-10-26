@@ -1,0 +1,50 @@
+---
+title: "Post Award Conference Materials CDRL"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+version: 0.1.0
+---
+
+A. CONTRACT LINE ITEM NO.........: `r params$cdrl_clin_numb`  
+B. EXHIBIT.......................: `r params$cdrl_exhibit`  
+C. CATEGORY......................: Other.  
+D. SYSTEM/ITEM...................: `r params$prime_mission_product`  
+E. CONTRACT/PR NUMBER............: `r params$contract_numb`  
+F. CONTRACTOR....................: `r params$contractor_name`  
+G. PREPARED BY...................: `r params$cdrl_prepared_by`  
+H. DATE..........................: `r params$cdrl_prepared_date`  
+I. APPROVED BY...................: `r params$cdrl_approved_by`  
+J. DATE..........................: `r params$cdrl_approved_date`  
+01. DATA ITEM NUMBER.............: `r params$meeting_docs_numb`  
+02. TITLE OF DATA ITEM...........: `r meeting_docs_CDRL_title`  
+03. SUBTITLE ....................: `r meeting_docs_CDRL_subtitle`  
+04. AUTHORITY....................: `r meeting_docs_CDRL_did`(T) see Block 16.  
+05. CONTRACT REFERENCE...........:  
+06. REQUIRING OFFICE.............: `r params$program_office_name_abbr`  
+07. DD 250 REQ...................: LT  
+08. APPROVAL CODE................: A  
+09. DIST. STATEMENT REQUIRED.....: `r meeting_docs_CDRL_dist`  
+10. FREQUENCY....................: See Block 16.  
+11. AS OF DATE...................: See Block 16.  
+12. DATE OF FIRST SUBMISSION.....: See Block 16.  
+13. DATE OF SUBSEQUENT SUBMISSION: See Block 16.  
+14. DISTRIBUTION.................: See Block 16.  
+15. TOTAL........................: 1  
+16. REMARKS......................:  
+
+Block 04: The `r prime_vs_sub` shall develop and deliver the data item in accordance with `r meeting_docs_CDRL_did` and as tailored in this CDRL.  
+
+The "Requirements" section of the DID is deleted and replaced with the following:  
+
+1. Content & Required Information: The submission shall contain all briefing materials and supporting documents presented or displayed at the "Post-Award Cost and Software Data Reporting Conference".  
+
+Formats: The contractor may develop and submit the deliverable in any format(s) however, submissions cannot be encrypted or password protected and must be able to be opened by the government.  
+
+Block 10, 11, 12, 13, and 14: The `r prime_vs_sub` shall submit one copy of the deliverables electronically to PCO’s email address listed on page one of the contract prior to the Post-Award Cost and Software Data Reporting Conference.  
+
+`r params$submission_instructions`  
+
+17. PRICE GROUP..................: N/A
+18. ESTIMATED TOTAL PRICE........: N/A
