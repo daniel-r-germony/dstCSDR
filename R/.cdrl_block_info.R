@@ -16,7 +16,7 @@ prime_vs_sub <-
 
 CWBS_CDRL_title_abbr         <- "CWBS"
 RDT_CDRL_title_abbr          <- "RDT"
-FlexFile_CDRL_title_abbr     <- "FlexFile"
+FlexFile_CDRL_title_abbr     <- "FF"
 QtyData_CDRL_title_abbr      <- "Qty"
 CDSR_CDRL_title_abbr         <- "CDSR"
 FCHR_CDRL_title_abbr         <- "FCHR"
