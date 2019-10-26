@@ -504,6 +504,12 @@ version: 0.22.0
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r, include=FALSE}
+# Find what: (\>\>\>)*(\<\<\<)
+# make sure "Use widecards" is checked
+# Click in "Replace with:" select "Format" select "Font" then "Font color:" then select red. 
+```
+
 ### Cost and Software Data Reporting (CSDR)
 Cost and Software Data are the primary means by which the Department of Defense (DoD) collects data on the costs that contractors incur on DoD programs. Reliable and comprehensive cost data is essential to produce credible cost estimates as required in both statute and regulation. The Government's goals and use of CSDR data is to improve the quality of cost estimates; ensure proper resource allocation occurs within the DoD; and enable data driven decision making by program and department leadership.  
 
@@ -512,30 +518,31 @@ The `r prime_vs_sub` shall systematically collect and report actual contract cos
 | Report Title                                                                    |             CDRL              |
 | :------------------------------------------------------------------------------ | :---------------------------: |
 | Resource Distribution Table                                                     |   `r params$RDT_CDRL_numb`    |
-| Contract Work Breakdown Structure and Dictionary                                |   `r params$CWBS_CDRL_numb`   |
 | Cost and Hour Report (FlexFile)                                                 | `r params$FlexFile_CDRL_numb` |
 | Quantity Data Report (DD Form 1921-Q)                                           |   `r params$QtyData_CDRL_numb`|
+| Maintenance and Repair Report (DD Form 1921-M/R)                                |    `r params$MR_CDRL_numb`    |
+| Technical Data Report (DD Form 1921-T)                                          |   `r params$TDR_CDRL_numb`    |
+| Contract Work Breakdown Structure and Dictionary                                |   `r params$CWBS_CDRL_numb`   |
 | Cost Data Summary Report (DD Form 1921)                                         |   `r params$CDSR_CDRL_numb`   |
 | Functional Cost-Hour Report (DD Form 1921-1)                                    |   `r params$FCHR_CDRL_numb`   |
 | Progress Curve Report (DD Form 1921-2)                                          |   `r params$PCR_CDRL_numb`    |
 | Contractor Business Data Report (DD Form 1921-3)                                |   `r params$CBDR_CDRL_numb`   |
 | Sustainment Functional Cost-Hour Report (DD Form 1921-5)                        |  `r params$SFCHR_CDRL_numb`   |
-| Maintenance and Repair Report (DD Form 1921-M/R)                                |    `r params$MR_CDRL_numb`    |
-| Technical Data Report (DD Form 1921-T)                                          |   `r params$TDR_CDRL_numb`    |
 | Software Development Report (DD Form 3026-1)                                    |   `r params$SDR_CDRL_numb`    |
 | Software Maintenance Report (DD Form 3026-2)                                    |   `r params$SMR_CDRL_numb`    |
 | Enterprise Resource Planning (ERP) Software Development Report (DD Form 3026-3) |   `r params$ERP_CDRL_numb`    |
-| Contract Funds Status Report (CFSR) (DD Form 1586)                              |   `r params$CFSR_CDRL_numb`   |
-| Performance and Cost Report (P&CR)                                              |   `r params$PaCR_CDRL_numb`   |
+| Bill of Materials (BOM)                                                         |   `r params$BOM_CDRL_numb`    |
 | Lot Size Pricing Data (LSPD)                                                    |   `r params$LSPD_CDRL_numb`   |
 | Average Unit Manufacturing Cost (AUMC) Report                                   |   `r params$AUMC_CDRL_numb`   |
-| Bill of Materials (BOM)                                                         |   `r params$BOM_CDRL_numb`    |
+| Contract Funds Status Report (CFSR) (DD Form 1586)                              |   `r params$CFSR_CDRL_numb`   |
+| Performance and Cost Report (P&CR)                                              |   `r params$PaCR_CDRL_numb`   |
+| Post Award Conference Materials CDRL Required                                   |   `r params$PAC_CDRL_numb`    |
 
 #### Application to Subcontractors
 ```{r , eval=FALSE, echo=FALSE}
 # TODO: Need to automatically identify $20M vs. $50M and MTA memo vs. 5000 as the subcontractor reporting threshold.
 ```
-The `r prime_vs_sub` shall flow-down CSDR requirements referenced in section `UPDATE ME` and its sub-paragraphs to subcontractors (regardless of subcontractor tier) when the subcontract value is expected to exceed `$20` million using the maximum allowable contract quantities, hours, or options (as applicable), as required by Department of Defense (DoD) 5000.04-M-1 - CSDR Manual. The Contractor shall require subcontractors to electronically submit CSDRs deliverables directly to the Defense Cost and Resource Center (DCARC). The Contractor shall ensure that Subcontractors subject to CSDR reporting thresholds collect data in sufficient detail to meet Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan requirements. The Contractor shall collect and deliver data on all subcontractors to comply with Attachment `r params$RDT_attach_numb` and CDRL `r params$RDT_CDRL_numb` - Resource Distribution Table and Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan requirements. A “subcontract” is any agreement, purchase order, or instrument other than a prime contract calling for work or for the material required for the performance of one or more prime contracts. A “subcontract” usually covers procurement of major components or subsystems that require the subcontractor to do extensive design, development, engineering, and testing to meet a prime contractor’s procurement specifications.  
+The `r prime_vs_sub` shall flow-down CSDR requirements referenced in section `r params$cost_rep_sow_numb` and its sub-paragraphs to subcontractors (regardless of subcontractor tier) when the subcontract value is expected to exceed \$20 million using the maximum allowable contract quantities, hours, or options (as applicable), as required by Department of Defense (DoD) 5000.04-M-1 - CSDR Manual. The Contractor shall require subcontractors to electronically submit CSDRs deliverables directly to the Defense Cost and Resource Center (DCARC). The Contractor shall ensure that Subcontractors subject to CSDR reporting thresholds collect data in sufficient detail to meet Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan requirements. The Contractor shall collect and deliver data on all subcontractors to comply with Attachment `r params$RDT_attach_numb` and CDRL `r params$RDT_CDRL_numb` - Resource Distribution Table and Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan requirements. A “subcontract” is any agreement, purchase order, or instrument other than a prime contract calling for work or for the material required for the performance of one or more prime contracts. A “subcontract” usually covers procurement of major components or subsystems that require the subcontractor to do extensive design, development, engineering, and testing to meet a prime contractor’s procurement specifications.   
 
 #### Resource Distribution Table (RDT)
 The `r prime_vs_sub` shall prepare and submit the "Resource Distribution Table (RDT)" in accordance with CDRL `r params$RDT_CDRL_numb`. The "Resource Distribution Table (RDT)" identifies the value of work assigned to the Contractor and its subcontractors by for each WBS element listed in Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan, and is the primary means of identifying subcontractors who qualify for CSDR reporting.  
