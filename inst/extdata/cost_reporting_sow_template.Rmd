@@ -9,133 +9,178 @@ params:
   program_name_full:
     input: text
     label: "Full Program Name"
-    value: ">>>Full Program Name<<<"
+    value: ">>>program_name_full<<<"
   program_name_abbr:
     input: text
     label: "Abbreviated Program Name/Acronym"
-    value: ">>>Abbreviated Program Name/Acronym<<<"
+    value: ">>>program_name_abbr<<<"
   program_office_name:
     input: text
     label: "Program Office Name"
-    value: ">>>Program Office Name<<<"
+    value: ">>>program_office_name<<<"
   program_office_name_abbr:
     input: text
     label: "Abbreviated Program Office Name"
-    value: ">>>Abbreviated Program Office Name<<<"
-  system_name:
+    value: ">>>program_office_name_abbr<<<"
+  prime_mission_product:
     input: text
     label: "System/Item Name"
-    value: ">>>System/Item Name<<<"
-  system_name_abbr:
+    value: ">>>prime_mission_product<<<"
+  prime_mission_product_abbr:
     input: text
     label: "Abbreviated System/Item Name"
-    value: ">>>Abbreviated System/Item Name<<<"
+    value: ">>>prime_mission_product_abbr<<<"
   program_ACAT:
     choices:
-    - ACAT-ID
-    - ACAT-IC
-    - ACAT-II
-    - ACAT-III
-    - ACAT-IV
-    - NA
+    - "ACAT-ID"
+    - "ACAT-IC"
+    - "ACAT-II"
+    - "ACAT-III"
+    - "ACAT-IV"
+    - "Pre-ACAT"
+    - "Other"
+    - ">>>program_ACAT<<<"
     input: select
     label: "Program Acquisition Category"
-    value: "NA"
+    value: ">>>program_ACAT<<<"
   acqusition_phase_full:
     choices:
-    - Materiel Solution Analysis
-    - Technology Maturation & Risk Reduction
-    - Engineering & Manufacturing Development
-    - Low Rate Initial Production
-    - Full Rate Production
-    - Operations & Sustainment
-    - Pre-Materiel Solution Analysis
-    - Middle Tier Acquisition - Rapid Prototyping
-    - Middle Tier Acquisition - Rapid Fielding
-    - Other Transaction Authority - Research Purpose
-    - Other Transaction Authority - Prototype Purpose
-    - Other Transaction Authority - Production Purpose
-    - ">>>Choose One<<<"
+    - "Materiel Solution Analysis"
+    - "Technology Maturation & Risk Reduction"
+    - "Engineering & Manufacturing Development"
+    - "Low Rate Initial Production"
+    - "Full Rate Production"
+    - "Operations & Sustainment"
+    - "Pre-Materiel Solution Analysis"
+    - "Middle Tier Acquisition - Rapid Prototyping"
+    - "Middle Tier Acquisition - Rapid Fielding"
+    - "Other Transaction Authority - Research Purpose"
+    - "Other Transaction Authority - Prototype Purpose"
+    - "Other Transaction Authority - Production Purpose"
+    - "Multiple"
+    - "TBD"
+    - ">>>acqusition_phase_full<<<"
     input: select
-    label: "Acquisition Phase(s)"
-    value: ">>>Choose One<<<"
+    label: "Acquisition Phase"
+    value: ">>>acqusition_phase_full<<<"
   acqusition_phase_abbr:
     choices:
-    - MSA
-    - TMRR
-    - EMD
-    - LRIP
-    - FRP
-    - O&S
-    - Pre-MSA
-    - MTA - RP
-    - MTA - RF
-    - OTA - R
-    - OTA - Proto
-    - OTA - Prod
-    - Multiple
-    - ">>>Choose One<<<"
+    - "MSA"
+    - "TMRR"
+    - "EMD"
+    - "LRIP"
+    - "FRP"
+    - "O&S"
+    - "Pre-MSA"
+    - "MTA - RP"
+    - "MTA - RF"
+    - "OTA - R"
+    - "OTA - Proto"
+    - "OTA - Prod"
+    - "Multiple"
+    - "TBD"
+    - ">>>acqusition_phase_abbr<<<"
     input: select
-    label: "Abbreviated Acquisition Phase(s)"
-    value: ">>>Choose One<<<"
-  reporting_organization_type:
-    choices:
-    - Prime Contractor
-    - Subcontractor
-    - Government
-    input: select
-    label: "Reporting Organization Type"
-    value: "Prime Contractor"
-  readiness_review_required:
-    choices:
-      - TRUE
-      - FALSE
-    input: select
-    label: "CSDR Readiness Review Required?"
-    value: FALSE
-  contractor_name:
+    label: "Abbreviated Acquisition Phase"
+    value: ">>>acqusition_phase_abbr<<<"
+  approved_plan_numb:
     input: text
-    label: "Reporting Organization’s Name"
-    value: ">>>TBD<<<"
-  contractor_name_abbr:
+    label: "Approved CSDR Plan Number (Include Revision Number)"
+    value: ">>>approved_plan_numb<<<"
+  CSDR_plan_style:
+    choices:
+    - "FlexFile"
+    - "Legacy"
+    - ">>>CSDR_Plan_style<<<"
+    input: select
+    label: "FlexFile or Legacy CSDR Plan"
+    value: ">>>CSDR_Plan_style<<<"
+  CSDR_plan_std:
+    choices:
+    - "MIL-STD-881D"
+    - "MIL-STD-881C"
+    - "Other"
+    - ">>>CSDR_plan_std<<<"
+    input: select
+    label: "MIL-STD-881 Utilized"
+    value: ">>>CSDR_Plan_std<<<"
+  CSDR_plan_commodity_type:
+    choices:
+      - "Aircraft System (MIL-STD-881D)"
+      - "Electronic System/Generic System (MIL-STD-881D)"
+      - "Missile/Ordnance System (MIL-STD-881D)"
+      - "Strategic Missile Systems (MIL-STD-881D)"
+      - "Sea System (MIL-STD-881D)"
+      - "Space System (MIL-STD-881D)"
+      - "Ground Vehicle System (MIL-STD-881D)"
+      - "Unmanned Maritime System (MIL-STD-881D)"
+      - "Launch Vehicle System (MIL-STD-881D)"
+      - "Information Systems (IS)/Defense Business Systems (DBS) (Investment) (MIL-STD-881D)"
+      - "Aircraft System (MIL-STD-881C)"
+      - "Electronic Systems (MIL-STD-881C)"
+      - "Missile Systems (MIL-STD-881C)"
+      - "Ordnance Systems (MIL-STD-881C)"
+      - "Sea Systems (MIL-STD-881C)"
+      - "Space Systems (MIL-STD-881C)"
+      - "Surface Vehicle Systems (MIL-STD-881C)"
+      - "Unmanned Air Vehicle Systems (MIL-STD-881C)"
+      - "Unmanned Maritime Systems (MIL-STD-881C)"
+      - "Launch Vehicle Systems (MIL-STD-881C)"
+      - "Automated Information Systems (MIL-STD-881C)"
+      - "Other"
+      - ">>>CSDR_plan_commodity_type<<<"
+    input: select
+    label: "CSDR Plan Commodity Type"
+    value: ">>>CSDR_plan_commodity_type<<<"
+  CSDR_plan_org_name:
     input: text
-    label: "Abbreviated Reporting Organization’s Name"
-    value: ">>>TBD<<<"
+    label: "Preparing USG Organization’s Name"
+    value: ">>>CSDR_plan_org_name<<<"
+  CSDR_plan_POC_name:
+    input: text
+    label: "POC Name (Last, First, M.)"
+    value: ">>>CSDR_plan_POC_name<<<"
+  CSDR_plan_POC_address:
+    input: text
+    label: "POC Address (Include ZIP Code)"
+    value: ">>>CSDR_plan_POC_address<<<"
+  CSDR_plan_POC_phone:
+    input: text
+    label: "POC Telephone Number"
+    value: ">>>CSDR_plan_POC_phone<<<"
+  CSDR_plan_POC_extension:
+    input: text
+    label: "POC Telephone Extension"
+    value: ">>>CSDR_plan_POC_extension<<<"
+  CSDR_plan_POC_email:
+    input: text
+    label: "POC Email Address"
+    value: ">>>CSDR_plan_POC_email<<<"
   solicitation_numb:
     input: text
     label: "Solicitation Number"
-    value: ">>>TBD<<<"
+    value: ">>>solicitation_numb<<<"
   contract_numb:
     input: text
     label: "Contract Number"
-    value: ">>>TBD<<<"
-  approved_plan_numb:
+    value: ">>>contract_numb<<<"
+  reporting_organization_type:
+    choices:
+    - "Prime Contractor"
+    - "Subcontractor"
+    - "Government"
+    - ">>>reporting_organization_type<<<"
+    input: select
+    label: "Reporting Organization Type"
+    value: ">>>reporting_organization_type<<<"
+  contractor_name:
     input: text
-    label: "CSDR Plan Number"
-    value: ">>>TBD<<<"
-  CSDR_Plan_type:
-    choices:
-    - Prime Contractor
-    - Subcontract
-    input: select
-    label: "Prime or Subcontract Plan"
-    value: Prime Contractor
-  CSDR_Plan_style:
-    choices:
-    - FlexFile
-    - Legacy
-    input: select
-    label: "FlexFile or Legacy CSDR Plan"
-    value: FlexFile
-  CSDR_Plan_std:
-    choices:
-    - MIL-STD-881D
-    - MIL-STD-881C
-    - MIL-HDBK-881A
-    - Other
-    input: select
-    label: "MIL-STD/HDBK Utilized"
-    value: MIL-STD-881D
+    label: "Reporting Organization’s Name"
+    value: ">>>contractor_name<<<"
+  contractor_name_abbr:
+    input: text
+    label: "Abbreviated Reporting Organization’s Name"
+    value: ">>>contractor_name_abbr<<<"
   draft_RFP_release_date:
     input: date
     label: "Draft RFP Release Date"
@@ -153,122 +198,262 @@ params:
     label: "Estimated Contract Complete Date"
     value: !r Sys.Date()
   est_contract_value:
-    input: text
+    input: numeric
     label: "Estimated Total Contract Value"
-    value: ">>>EST_CONTRACT_VALUE<<<"
+    value: ">>>est_contract_value<<<"
+  est_contract_swdev_value:
+    input: numeric
+    label: "Estimated Total Value of Software Development Scopes of Work"
+    value: ">>>est_contract_swdev_value<<<"
+  est_contract_swmx_value:
+    input: numeric
+    label: "Estimated Total Value of Software Maintenance  Scopes of Work"
+    value: ">>>est_contract_swmx_value<<<"
   pco_name:
     input: text
     label: "PCO Name"
-    value: ">>>TBD<<<"
+    value: ">>>pco_name<<<"
   pco_email:
     input: text
     label: "PCO Email Address?"
-    value: ">>>TBD<<<"
+    value: ">>>pco_email<<<"
   pco_phone:
     input: text
     label: "PCO Phone Number"
-    value: ">>>TBD<<<"
-  CSDR_Plan_attch_numb:
+    value: ">>>pco_phone<<<"
+  cost_rep_sow_numb:
     input: text
-    label: "CSDR Plan Attachment Number"
-    value: ">>>CSDR_ATTACH_NUMB<<<"
-  RDT_attach_numb:
+    label: "Cost Reporting Paragraph Number"
+    value: ">>>cost_rep_sow_numb<<<"
+  RDT_CDRL_lgl:
+    choices:
+      - TRUE
+      - FALSE
+    input: select
+    label: "Resource Distribution Table (RDT) CDRL Required"
+    value: TRUE
+  FlexFile_CDRL_lgl:
+    choices:
+      - TRUE
+      - FALSE
+    input: select
+    label: "Cost and Hour Report (FlexFile) CDRL Required"
+    value: TRUE
+  QtyData_CDRL_lgl:
+    choices:
+      - TRUE
+      - FALSE
+    input: select
+    label: "Quantity Data Report (DD Form 1921-Q) CDRL Required"
+    value: TRUE
+  MR_CDRL_lgl:
+    choices:
+      - TRUE
+      - FALSE
+    input: select
+    label: "Maintenance and Repair Report (DD Form 1921-M/R) CDRL Required"
+    value: TRUE
+  TDR_CDRL_lgl:
+    choices:
+      - TRUE
+      - FALSE
+    input: select
+    label: "Technical Data Report (DD Form 1921-T) CDRL Required"
+    value: TRUE
+  CWBS_CDRL_lgl:
+    choices:
+      - TRUE
+      - FALSE
+    input: select
+    label: "Contract Work Breakdown Structure (CWBS) Dictionary CDRL Required"
+    value: TRUE
+  CDSR_CDRL_lgl:
+    choices:
+      - TRUE
+      - FALSE
+    input: select
+    label: "Cost Data Summary Report (DD Form 1921) CDRL Required"
+    value: TRUE
+  FCHR_CDRL_lgl:
+    choices:
+      - TRUE
+      - FALSE
+    input: select
+    label: "Functional Cost-Hour Report (DD Form 1921-1) CDRL Required"
+    value: TRUE
+  PCR_CDRL_lgl:
+    choices:
+      - TRUE
+      - FALSE
+    input: select
+    label: "Progress Curve Report (DD Form 1921-2) CDRL Required"
+    value: TRUE
+  CBDR_CDRL_lgl:
+    choices:
+      - TRUE
+      - FALSE
+    input: select
+    label: "Contractor Business Data Report (DD Form 1921-3) CDRL Required"
+    value: TRUE
+  SFCHR_CDRL_lgl:
+    choices:
+      - TRUE
+      - FALSE
+    input: select
+    label: "Sustainment Functional Cost-Hour Report (DD Form 1921-5) CDRL Required"
+    value: TRUE
+  SDR_CDRL_lgl:
+    choices:
+      - TRUE
+      - FALSE
+    input: select
+    label: "Software Development Report (DD Form 3026-1) CDRL Required"
+    value: TRUE
+  SMR_CDRL_lgl:
+    choices:
+      - TRUE
+      - FALSE
+    input: select
+    label: "Software Maintenance Report (DD Form 3026-2) CDRL Required"
+    value: TRUE
+  ERP_CDRL_lgl:
+    choices:
+      - TRUE
+      - FALSE
+    input: select
+    label: "Enterprise Resource Planning (ERP) Software Development Report (DD Form 3026-3) CDRL Required"
+    value: TRUE
+  BOM_CDRL_lgl:
+    choices:
+      - TRUE
+      - FALSE
+    input: select
+    label: "Bill of Materials (BOM) Report CDRL Required"
+    value: TRUE
+  LSPD_CDRL_lgl:
+    choices:
+      - TRUE
+      - FALSE
+    input: select
+    label: "Lot Size Pricing Data (LSPD) CDRL Required"
+    value: TRUE
+  AUMC_CDRL_lgl:
+    choices:
+      - TRUE
+      - FALSE
+    input: select
+    label: "Average Unit Manufacturing Cost (AUMC) Report CDRL Required"
+    value: TRUE
+  CFSR_CDRL_lgl:
+    choices:
+      - TRUE
+      - FALSE
+    input: select
+    label: "Contractor Funds Status Report (CFSR) CDRL Required"
+    value: TRUE
+  PaCR_CDRL_lgl:
+    choices:
+      - TRUE
+      - FALSE
+    input: select
+    label: "Performance & Cost Report (P&CR) CDRL Required"
+    value: TRUE
+  PAC_CDRL_lgl:
+    choices:
+      - TRUE
+      - FALSE
+    input: select
+    label: "Post Award Conference Materials CDRL"
+    value: TRUE
+  cdrl_clin_numb:
     input: text
-    label: "Resource Distribution Table Attachment Number"
-    value: ">>>RDT_ATTACH_NUMB<<<"
-  LSPD_attach_numb:
-    input: text
-    label: "Lot Size Pricing Data Attachment Number"
-    value: ">>>LSPD_ATTACH_NUMB<<<"
-  AUMC_attach_numb:
-    input: text
-    label: "Average Unit Manufacturing Cost Report Attachment Number"
-    value: ">>>AUMC_ATTACH_NUMB<<<"
-  CWBS_CDRL_numb:
-    input: text
-    label: "Contract Work Breakdown Structure and Dictionary CDRL Number"
-    value: ">>>CWBS_CDRL_NUMB<<<"
+    label: "Contract Data Requirements List (CDRL) CLIN Number"
+    value: ">>>cdrl_clin_numb<<<"
+  cdrl_exhibit:
+    choices: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, ">>>cdrl_exhibit<<<"]
+    input: select
+    label: "Contract Data Requirements List (CDRL) Exhibit Letter"
+    value: ">>>cdrl_exhibit<<<"
   RDT_CDRL_numb:
     input: text
     label: "Resource Distribution Table CDRL Number"
-    value: ">>>RDT_CDRL_NUMB<<<"
+    value: ">>>RDT_CDRL_numb<<<"
   FlexFile_CDRL_numb:
     input: text
-    label: "Cost and Hour Report (FlexFile)"
-    value: ">>>FlexFile_CDRL_NUMB<<<"
+    label: "Cost and Hour Report (FlexFile) CDRL Number"
+    value: ">>>FlexFile_CDRL_numb<<<"
   QtyData_CDRL_numb:
     input: text
-    label: "Quantity Data Report (DD Form 1921-Q)"
-    value: ">>>QtyData_CDRL_NUMB<<<"
-  CDSR_CDRL_numb:
-    input: text
-    label: "Cost Data Summary Report (DD Form 1921) CDRL Number"
-    value: ">>>CDSR_CDRL_NUMB<<<"
-  FCHR_CDRL_numb:
-    input: text
-    label: "Functional Cost-Hour Report (DD Form 1921-1) CDRL Number"
-    value: ">>>FCHR_CDRL_NUMB<<<"
-  PCR_CDRL_numb:
-    input: text
-    label: "Progress Curve Report (DD Form 1921-2) CDRL Number"
-    value: ">>>PCR_CDRL_NUMB<<<"
-  CBDR_CDRL_numb:
-    input: text
-    label: "Contractor Business Data Report (DD Form 1921-3) CDRL Number"
-    value: ">>>CBDR_CDRL_NUMB<<<"
-  SFCHR_CDRL_numb:
-    input: text
-    label: "Sustainment Functional Cost-Hour Report (DD Form 1921-5) CDRL Number"
-    value: ">>>SFCHR_CDRL_NUMB<<<"
+    label: "Quantity Data Report (DD Form 1921-Q) CDRL Number"
+    value: ">>>QtyData_CDRL_numb<<<"
   MR_CDRL_numb:
     input: text
     label: "Maintenance and Repair Report (DD Form 1921-M/R) CDRL Number"
-    value: ">>>MR_CDRL_NUMB<<<"
+    value: ">>>MR_CDRL_numb<<<"
   TDR_CDRL_numb:
     input: text
     label: "Technical Data Report (DD Form 1921-T) CDRL Number"
-    value: ">>>TDR_CDRL_NUMB<<<"
+    value: ">>>TDR_CDRL_numb<<<"
+  CWBS_CDRL_numb:
+    input: text
+    label: "Contract Work Breakdown Structure and Dictionary CDRL Number"
+    value: ">>>CWBS_CDRL_numb<<<"
+  CDSR_CDRL_numb:
+    input: text
+    label: "Cost Data Summary Report (DD Form 1921) CDRL Number"
+    value: ">>>CDSR_CDRL_numb<<<"
+  FCHR_CDRL_numb:
+    input: text
+    label: "Functional Cost-Hour Report (DD Form 1921-1) CDRL Number"
+    value: ">>>FCHR_CDRL_numb<<<"
+  PCR_CDRL_numb:
+    input: text
+    label: "Progress Curve Report (DD Form 1921-2) CDRL Number"
+    value: ">>>PCR_CDRL_numb<<<"
+  CBDR_CDRL_numb:
+    input: text
+    label: "Contractor Business Data Report (DD Form 1921-3) CDRL Number"
+    value: ">>>CBDR_CDRL_numb<<<"
+  SFCHR_CDRL_numb:
+    input: text
+    label: "Sustainment Functional Cost-Hour Report (DD Form 1921-5) CDRL Number"
+    value: ">>>SFCHR_CDRL_numb<<<"
   SDR_CDRL_numb:
     input: text
     label: "Software Development Report (DD Form 3026-1) CDRL Number"
-    value: ">>>SDR_CDRL_NUMB<<<"
+    value: ">>>SDR_CDRL_numb<<<"
   SMR_CDRL_numb:
     input: text
     label: "Software Maintenance Report (DD Form 3026-2) CDRL Number"
-    value: ">>>SMR_CDRL_NUMB<<<"
+    value: ">>>SMR_CDRL_numb<<<"
   ERP_CDRL_numb:
     input: text
     label: "Enterprise Resource Planning (ERP) Software Development Report (DD Form 3026-3) CDRL Number"
-    value: ">>>ERP_CDRL_NUMB<<<"
-  CFSR_CDRL_numb:
-    input: text
-    label: "Contractor Funds Status Report (CFSR) CDRL Number"
-    value: ">>>CFSR_CDRL_NUMB<<<"
-  PaCR_CDRL_numb:
-    input: text
-    label: "Performance & Cost Report (P&CR) CDRL Number"
-    value: ">>>PaCR_CDRL_NUMB<<<"
-  LSPD_CDRL_numb:
-    input: text
-    label: "Lot Size Pricing Data (LSPD) CDRL Number"
-    value: ">>>LSPDR_CDRL_NUMB<<<"
+    value: ">>>ERP_CDRL_numb<<<"
   BOM_CDRL_numb:
     input: text
     label: "Bill of Materials (BOM) Report CDRL Number"
     value: ">>>BOM_CDRL_NUMB<<<"
+  LSPD_CDRL_numb:
+    input: text
+    label: "Lot Size Pricing Data (LSPD) CDRL Number"
+    value: ">>>LSPD_CDRL_numb<<<"
   AUMC_CDRL_numb:
     input: text
     label: "Average Unit Manufacturing Cost (AUMC) Report CDRL Number"
-    value: ">>>AUMC_CDRL_NUMB<<<"
-  cdrl_exhibit:
-    choices: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z]
-    input: select
-    label: "Contract Data Requirements List (CDRL) Exhibit Letter"
-    value: A
-  cdrl_clin_numb:
+    value: ">>>AUMC_CDRL_numb<<<"
+  CFSR_CDRL_numb:
     input: text
-    label: "Contract Data Requirements List (CDRL) CLIN Number"
-    value: "1000"
+    label: "Contractor Funds Status Report (CFSR) CDRL Number"
+    value: ">>>CFSR_CDRL_numb<<<"
+  PaCR_CDRL_numb:
+    input: text
+    label: "Performance & Cost Report (P&CR) CDRL Number"
+    value: ">>>PaCR_CDRL_numb<<<"
+  PAC_CDRL_numb:
+    input: text
+    label: "Post Award Conference CDRL Number"
+    value: ">>>PAC_CDRL_numb<<<"
   cdrl_prepared_by:
     input: text
     label: "First & Last Name, Title of CDRL Preparer"
@@ -288,8 +473,31 @@ params:
   submission_instructions:
     input: text
     label: "Additional Submission Instructions"
-    value: ">>>Add PEO/PM specific submission instructions (e.g., Submit to SharePoint...) or make blank if there are none.<<<"
-version: 0.21.0
+    value: ">>>submission_instructions<<<"
+  CSDR_Plan_attch_numb:
+    input: text
+    label: "CSDR Plan Attachment Number"
+    value: ">>>CSDR_Plan_attch_numb<<<"
+  RDT_attach_numb:
+    input: text
+    label: "Resource Distribution Table Attachment Number"
+    value: ">>>RDT_attach_numb<<<"
+  LSPD_attach_numb:
+    input: text
+    label: "Lot Size Pricing Data Attachment Number"
+    value: ">>>LSPD_attach_numb<<<"
+  AUMC_attach_numb:
+    input: text
+    label: "Average Unit Manufacturing Cost Report Attachment Number"
+    value: ">>>AUMC_attach_numb<<<"
+  readiness_review_required:
+    choices:
+      - TRUE
+      - FALSE
+    input: select
+    label: "CSDR Readiness Review Required?"
+    value: FALSE
+version: 0.22.0
 ---
 
 ```{r setup, include=FALSE}
@@ -402,4 +610,4 @@ The `r prime_vs_sub` and CWIPT will also review the initial submission of the "R
 The Post-Award Cost and Software Data Reporting Conference shall be held within 60 days of the Start of Work Meeting on a date mutually agreed to by the CWIPT and the `r prime_vs_sub`. This meeting has an anticipated duration of one business day.  
 
 ### CSDR Mapping Review(s)
-The `r prime_vs_sub` shall host a CSDR Conference Mapping Review at the `r prime_vs_sub`’s facility where CSDRs are prepared with the Government at least 60 days before the initial CSDR report submission or the second CSDR report submission if the initial submission is due within 60 days of contract award. The purpose of a CSDR Mapping Review is to ensure that all contractor internal control accounts and all part numbers identified in the CDRL `r params$BOM_CDRL_numb` - Bill of Materials (BOM) are mapped to the appropriate CSDR WBS elements in accordance with `r params$CSDR_Plan_std` and as required by the CWBS Dictionary `r params$CWBS_CDRL_numb` and Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan. The meeting has an anticipated duration of one business day. In the event that new control accounts or part numbers are created after the initial CSDR Mapping Review, the `r prime_vs_sub` shall review the updated mappings with the Government prior to follow-on CSDR submissions either via phone or email.  
+The `r prime_vs_sub` shall host a CSDR Conference Mapping Review at the `r prime_vs_sub`’s facility where CSDRs are prepared with the Government at least 60 days before the initial CSDR report submission or the second CSDR report submission if the initial submission is due within 60 days of contract award. The purpose of a CSDR Mapping Review is to ensure that all contractor internal control accounts and all part numbers identified in the CDRL `r params$BOM_CDRL_numb` - Bill of Materials (BOM) are mapped to the appropriate CSDR WBS elements in accordance with `r params$CSDR_plan_std` and as required by the CWBS Dictionary `r params$CWBS_CDRL_numb` and Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan. The meeting has an anticipated duration of one business day. In the event that new control accounts or part numbers are created after the initial CSDR Mapping Review, the `r prime_vs_sub` shall review the updated mappings with the Government prior to follow-on CSDR submissions either via phone or email.  
