@@ -363,7 +363,7 @@ params:
       - TRUE
       - FALSE
     input: select
-    label: "Post Award Conference Materials CDRL"
+    label: "Post Award Conference Materials CDRL Required"
     value: TRUE
   cdrl_clin_numb:
     input: text
@@ -452,7 +452,7 @@ params:
     value: ">>>PaCR_CDRL_numb<<<"
   PAC_CDRL_numb:
     input: text
-    label: "Post Award Conference CDRL Number"
+    label: "Post Award Conference Materials CDRL Number"
     value: ">>>PAC_CDRL_numb<<<"
   cdrl_prepared_by:
     input: text

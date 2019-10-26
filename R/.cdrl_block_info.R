@@ -8,7 +8,9 @@
 #'   CDRL titles, subtitles, DID numbers, and distro statement letters are
 #'   written to the global environment.
 
-prime_vs_sub <- if (params_from_excel$CSDR_Plan_type == "Contract") {"Contractor"} else {"Subcontractor"}
+prime_vs_sub <-
+  if (params$CSDR_Plan_type == ">>>CSDR_Plan_type<<<") {"Contractor"} else
+  if (params$CSDR_Plan_type == "Contract") {"Contractor"} else {"Subcontractor"}
 
 # Block 2: CDRL Titles ========================================================
 
@@ -25,13 +27,13 @@ MR_CDRL_title_abbr           <- "MRR"
 TDR_CDRL_title_abbr          <- "TDR"
 SDR_CDRL_title_abbr          <- "SDR"
 SMR_CDRL_title_abbr          <- "SMR"
-ERP_CDRL_title_abbr          <- "SDERPR"
+ERP_CDRL_title_abbr          <- "ERP"
 CFSR_CDRL_title_abbr         <- "CFSR"
 PaCR_CDRL_title_abbr         <- "PaCR"
 LSPD_CDRL_title_abbr         <- "LSPD"
 AUMC_CDRL_title_abbr         <- "AUCM"
 BOM_CDRL_title_abbr          <- "BOM"
-meeting_docs_CDRL_title_abbr <- "PAC"
+PAC_CDRL_title_abbr          <- "PAC"
 
 # Block 2: CDRL Titles ========================================================
 
@@ -54,7 +56,7 @@ PaCR_CDRL_title         <- "Performance & Cost Report"
 LSPD_CDRL_title         <- "Lot Size Pricing Data (LSPD)"
 AUMC_CDRL_title         <- "Average Unit Manufacturing Cost (AUCM) Report"
 BOM_CDRL_title          <- "Bill of Materials (BOM)"
-meeting_docs_CDRL_title <- "CSDR PAC Briefing Material"
+PAC_CDRL_title          <- "CSDR PAC Briefing Material"
 
 # Block 3: CDRL Subtitles =====================================================
 CWBS_CDRL_subtitle         <- ""
@@ -76,7 +78,7 @@ PaCR_CDRL_subtitle         <- ""
 LSPD_CDRL_subtitle         <- ""
 AUMC_CDRL_subtitle         <- ""
 BOM_CDRL_subtitle          <- ""
-meeting_docs_CDRL_subtitle <- ""
+PAC_CDRL_subtitle          <- ""
 
 # Block 4: CDRL DID Numbers ===================================================
 CWBS_CDRL_did         <- "DI-MGMT-81334D"
@@ -98,7 +100,7 @@ PaCR_CDRL_did         <- "???"  # TODO: Need a DID number for the P&RC
 LSPD_CDRL_did         <- stringr::str_c("See Attachment ", params_from_excel$LSPD_attach_numb)
 AUMC_CDRL_did         <- "DI-MGMT-81334D(T)"
 BOM_CDRL_did          <- "DI-MGMT-81994"
-meeting_docs_CDRL_did <- "DI-MGMT-81605"
+PAC_CDRL_did          <- "DI-MGMT-81605"
 
 # Block 9: DIST. STATEMENT REQUIRED ===========================================
 CWBS_CDRL_dist          <- "D"
@@ -120,4 +122,4 @@ PaCR_CDRL_dist          <- "D"
 LSPD_CDRL_dist          <- "D"
 AUMC_CDRL_dist          <- "D"
 BOM_CDRL_dist           <- "D"
-meeting_docs_CDRL_dist  <- "D"
+PAC_CDRL_dist           <- "D"
