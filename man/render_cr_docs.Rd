@@ -5,7 +5,7 @@
 \title{Create Cost Reporting SOW, CDRLs, Attachments with Params}
 \usage{
 render_cr_docs(params_path = file.choose(), output_dir = choose.dir(),
-  combine_cdrls = TRUE)
+  combine_cdrls = FALSE)
 }
 \arguments{
 \item{params_path}{Required. A full path to a filled-in

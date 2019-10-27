@@ -1,0 +1,93 @@
+---
+title: "Average Unit Manufacturing Cost CDRL"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+version: 0.1.0
+---
+
+A. CONTRACT LINE ITEM NO.........: `r params_from_excel$cdrl_clin_numb`  
+B. EXHIBIT.......................: `r params_from_excel$cdrl_exhibit`  
+C. CATEGORY......................: Other.  
+D. SYSTEM/ITEM...................: `r params_from_excel$prime_mission_product`  
+E. CONTRACT/PR NUMBER............: `r params_from_excel$contract_numb`  
+F. CONTRACTOR....................: `r params_from_excel$contractor_name`  
+G. PREPARED BY...................: `r params_from_excel$cdrl_prepared_by`  
+H. DATE..........................: `r params_from_excel$cdrl_prepared_date`  
+I. APPROVED BY...................: `r params_from_excel$cdrl_approved_by`  
+J. DATE..........................: `r params_from_excel$cdrl_approved_date`  
+01. DATA ITEM NUMBER.............: `r params_from_excel$AUMC_CDRL_numb`  
+02. TITLE OF DATA ITEM...........: `r AUMC_CDRL_title`  
+03. SUBTITLE ....................: `r AUMC_CDRL_subtitle`  
+04. AUTHORITY....................: `r AUMC_CDRL_did`(T) and see Block 16.  
+05. CONTRACT REFERENCE...........:  
+06. REQUIRING OFFICE.............: `r params_from_excel$program_office_name_abbr`  
+07. DD 250 REQ...................: See Block 16.  
+08. APPROVAL CODE................: None.  
+09. DIST. STATEMENT REQUIRED.....: `r AUMC_CDRL_dist`  
+10. FREQUENCY....................: See Block 16.  
+11. AS OF DATE...................: See Block 16.  
+12. DATE OF FIRST SUBMISSION.....: See Block 16.  
+13. DATE OF SUBSEQUENT SUBMISSION: See Block 16.  
+14. DISTRIBUTION.................: See Block 16.  
+15. TOTAL........................: See Attachment `r params_from_excel$CSDR_plan_attch_numb` - CSDR Plan.  
+16. REMARKS......................:  
+
+Block 04: The `r prime_vs_sub` shall develop, maintain, and deliver the data item in accordance with `r AUMC_CDRL_did` and as tailored in this CDRL.  
+
+Block 4: The "Requirements" section of the DID is deleted and replaced with the following:  
+1. Content: The information provided in the Average Unit Manufacturing Cost (AUMC) Report will be utilized by Army and Office of the Secretary of Defense (OSD) cost analysis offices to support budget submissions by better understanding and estimating future `r params_from_excel$prime_mission_product_abbr` costs. The information provided in this report will supplement the detailed prototype cost reporting data provided via CSDR on this contract to ensure the program is appropriately funded for enduring success. All data provided in this CDRL’s deliverable is non-binding and does not commit the contractor to any future agreement, nor will the data be utilized for any current or future contract evaluation.  
+
+The report shall contain information regarding how the contractor intends to change its manufacturing process, vehicle design, supply chain, and any other significant process changes that would impact the Average Unit Manufacturing Cost (AUMC) of the `r params_from_excel$prime_mission_product_abbr` between the `r params_from_excel$acqusition_phase_abbr` and a potential `r params_from_excel$prime_mission_product_abbr` follow-on contract, assuming the contractor were to be awarded said follow-on contract(s).  
+
+2. Required Information:  
+a. The report shall include a written discussion of at least the following topics, submitted in a Microsoft Word file:  
+
+|    i. MANUFACTURING LOCATION(s): A description of where the manufacturing to produce the prototype vehicles for the `r params_from_excel$acqusition_phase_abbr` occurred (e.g., where were major sub-assemblies built, where were major sub-assemblies matted together/assembled into the final end-item?). A description of where the contractor intends to produce any potential follow-on contract(s) major sub-assemblies and vehicles. A description of how the differences between `r params_from_excel$acqusition_phase_abbr` and a potential follow-on contract(s) manufacturing locations will affect the AUMC of the follow-on `r params_from_excel$acqusition_phase_abbr`s; include what effect the differences in manufacturing location will have from a material, labor, and other direct costs perspective.  
+
+|    ii. MANUFACTURING PROCESS: A description of the manufacturing process utilized to produce the `r params_from_excel$acqusition_phase_abbr` end-items (e.g., were end-items built in specialized bays or on an LRIP/FRP representative production line, how were sub-assemblies produced and provided to the final assembly process, how many production shifts were utilized?). A description of the manufacturing process the contractor intends to utilize in order to produce LRIP and/or FRP `r params_from_excel$prime_mission_product_abbr` end-items. A description of how the differences between `r params_from_excel$acqusition_phase_abbr` and a potential follow-on contract(s) manufacturing process will affect the AUMC of the `r params_from_excel$prime_mission_product_abbr`; include what effect the differences in manufacturing process will have from a material, labor, and other direct costs perspective.  
+
+|    iii. SUPPLY CHAIN: A description of the supply chain process/suppliers utilized to produce the prototype vehicles for the `r params_from_excel$acqusition_phase_abbr` Contract (e.g., which major sub-assemblies were produced by subcontractors vs. produced by the prime contractor?). A description of the supply chain process/suppliers the contractor intends to utilize in order to produce LRIP and/or FRP `r params_from_excel$prime_mission_product_abbr` end-items. A description of how the differences between `r params_from_excel$acqusition_phase_abbr` Contract and a potential follow-on contract(s) LRIP and/or FRP supply chain process/suppliers will affect the AUMC of the LRIP/FRP end-items; include what effect the differences in supply chain processes will have from a material, labor, and other direct costs perspective. The contractor shall include a discussion of the rate effects it anticipates in an LRIP and/or FRP type production environment for both parts it produces and parts it procures from subcontractors given the data collected from and reported in CDRL `r params_from_excel$LSPD_CDRL_numb` - Lot Size Pricing Data (e.g., does the contractor anticipate similar rate effects for parts it produces, does the contractor anticipate subcontractor rate effects to differ from those reported in the `r params_from_excel$LSPD_CDRL_numb` in a LRIP/FRP environment and if so, how does it expect them to differ).  
+
+|    iv. END-ITEM DESIGN: A description of design changes from the `r params_from_excel$acqusition_phase_abbr` Contract to the potential LRIP and/or FRP contract the contractor intends to make to its `r params_from_excel$prime_mission_product_abbr` end-items (e.g., which major sub-assemblies/capabilities will be added or removed?). A description of how the differences between `r params_from_excel$acqusition_phase_abbr` Contract and a potential LRIP and/or FRP `r params_from_excel$prime_mission_product_abbr` end-item designs will affect the AUMC of the LRIP/FRP `r params_from_excel$prime_mission_product_abbr` end-items; include what effect that differences in `r params_from_excel$prime_mission_product_abbr` end-item design will have from a material, labor, and other direct costs perspective.  
+
+|    v. Additional Considerations:  
+|    - A description of the data sources, methodologies, ground rules, assumptions, and facts utilized when developing this CDRL deliverable.  
+|    - Provide a description of learning and rate curves used to calculate the AUMC values provided in this CDRL deliverable, which are of particular interest to the government and may have a significant impact on budget submissions and future available funding to the program.  
+|    - A description of risks that may impact the plausibility of the data sources, methodologies, ground rules, assumptions, and facts used in this CDRL deliverable.  
+|    - A description of the assumed approach to subcontracting, namely an assessment of the congruency (or lack thereof) between the assumed government `r params_from_excel$prime_mission_product` order quantities and the associated material quantities purchased from subcontractors.  
+
+b. The contractor shall provide responses for this section of the CDRL in an Excel file (either submitted at the same time or embedded within the associated Word file from section 2.a.). Given the intended changes discussed in section 2.a. of the CDRL deliverable, the report shall include at least the following information given three scenarios:   
+
+|    i. AUMC at MINIMUM SUSTAINING RATE: Given the intended manufacturing location, process, supply and design changes provided in section 2.a., the contractor shall provide the annual production quantity of vehicles it would produce at the contractor’s minimum production rate, assuming LRIP production begins in the year after this contract is complete and ends when the complete Army Acquisition Objective or Army Procurement Objective quantity of `r params_from_excel$prime_mission_product_abbr` are produced. The contractor shall provide the associated annual and total AUMC given the minimum sustaining rate of production. AUMC values shall be reported as labor, material, and other direct costs. If the contractor would modify any of the information provided in section 2.a., provide updated descriptions associated with this scenario.  
+
+|    ii. AUMC at USG PROVIDED PRODUCTION RATE: The USG shall provide an annual `r params_from_excel$prime_mission_product_abbr` production profile not later than 60 days before this CDRL deliverable submission date. The contractor shall utilize the USG provided production profile and shall describe its intended manufacturing location, process, supply and design changes provided in section 2.a. The contractor shall provide the associated annual and total AUMC given the USG provided rate of production. AUMC values shall be reported as labor, material, and other direct costs. If the contractor would modify any of the information provided in section 2.a., provide updated descriptions associated with this scenario.  
+
+|    iii. AUMC at MAXIMUM PRODUCTION RATE: Given the intended manufacturing location, process, supply and design changes provided in section 2.a., the contractor shall provide the annual production quantity of vehicles it would produce at the contractor’s maximum production rate, assuming LRIP production begins in the year after this contract is complete and ends when the complete Army Acquisition Objective quantity of `r params_from_excel$prime_mission_product_abbr` are produced. The contractor shall provide the associated annual and total AUMC given the maximum rate of production. AUMC values shall be reported as labor, material, and other direct costs. If the contractor would modify any of the information provided in section 2.a., provide updated descriptions associated with this scenario.  
+
+DEFINITIONS:  
+
+i. Average Unit Manufacturing Cost (AUMC) – Includes the costs of all materials, labor, other direct costs incurred in the fabrication, checkout, paint, preparation for shipment to its acceptance destination, processing and installation of parts, sub-assemblies, major assemblies, and subsystems needed for the final system, and associated burdens (i.e., overhead, general and administrative, cost of money, and profit/fee) necessary to build complete production vehicles by the prime contractor and all subcontractors. AUMC includes the labor and other direct costs to integrate GFE into the final vehicle if completed prior to final acceptance. Annual costs are divided by an annual quantity of vehicles produced, if calculating an annual AUMC, or total cost is divided over the full Approved Acquisition Objective (AAO) or Army Procurement Objective (APO) quantity of vehicles if calculating a total AUMC. AUMC does NOT include the costs associated with the procurement of GFE hardware (which is issued to the prime contractor for integration into the final vehicle prior to acceptance or delivery), recurring Systems Engineering/Program Management, Engineering Change Orders (ECOs), vehicle modifications, nonrecurring engineering, training, support equipment, integrated logistics support, data, or initial spares; rather, AUMC includes only those costs necessary to build the vehicle.  
+
+ii. Minimum Sustaining Rate – The lowest feasible level of production for a production line to stay open.  
+
+iii. Maximum Production Rate – The maximum/fastest feasible level of production to go from producing 0 of an end-item annually till a given number has been delivered.  
+
+iv. Labor Cost – Costs uniquely attributable to direct hourly labor rates for touch labor to produce or manufacture an end-item and indirect labor cost overheads (e.g., the cost of supervisors overseeing touch labor) as well as any fringe benefits or other costs due solely to the execution of touch labor.  
+
+v. Material Cost – The cost paid for any crude, semi-fabricated, or fully fabricated assemblies, sub-assemblies, or discrete components incorporated into the final manufacture of the end-item.  
+ 
+vi. Other Direct Cost – All costs other than labor costs and material costs to include General and Administrative, profit/fee, security, royalty, license fees, transportation, preservation and applicable Federal excise tax. 
+
+Block 07: The DCARC office will issue a letter stating if the submission to the DCARC website has been accepted or rejected. Deliverables will be reviewed for technical content and/or format. Should the Government require the data item to be corrected after its delivery the `r prime_vs_sub` shall resubmit an update within 15 calendar days after receipt of Government comments.  
+
+`r # TODO: Fix submission event reference.  It should not be pointing to the CSDR Plan.`  
+Block 10, 11, 12, and 13: The contractor shall submit reports at frequencies specified in Attachment `r params_from_excel$CSDR_plan_attch_numb` - CSDR Plan.  
+
+Block 14: The `r prime_vs_sub` shall submit files electronically using the CADE website. Data submitters shall register through the CADE website and possess a DoD-approved ECA digital certificate or DoD-issued CAC to obtain a CADE Portal account and be authorized to upload CSDR content. Users can obtain access by submitting user information about themselves and their organizations to the CADE Portal and requesting a CSDR submitter user role. After the registration information has been verified, CAPE shall authorize the user account and requested roles. All CADE Portal accounts shall be renewed at least annually.  
+
+`r params_from_excel$submission_instructions`  
+
+17. PRICE GROUP..................: N/A
+18. ESTIMATED TOTAL PRICE........: N/A

@@ -7,22 +7,22 @@ output:
 version: 0.1.0
 ---
 
-A. CONTRACT LINE ITEM NO.........: `r params$cdrl_clin_numb`  
-B. EXHIBIT.......................: `r params$cdrl_exhibit`  
+A. CONTRACT LINE ITEM NO.........: `r params_from_excel$cdrl_clin_numb`  
+B. EXHIBIT.......................: `r params_from_excel$cdrl_exhibit`  
 C. CATEGORY......................: Other.  
-D. SYSTEM/ITEM...................: `r params$prime_mission_product`  
-E. CONTRACT/PR NUMBER............: `r params$contract_numb`  
-F. CONTRACTOR....................: `r params$contractor_name`  
-G. PREPARED BY...................: `r params$cdrl_prepared_by`  
-H. DATE..........................: `r params$cdrl_prepared_date`  
-I. APPROVED BY...................: `r params$cdrl_approved_by`  
-J. DATE..........................: `r params$cdrl_approved_date`  
-01. DATA ITEM NUMBER.............: `r params$SFCHR_CDRL_numb`  
+D. SYSTEM/ITEM...................: `r params_from_excel$prime_mission_product`  
+E. CONTRACT/PR NUMBER............: `r params_from_excel$contract_numb`  
+F. CONTRACTOR....................: `r params_from_excel$contractor_name`  
+G. PREPARED BY...................: `r params_from_excel$cdrl_prepared_by`  
+H. DATE..........................: `r params_from_excel$cdrl_prepared_date`  
+I. APPROVED BY...................: `r params_from_excel$cdrl_approved_by`  
+J. DATE..........................: `r params_from_excel$cdrl_approved_date`  
+01. DATA ITEM NUMBER.............: `r params_from_excel$SFCHR_CDRL_numb`  
 02. TITLE OF DATA ITEM...........: `r SFCHR_CDRL_title`  
 03. SUBTITLE ....................: `r SFCHR_CDRL_subtitle`  
 04. AUTHORITY....................: `r SFCHR_CDRL_did`(T) and see Block 16.   
 05. CONTRACT REFERENCE...........:  
-06. REQUIRING OFFICE.............: `r params$program_office_name_abbr`  
+06. REQUIRING OFFICE.............: `r params_from_excel$program_office_name_abbr`  
 07. DD 250 REQ...................: See Block 16.  
 08. APPROVAL CODE................: None.  
 09. DIST. STATEMENT REQUIRED.....: `r SFCHR_CDRL_dist`  
@@ -31,18 +31,18 @@ J. DATE..........................: `r params$cdrl_approved_date`
 12. DATE OF FIRST SUBMISSION.....: See Block 16.  
 13. DATE OF SUBSEQUENT SUBMISSION: See Block 16.  
 14. DISTRIBUTION.................: See Block 16.  
-15. TOTAL........................: See Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan.  
+15. TOTAL........................: See Attachment `r params_from_excel$CSDR_plan_attch_numb` - CSDR Plan.  
 16. REMARKS......................:  
 
-Block 04: The `r prime_vs_sub` shall develop, maintain, and deliver the data item in accordance with `r SFCHR_CDRL_did`, the CSDR Manual (DoD 5000.04-M-1), and as tailored in this CDRL and Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan. The CSDR Manual is available from the CADE website at https://cade.osd.mil/.  
+Block 04: The `r prime_vs_sub` shall develop, maintain, and deliver the data item in accordance with `r SFCHR_CDRL_did`, the CSDR Manual (DoD 5000.04-M-1), and as tailored in this CDRL and Attachment `r params_from_excel$CSDR_plan_attch_numb` - CSDR Plan. The CSDR Manual is available from the CADE website at https://cade.osd.mil/.  
 
 Block 07: The DCARC office will issue a letter stating if the submission to the DCARC website has been accepted or rejected. Deliverables will be reviewed for technical content and/or format. Should the Government require the data item to be corrected after its delivery the `r prime_vs_sub` shall resubmit an update within 15 calendar days after receipt of Government comments.  
 
-Block 10, 11, 12, and 13: The contractor shall submit reports at frequencies specified in Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan.  
+Block 10, 11, 12, and 13: The contractor shall submit reports at frequencies specified in Attachment `r params_from_excel$CSDR_plan_attch_numb` - CSDR Plan.  
 
 Block 14: The `r prime_vs_sub` shall submit files electronically using the CADE website. Data submitters shall register through the CADE website and possess a DoD-approved ECA digital certificate or DoD-issued CAC to obtain a CADE Portal account and be authorized to upload CSDR content. Users can obtain access by submitting user information about themselves and their organizations to the CADE Portal and requesting a CSDR submitter user role. After the registration information has been verified, CAPE shall authorize the user account and requested roles. All CADE Portal accounts shall be renewed at least annually.  
 
-`r params$submission_instructions`  
+`r params_from_excel$submission_instructions`  
 
 17. PRICE GROUP..................: N/A
 18. ESTIMATED TOTAL PRICE........: N/A

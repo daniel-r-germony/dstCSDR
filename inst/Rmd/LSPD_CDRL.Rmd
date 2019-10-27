@@ -1,0 +1,62 @@
+---
+title: "Lot Size Pricing Data CDRL"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+version: 0.1.0
+---
+
+A. CONTRACT LINE ITEM NO.........: `r params_from_excel$cdrl_clin_numb`  
+B. EXHIBIT.......................: `r params_from_excel$cdrl_exhibit`  
+C. CATEGORY......................: Other.  
+D. SYSTEM/ITEM...................: `r params_from_excel$prime_mission_product`  
+E. CONTRACT/PR NUMBER............: `r params_from_excel$contract_numb`  
+F. CONTRACTOR....................: `r params_from_excel$contractor_name`  
+G. PREPARED BY...................: `r params_from_excel$cdrl_prepared_by`  
+H. DATE..........................: `r params_from_excel$cdrl_prepared_date`  
+I. APPROVED BY...................: `r params_from_excel$cdrl_approved_by`  
+J. DATE..........................: `r params_from_excel$cdrl_approved_date`  
+01. DATA ITEM NUMBER.............: `r params_from_excel$LSPD_CDRL_numb`  
+02. TITLE OF DATA ITEM...........: `r LSPD_CDRL_title`  
+03. SUBTITLE ....................: `r LSPD_CDRL_subtitle`  
+04. AUTHORITY....................: `r LSPD_CDRL_did`(T) and see Block 16.  
+05. CONTRACT REFERENCE...........:  
+06. REQUIRING OFFICE.............: `r params_from_excel$program_office_name_abbr`  
+07. DD 250 REQ...................: See Block 16.  
+08. APPROVAL CODE................: None.  
+09. DIST. STATEMENT REQUIRED.....: `r LSPD_CDRL_dist`  
+10. FREQUENCY....................: See Block 16.  
+11. AS OF DATE...................: See Block 16.  
+12. DATE OF FIRST SUBMISSION.....: See Block 16.  
+13. DATE OF SUBSEQUENT SUBMISSION: See Block 16.  
+14. DISTRIBUTION.................: See Block 16.  
+15. TOTAL........................: See Attachment `r params_from_excel$CSDR_plan_attch_numb` - CSDR Plan.  
+16. REMARKS......................:  
+
+Block 04: The `r prime_vs_sub` shall develop, maintain, and deliver the data item in accordance with `r LSPD_CDRL_did`, Attachment `r params_from_excel$LSPD_attach_numb` - Lot Size Pricing Data, and as tailored in this CDRL.  
+
+A Major End Item (MEI) is defined as: a component procured by the Contractor wherein the cost to the Prime Contractor is greater than \$100,000 per unit. A Component of Interest (CoI) is defined as: a component part for which the Government determines there is a significant technical, cost, or schedule risk implication. The list of CoIs will be identified by the Government within 30 days of acceptance of the Contractor’s Initial Design BOM, CDRL A016, and will be modified into the LSPD Workbook (Attachment `r params_from_excel$LSPD_attach_numb`). For planning purposes, the Contractor shall assume approximately 15 components will be considered CoI.  The purpose of the LSPD Report, CDRL `r params_from_excel$LSPD_CDRL_numb` is to provide data on how changes in lot/production quantity may effect unit price (i.e., when higher quantities are ordered, how much does unit price change).
+
+For all MEI or Col, the prime Contractor shall obtain and provide information from its subcontractors to include Rough Order Magnitude (ROM)-level pricing information and quantity discount information based on the procurement buy quantities provided by the Government within the LSPD Workbook (Attachment `r params_from_excel$LSPD_attach_numb`). The notional list of components that could be included in the LSPD Workbook (Attachment `r params_from_excel$LSPD_attach_numb`) includes, but is not limited to, the following subsystems:
+
+1. Hull weldment
+2. Suspension system
+3. Hydraulic system
+4. Environmental control system
+5. Hull armor
+6. Automotive drive shafts/differentials
+7. Dressed engine
+8. Transmission  
+
+Block 07: The DCARC office will issue a letter stating if the submission to the DCARC website has been accepted or rejected. Deliverables will be reviewed for technical content and/or format. Should the Government require the data item to be corrected after its delivery the `r prime_vs_sub` shall resubmit an update within 15 calendar days after receipt of Government comments.  
+
+`r # TODO: Fix submission event reference.  It should not be pointing to the CSDR Plan.`
+Block 10, 11, 12, and 13: The contractor shall submit reports at frequencies specified in Attachment `r params_from_excel$CSDR_plan_attch_numb` - CSDR Plan.  
+
+Block 14: The `r prime_vs_sub` shall submit files electronically using the CADE website. Data submitters shall register through the CADE website and possess a DoD-approved ECA digital certificate or DoD-issued CAC to obtain a CADE Portal account and be authorized to upload CSDR content. Users can obtain access by submitting user information about themselves and their organizations to the CADE Portal and requesting a CSDR submitter user role. After the registration information has been verified, CAPE shall authorize the user account and requested roles. All CADE Portal accounts shall be renewed at least annually.  
+
+`r params_from_excel$submission_instructions`  
+
+17. PRICE GROUP..................: N/A
+18. ESTIMATED TOTAL PRICE........: N/A

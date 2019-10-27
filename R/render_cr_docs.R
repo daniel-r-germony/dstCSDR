@@ -54,7 +54,7 @@
 #'          }
 render_cr_docs <- function(params_path = file.choose(),
                            output_dir = choose.dir(),
-                           combine_cdrls = TRUE) {
+                           combine_cdrls = FALSE) {
 
   # SETUP =====================================================================
 
@@ -82,16 +82,21 @@ render_cr_docs <- function(params_path = file.choose(),
   # This is a function to help render each CDRL into its own Word document.
   .render_cr_cdrl_doc <- function(params_path = params_path,
                                   output_dir = output_dir,
-                                  rmd_cdrl){
+                                  rmd_cdrl,
+                                  cdrl_title_abbr){
     rmarkdown::render(
-      input = system.file("extdata",
+      input = system.file("Rmd",
                           rmd_cdrl,
                           package = "dstCSDR"),
       output_file = paste0(Sys.Date(),
                            "_",
-                           params_from_excel$system_name_abbr,
-                           "_CDRL_",
+                           stringr::str_replace(
+                             params_from_excel$prime_mission_product_abbr,
+                             pattern = " ",
+                             replacement = "-"),
+                           "_",
                            cdrl_title_abbr,
+                           "_CDRL",
                            ".docx"),
       output_dir = if (exists("output_dir"))
         output_dir
@@ -105,12 +110,15 @@ render_cr_docs <- function(params_path = file.choose(),
 
   # Render the SOW document docx. =============================================
   rmarkdown::render(
-    input = system.file("extdata",
+    input = system.file("Rmd",
                         "cost_reporting_sow_template.Rmd",
                         package="dstCSDR"),
     output_file = paste0(Sys.Date(),
                          "_",
-                         params_from_excel$system_name_abbr,
+                         stringr::str_replace(
+                           params_from_excel$prime_mission_product_abbr,
+                           pattern = " ",
+                           replacement = "-"),
                          "_cost-reporting-sow.docx"),
     output_dir = if (exists("output_dir"))
                    output_dir
@@ -119,16 +127,89 @@ render_cr_docs <- function(params_path = file.choose(),
     params = params_from_excel
   )
 
-  # Render each CDRL into its own Word document.
-  if (params_from_excel$include_cdrl_xyz == TRUE) # If the user marked the CDRL is needed
-    .render_cr_cdrl_doc(params_path, output_dir, "cdrl.Rmd") # Replace "cdrl.Rmd"
-  if (params_from_excel$include_cdrl_xyz == TRUE)# If the user marked the CDRL is needed
-    .render_cr_cdrl_doc(params_path, output_dir, "cdrl.Rmd") # Replace "cdrl.Rmd"
-  if (params_from_excel$include_cdrl_xyz == TRUE)# If the user marked the CDRL is needed
-    .render_cr_cdrl_doc(params_path, output_dir, "cdrl.Rmd") # Replace "cdrl.Rmd"
-  #...
-  if (params_from_excel$include_cdrl_xyz == TRUE)# If the user marked the CDRL is needed
-  .render_cr_cdrl_doc(params_path, output_dir, "cdrl.Rmd") # Replace "cdrl.Rmd"
+  # Render each CDRL into its own Word document. ==============================
+  if (as.logical(params_from_excel$RDT_CDRL_lgl) == TRUE)
+    .render_cr_cdrl_doc(params_path, output_dir, "RDT_CDRL.Rmd", "RDT")
+
+  if (as.logical(params_from_excel$FlexFile_CDRL_lgl) == TRUE)
+    .render_cr_cdrl_doc(params_path, output_dir, "FF_CDRL.Rmd", "FF")
+
+  if (as.logical(params_from_excel$QtyData_CDRL_lgl) == TRUE)
+    .render_cr_cdrl_doc(params_path, output_dir, "Qty_CDRL.Rmd", "Qty")
+
+  if (as.logical(params_from_excel$MR_CDRL_lgl) == TRUE)
+    .render_cr_cdrl_doc(params_path, output_dir, "MRR_CDRL.Rmd", "MR")
+
+  if (as.logical(params_from_excel$TDR_CDRL_lgl) == TRUE)
+    .render_cr_cdrl_doc(params_path, output_dir, "TDR_CDRL.Rmd", "TDR")
+
+  if (as.logical(params_from_excel$CWBS_CDRL_lgl) == TRUE)
+    .render_cr_cdrl_doc(params_path, output_dir, "CWBS_CDRL.Rmd", "CWBS")
+
+  if (as.logical(params_from_excel$CDSR_CDRL_lgl) == TRUE)
+    .render_cr_cdrl_doc(params_path, output_dir, "CDSR_CDRL.Rmd", "CSDR")
+
+  if (as.logical(params_from_excel$FCHR_CDRL_lgl) == TRUE)
+    .render_cr_cdrl_doc(params_path, output_dir, "FCHR_CDRL.Rmd", "FCHR")
+
+  if (as.logical(params_from_excel$PCR_CDRL_lgl) == TRUE)
+    .render_cr_cdrl_doc(params_path, output_dir, "PCR_CDRL.Rmd", "PCR")
+
+  if (as.logical(params_from_excel$CBDR_CDRL_lgl) == TRUE)
+    .render_cr_cdrl_doc(params_path, output_dir, "CBDR_CDRL.Rmd", "CBDR")
+
+  if (as.logical(params_from_excel$SFCHR_CDRL_lgl) == TRUE)
+    .render_cr_cdrl_doc(params_path, output_dir, "SFCHR_CDRL.Rmd", "SFCHR")
+
+  if (as.logical(params_from_excel$SDR_CDRL_lgl) == TRUE)
+    .render_cr_cdrl_doc(params_path, output_dir, "SDR_CDRL.Rmd", "SDR")
+
+  if (as.logical(params_from_excel$SMR_CDRL_lgl) == TRUE)
+    .render_cr_cdrl_doc(params_path, output_dir, "SMR_CDRL.Rmd", "SMR")
+
+  if (as.logical(params_from_excel$ERP_CDRL_lgl) == TRUE)
+    .render_cr_cdrl_doc(params_path, output_dir, "ERP_CDRL.Rmd", "ERP")
+
+  if (as.logical(params_from_excel$BOM_CDRL_lgl) == TRUE)
+    .render_cr_cdrl_doc(params_path, output_dir, "BOM_CDRL.Rmd", "BOM")
+
+  if (as.logical(params_from_excel$LSPD_CDRL_lgl) == TRUE)
+    .render_cr_cdrl_doc(params_path, output_dir, "LSPD_CDRL.Rmd", "LSPD")
+
+  if (as.logical(params_from_excel$AUMC_CDRL_lgl) == TRUE)
+    .render_cr_cdrl_doc(params_path, output_dir, "AUMC_CDRL.Rmd", "AUMC")
+
+  if (as.logical(params_from_excel$CFSR_CDRL_lgl) == TRUE)
+    .render_cr_cdrl_doc(params_path, output_dir, "CFSR_CDRL.Rmd", "CFSR")
+
+  if (as.logical(params_from_excel$PaCR_CDRL_lgl) == TRUE)
+    .render_cr_cdrl_doc(params_path, output_dir, "PaCR_CDRL.Rmd", "PaCR")
+
+  if (as.logical(params_from_excel$PAC_CDRL_lgl) == TRUE)
+    .render_cr_cdrl_doc(params_path, output_dir, "PAC_CDRL.Rmd", "PAC")
+
+  if (as.logical(params_from_excel$MR_CDRL_lgl) == TRUE)
+    .render_cr_cdrl_doc(params_path, output_dir, "PAC_CDRL.Rmd", "PAC")
+
+  # Render Section L language into its own Word document. =====================
+
+  rmarkdown::render(
+    input = system.file("Rmd",
+                        "Section_L.Rmd",
+                        package="dstCSDR"),
+    output_file = paste0(Sys.Date(),
+                         "_",
+                         stringr::str_replace(
+                           params_from_excel$prime_mission_product_abbr,
+                           pattern = " ",
+                           replacement = "-"),
+                         "_section-l.docx"),
+    output_dir = if (exists("output_dir"))
+      output_dir
+    else
+      here::here(),
+    params = params_from_excel
+  )
 
   # Render all CDRLs into one Word document ===================================
   if (combine_cdrls == TRUE) {

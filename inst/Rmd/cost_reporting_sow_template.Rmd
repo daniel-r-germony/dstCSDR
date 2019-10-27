@@ -207,8 +207,12 @@ params:
     value: ">>>est_contract_swdev_value<<<"
   est_contract_swmx_value:
     input: numeric
-    label: "Estimated Total Value of Software Maintenance  Scopes of Work"
+    label: "Estimated Total Value of Software Maintenance Scopes of Work"
     value: ">>>est_contract_swmx_value<<<"
+  est_contract_sys_value:
+    input: numeric
+    label: "Estimated Total Value of Sustainment Scopes of Work"
+    value: ">>>est_contract_sys_value<<<"
   pco_name:
     input: text
     label: "PCO Name"
@@ -474,10 +478,10 @@ params:
     input: text
     label: "Additional Submission Instructions"
     value: ">>>submission_instructions<<<"
-  CSDR_Plan_attch_numb:
+  CSDR_plan_attch_numb:
     input: text
     label: "CSDR Plan Attachment Number"
-    value: ">>>CSDR_Plan_attch_numb<<<"
+    value: ">>>CSDR_plan_attch_numb<<<"
   RDT_attach_numb:
     input: text
     label: "Resource Distribution Table Attachment Number"
@@ -513,7 +517,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ### Cost and Software Data Reporting (CSDR)
 Cost and Software Data are the primary means by which the Department of Defense (DoD) collects data on the costs that contractors incur on DoD programs. Reliable and comprehensive cost data is essential to produce credible cost estimates as required in both statute and regulation. The Government's goals and use of CSDR data is to improve the quality of cost estimates; ensure proper resource allocation occurs within the DoD; and enable data driven decision making by program and department leadership.  
 
-The `r prime_vs_sub` shall systematically collect and report actual contract costs in accordance with the following Contract Data Requirements Lists (CDRLs) and Attachment `r params$CSDR_Plan_attch_numb`, the "Contract Cost and Software Data Reporting (CSDR) Plan":  
+The `r prime_vs_sub` shall systematically collect and report actual contract costs in accordance with the following Contract Data Requirements Lists (CDRLs) and Attachment `r params$CSDR_plan_attch_numb`, the "Contract Cost and Software Data Reporting (CSDR) Plan":  
 
 | Report Title                                                                    |             CDRL              |
 | :------------------------------------------------------------------------------ | :---------------------------: |
@@ -542,16 +546,16 @@ The `r prime_vs_sub` shall systematically collect and report actual contract cos
 ```{r , eval=FALSE, echo=FALSE}
 # TODO: Need to automatically identify $20M vs. $50M and MTA memo vs. 5000 as the subcontractor reporting threshold.
 ```
-The `r prime_vs_sub` shall flow-down CSDR requirements referenced in section `r params$cost_rep_sow_numb` and its sub-paragraphs to subcontractors (regardless of subcontractor tier) when the subcontract value is expected to exceed \$20 million using the maximum allowable contract quantities, hours, or options (as applicable), as required by Department of Defense (DoD) 5000.04-M-1 - CSDR Manual. The Contractor shall require subcontractors to electronically submit CSDRs deliverables directly to the Defense Cost and Resource Center (DCARC). The Contractor shall ensure that Subcontractors subject to CSDR reporting thresholds collect data in sufficient detail to meet Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan requirements. The Contractor shall collect and deliver data on all subcontractors to comply with Attachment `r params$RDT_attach_numb` and CDRL `r params$RDT_CDRL_numb` - Resource Distribution Table and Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan requirements. A “subcontract” is any agreement, purchase order, or instrument other than a prime contract calling for work or for the material required for the performance of one or more prime contracts. A “subcontract” usually covers procurement of major components or subsystems that require the subcontractor to do extensive design, development, engineering, and testing to meet a prime contractor’s procurement specifications.   
+The `r prime_vs_sub` shall flow-down CSDR requirements referenced in section `r params$cost_rep_sow_numb` and its sub-paragraphs to subcontractors (regardless of subcontractor tier) when the subcontract value is expected to exceed \$20 million using the maximum allowable contract quantities, hours, or options (as applicable), as required by Department of Defense (DoD) 5000.04-M-1 - CSDR Manual. The Contractor shall require subcontractors to electronically submit CSDRs deliverables directly to the Defense Cost and Resource Center (DCARC). The Contractor shall ensure that Subcontractors subject to CSDR reporting thresholds collect data in sufficient detail to meet Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan requirements. The Contractor shall collect and deliver data on all subcontractors to comply with Attachment `r params$RDT_attach_numb` and CDRL `r params$RDT_CDRL_numb` - Resource Distribution Table and Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan requirements. A “subcontract” is any agreement, purchase order, or instrument other than a prime contract calling for work or for the material required for the performance of one or more prime contracts. A “subcontract” usually covers procurement of major components or subsystems that require the subcontractor to do extensive design, development, engineering, and testing to meet a prime contractor’s procurement specifications.   
 
 #### Resource Distribution Table (RDT)
-The `r prime_vs_sub` shall prepare and submit the "Resource Distribution Table (RDT)" in accordance with CDRL `r params$RDT_CDRL_numb`. The "Resource Distribution Table (RDT)" identifies the value of work assigned to the Contractor and its subcontractors by for each WBS element listed in Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan, and is the primary means of identifying subcontractors who qualify for CSDR reporting.  
+The `r prime_vs_sub` shall prepare and submit the "Resource Distribution Table (RDT)" in accordance with CDRL `r params$RDT_CDRL_numb`. The "Resource Distribution Table (RDT)" identifies the value of work assigned to the Contractor and its subcontractors by for each WBS element listed in Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan, and is the primary means of identifying subcontractors who qualify for CSDR reporting.  
 
 #### Contract Work Breakdown Structure (WBS) & Dictionary
 ```{r , eval=FALSE, echo=FALSE}
 # TODO: Needs to be its own paragraph in legacy but needs to be nested under FlexFile if FF. I think the requirements may be slightly different under FlexFile as well.
 ```
-The `r prime_vs_sub` shall utilize the Contract Work Breakdown Structure (WBS) identified in Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan, as the primary framework for contract budgeting and reporting of incurred costs and hours to perform the contract. The `r prime_vs_sub` shall extend the WBS to provide adequate internal management, surveillance, and performance measurement of the contract. The Contractor shall ensure all WBS oriented reporting is compliant with at least the levels identified in Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan. The `r prime_vs_sub` shall develop and maintain a "Contract Work Breakdown Structure (CWBS) Dictionary" throughout the life of the contract, and shall submit the "CWBS Dictionary" IAW CDRL `r params$CWBS_CDRL_numb`. The "CWBS Dictionary" reports a description of the technical, cost, and work content of each WBS element.  
+The `r prime_vs_sub` shall utilize the Contract Work Breakdown Structure (WBS) identified in Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan, as the primary framework for contract budgeting and reporting of incurred costs and hours to perform the contract. The `r prime_vs_sub` shall extend the WBS to provide adequate internal management, surveillance, and performance measurement of the contract. The Contractor shall ensure all WBS oriented reporting is compliant with at least the levels identified in Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan. The `r prime_vs_sub` shall develop and maintain a "Contract Work Breakdown Structure (CWBS) Dictionary" throughout the life of the contract, and shall submit the "CWBS Dictionary" IAW CDRL `r params$CWBS_CDRL_numb`. The "CWBS Dictionary" reports a description of the technical, cost, and work content of each WBS element.  
 
 #### Cost and Hour Report (FlexFile)
 The `r prime_vs_sub` shall prepare and submit the "Cost and Hour Report (FlexFile)" in accordance with CDRL `r params$FlexFile_CDRL_numb`. The "Cost and Hour Report (FlexFile)" reports incurred and forecasted costs and hours related business data in order to perform this contract.  
@@ -560,19 +564,19 @@ The `r prime_vs_sub` shall prepare and submit the "Cost and Hour Report (FlexFil
 The `r prime_vs_sub` shall prepare and submit the "Quantity Data Report (DD Form 1921-Q)" in accordance with CDRL `r params$QtyData_CDRL_numb`. The "Quantity Data Report (DD Form 1921-Q)" reports quantity information to provide context to the data reported in FlexFile submissions and in order to derive accurate unit cost information.  
 
 #### Cost Data Summary Report (CDSR, DD Form 1921)
-The `r prime_vs_sub` shall prepare and submit the "Cost Data Summary Report (DD Form 1921)" in accordance with CDRL `r params$CDSR_CDRL_numb`. The "Cost Data Summary Report (DD Form 1921)" reports actual and forecasted cost and quantity data by WBS element specified in Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan.  
+The `r prime_vs_sub` shall prepare and submit the "Cost Data Summary Report (DD Form 1921)" in accordance with CDRL `r params$CDSR_CDRL_numb`. The "Cost Data Summary Report (DD Form 1921)" reports actual and forecasted cost and quantity data by WBS element specified in Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan.  
 
 #### Functional Cost-Hour Report (FCHR, DD Form 1921-1)
-The `r prime_vs_sub` shall prepare and submit the "Functional Cost-Hour Report (DD Form 1921-1)" in accordance with CDRL `r params$FCHR_CDRL_numb`. The "Functional Cost-Hour Report (DD Form 1921-1)" reports information on actual and forecasted production labor hours, overhead costs, material costs, and other direct and indirect costs by WBS element specified in Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan.  
+The `r prime_vs_sub` shall prepare and submit the "Functional Cost-Hour Report (DD Form 1921-1)" in accordance with CDRL `r params$FCHR_CDRL_numb`. The "Functional Cost-Hour Report (DD Form 1921-1)" reports information on actual and forecasted production labor hours, overhead costs, material costs, and other direct and indirect costs by WBS element specified in Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan.  
 
 #### Progress Curve Report (PCR, DD Form 1921-2)
-The `r prime_vs_sub` shall prepare and submit "Progress Curve Report (DD Form 1921-2)" in accordance with CDRL `r params$PCR_CDRL_numb`. The "Progress Curve Report (DD Form 1921-2)" reports actual production cost and hours data at the unit or sub-lot level, as specified in Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan.  
+The `r prime_vs_sub` shall prepare and submit "Progress Curve Report (DD Form 1921-2)" in accordance with CDRL `r params$PCR_CDRL_numb`. The "Progress Curve Report (DD Form 1921-2)" reports actual production cost and hours data at the unit or sub-lot level, as specified in Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan.  
 
 #### Contractor Business Data Report (CBDR, DD Form 1921-3)
 The `r prime_vs_sub` shall prepare and submit the "Contractor Business Data Report (DD Form 1921-3)" in accordance with CDRL `r params$CBDR_CDRL_numb`. The "Contractor Business Data Report (DD Form 1921-3)" reports data to facilitate estimating and analysis of indirect contract costs and rates.  
 
 #### Sustainment Functional Cost-Hour Report (SFCHR)
-The `r prime_vs_sub` shall prepare and submit the "Sustainment Functional Cost-Hour Report (DD Form 1921-5)" in accordance with CDRL `r params$MR_CDRL_numb`. The "Sustainment Functional Cost-Hour Report (DD Form 1921-5)" reports information on actual and forecasted sustainment labor hours, overhead costs, material costs, and other direct and indirect costs by WBS element specified in Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan.  
+The `r prime_vs_sub` shall prepare and submit the "Sustainment Functional Cost-Hour Report (DD Form 1921-5)" in accordance with CDRL `r params$MR_CDRL_numb`. The "Sustainment Functional Cost-Hour Report (DD Form 1921-5)" reports information on actual and forecasted sustainment labor hours, overhead costs, material costs, and other direct and indirect costs by WBS element specified in Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan.  
 
 #### Maintenance and Repair Report (DD Form 1921-M/R)
 The `r prime_vs_sub` shall prepare and submit the "Maintenance and Repair Report (DD Form 1921-M/R)" in accordance with CDRL `r params$SFCHR_CDRL_numb`. The "Maintenance and Repair Report (DD Form 1921-M/R)" reports sustainment information including labor hours, parts consumption, overhead costs, material costs, and other direct and indirect cost, by maintenance event, vehicle, part number, and contract line item number.  
@@ -605,16 +609,16 @@ The `r prime_vs_sub` shall prepare and submit the "Average Unit Manufacturing Co
 The `r prime_vs_sub` shall prepare and submit the "Bill of Materials (BOM)" in accordance with CDRL `r params$BOM_CDRL_numb` for its `r params$system_name_abbr` design. The "Bill of Materials (BOM)" reports a complete list of material (e.g., part numbers, software, fluids) including all levels of assembly required to build, assemble, and sustain a complete `r params$system_name_abbr` end-item to include any kits or appliqué equipment. The first submission of the BOM shall identify the `r prime_vs_sub`'s `r params$system_name_abbr` design as of the date of contract award and the final submission shall identify the `r params$system_name_abbr` design current as of the end of the contract.
 
 #### Post-Award Cost and Software Data Reporting Conference
-The `r prime_vs_sub` shall host a Post-Award CSDR Conference at the `r prime_vs_sub`’s facility where CSDRs are prepared with the Government’s Cost Working Group Integrated Product Team (CWIPT) IAW DFARS 242.503-2(b) and DoD 5000.04-M-1 (CSDR Manual). The purpose of the Post-Award CSDR Conference is to review the contract’s CSDR requirements and assess how the Contractor’s accounting system satisfies the CSDR requirements found in DoD 5000.04-M-1, “CSDR Manual” and Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan. In a briefing presented by the Contractor in its own format, the Contractor shall:  
+The `r prime_vs_sub` shall host a Post-Award CSDR Conference at the `r prime_vs_sub`’s facility where CSDRs are prepared with the Government’s Cost Working Group Integrated Product Team (CWIPT) IAW DFARS 242.503-2(b) and DoD 5000.04-M-1 (CSDR Manual). The purpose of the Post-Award CSDR Conference is to review the contract’s CSDR requirements and assess how the Contractor’s accounting system satisfies the CSDR requirements found in DoD 5000.04-M-1, “CSDR Manual” and Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan. In a briefing presented by the Contractor in its own format, the Contractor shall:  
 - Demonstrate how it collects cost data in its accounting system and how that data will be utilized to provide actual cost transactions and minimize cost allocations when preparing CSDR data deliverables.  
 - Describe how recurring vs. nonrecurring costs are segregated in its accounting system and for the purpose of CSDR reporting.  
-- Demonstrate how the data from its accounting system will be mapped into the CSDR reports required by Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan and associated CDRLs.  
+- Demonstrate how the data from its accounting system will be mapped into the CSDR reports required by Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan and associated CDRLs.  
 - Present the methodologies used for mapping internal cost accounts to the WBS, specifically showing how individual WBS elements and functional element codes will be populated.  
-- Propose any changes to Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan in order to tailor the plan to the `r prime_vs_sub`’s accounting system, to include any `r prime_vs_sub` recommended changes or additions to the WBS elements. These changes may include adjustments to the submission events and/or submission timelines, particularly in the case of a direct-reporting subcontractor performing against a different delivery schedule than the associated prime contractor.  
+- Propose any changes to Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan in order to tailor the plan to the `r prime_vs_sub`’s accounting system, to include any `r prime_vs_sub` recommended changes or additions to the WBS elements. These changes may include adjustments to the submission events and/or submission timelines, particularly in the case of a direct-reporting subcontractor performing against a different delivery schedule than the associated prime contractor.  
 
 The `r prime_vs_sub` and CWIPT will also review the initial submission of the "Resource Distribution Table (RDT)" (CDRL `r params$RDT_CDRL_numb`), in order to finalize which subcontractors will be required to provide CSDR reporting and electronic submission of deliverables directly to the Defense Cost and Resource Center (DCARC) and which subcontractors may qualify for a CSDR direct reporting subcontractor waiver.  
 
 The Post-Award Cost and Software Data Reporting Conference shall be held within 60 days of the Start of Work Meeting on a date mutually agreed to by the CWIPT and the `r prime_vs_sub`. This meeting has an anticipated duration of one business day.  
 
 ### CSDR Mapping Review(s)
-The `r prime_vs_sub` shall host a CSDR Conference Mapping Review at the `r prime_vs_sub`’s facility where CSDRs are prepared with the Government at least 60 days before the initial CSDR report submission or the second CSDR report submission if the initial submission is due within 60 days of contract award. The purpose of a CSDR Mapping Review is to ensure that all contractor internal control accounts and all part numbers identified in the CDRL `r params$BOM_CDRL_numb` - Bill of Materials (BOM) are mapped to the appropriate CSDR WBS elements in accordance with `r params$CSDR_plan_std` and as required by the CWBS Dictionary `r params$CWBS_CDRL_numb` and Attachment `r params$CSDR_Plan_attch_numb` - CSDR Plan. The meeting has an anticipated duration of one business day. In the event that new control accounts or part numbers are created after the initial CSDR Mapping Review, the `r prime_vs_sub` shall review the updated mappings with the Government prior to follow-on CSDR submissions either via phone or email.  
+The `r prime_vs_sub` shall host a CSDR Conference Mapping Review at the `r prime_vs_sub`’s facility where CSDRs are prepared with the Government at least 60 days before the initial CSDR report submission or the second CSDR report submission if the initial submission is due within 60 days of contract award. The purpose of a CSDR Mapping Review is to ensure that all contractor internal control accounts and all part numbers identified in the CDRL `r params$BOM_CDRL_numb` - Bill of Materials (BOM) are mapped to the appropriate CSDR WBS elements in accordance with `r params$CSDR_plan_std` and as required by the CWBS Dictionary `r params$CWBS_CDRL_numb` and Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan. The meeting has an anticipated duration of one business day. In the event that new control accounts or part numbers are created after the initial CSDR Mapping Review, the `r prime_vs_sub` shall review the updated mappings with the Government prior to follow-on CSDR submissions either via phone or email.  

@@ -7,25 +7,25 @@ output:
 version: 0.1.0
 ---
 
-A. CONTRACT LINE ITEM NO.........: `r params$cdrl_clin_numb`  
-B. EXHIBIT.......................: `r params$cdrl_exhibit`  
+A. CONTRACT LINE ITEM NO.........: `r params_from_excel$cdrl_clin_numb`  
+B. EXHIBIT.......................: `r params_from_excel$cdrl_exhibit`  
 C. CATEGORY......................: Other.  
-D. SYSTEM/ITEM...................: `r params$prime_mission_product`  
-E. CONTRACT/PR NUMBER............: `r params$contract_numb`  
-F. CONTRACTOR....................: `r params$contractor_name`  
-G. PREPARED BY...................: `r params$cdrl_prepared_by`  
-H. DATE..........................: `r params$cdrl_prepared_date`  
-I. APPROVED BY...................: `r params$cdrl_approved_by`  
-J. DATE..........................: `r params$cdrl_approved_date`  
-01. DATA ITEM NUMBER.............: `r params$meeting_docs_numb`  
-02. TITLE OF DATA ITEM...........: `r meeting_docs_CDRL_title`  
-03. SUBTITLE ....................: `r meeting_docs_CDRL_subtitle`  
-04. AUTHORITY....................: `r meeting_docs_CDRL_did`(T) see Block 16.  
+D. SYSTEM/ITEM...................: `r params_from_excel$prime_mission_product`  
+E. CONTRACT/PR NUMBER............: `r params_from_excel$contract_numb`  
+F. CONTRACTOR....................: `r params_from_excel$contractor_name`  
+G. PREPARED BY...................: `r params_from_excel$cdrl_prepared_by`  
+H. DATE..........................: `r params_from_excel$cdrl_prepared_date`  
+I. APPROVED BY...................: `r params_from_excel$cdrl_approved_by`  
+J. DATE..........................: `r params_from_excel$cdrl_approved_date`  
+01. DATA ITEM NUMBER.............: `r params_from_excel$PAC_CDRL_numb`  
+02. TITLE OF DATA ITEM...........: `r PAC_CDRL_title`  
+03. SUBTITLE ....................: `r PAC_CDRL_subtitle`  
+04. AUTHORITY....................: `r PAC_CDRL_did`(T) see Block 16.  
 05. CONTRACT REFERENCE...........:  
-06. REQUIRING OFFICE.............: `r params$program_office_name_abbr`  
+06. REQUIRING OFFICE.............: `r params_from_excel$program_office_name_abbr`  
 07. DD 250 REQ...................: LT  
 08. APPROVAL CODE................: A  
-09. DIST. STATEMENT REQUIRED.....: `r meeting_docs_CDRL_dist`  
+09. DIST. STATEMENT REQUIRED.....: `r PAC_CDRL_dist`  
 10. FREQUENCY....................: See Block 16.  
 11. AS OF DATE...................: See Block 16.  
 12. DATE OF FIRST SUBMISSION.....: See Block 16.  
@@ -34,7 +34,7 @@ J. DATE..........................: `r params$cdrl_approved_date`
 15. TOTAL........................: 1  
 16. REMARKS......................:  
 
-Block 04: The `r prime_vs_sub` shall develop and deliver the data item in accordance with `r meeting_docs_CDRL_did` and as tailored in this CDRL.  
+Block 04: The `r prime_vs_sub` shall develop and deliver the data item in accordance with `r PAC_CDRL_did` and as tailored in this CDRL.  
 
 The "Requirements" section of the DID is deleted and replaced with the following:  
 
@@ -44,7 +44,7 @@ Formats: The contractor may develop and submit the deliverable in any format(s) 
 
 Block 10, 11, 12, 13, and 14: The `r prime_vs_sub` shall submit one copy of the deliverables electronically to PCO’s email address listed on page one of the contract prior to the Post-Award Cost and Software Data Reporting Conference.  
 
-`r params$submission_instructions`  
+`r params_from_excel$submission_instructions`  
 
 17. PRICE GROUP..................: N/A
 18. ESTIMATED TOTAL PRICE........: N/A

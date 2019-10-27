@@ -9,8 +9,8 @@
 #'   written to the global environment.
 
 prime_vs_sub <-
-  if (params$CSDR_Plan_type == ">>>CSDR_Plan_type<<<") {"Contractor"} else
-  if (params$CSDR_Plan_type == "Contract") {"Contractor"} else {"Subcontractor"}
+  if (params_from_excel$reporting_organization_type == ">>>CSDR_Plan_type<<<") {"Contractor"} else
+  if (params_from_excel$reporting_organization_type == "Prime Contractor") {"Contractor"} else {"Subcontractor"}
 
 # Block 2: CDRL Titles ========================================================
 
