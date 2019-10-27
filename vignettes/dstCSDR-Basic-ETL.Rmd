@@ -14,9 +14,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, warning = FALSE, message = FALSE}
 library(dstCSDR)
-library(tidyverse, quietly = TRUE)
+library(tidyverse)
 library(gt)
 ```
 
@@ -46,27 +46,29 @@ In this vignette, we will:
 
 ## Import Function Overview
 
-The `{dstCSDR}` package takes a tip from tidyverse packages and utilizes a consistent naming convention when it comes to working with CSDR data.  
+The `{dstCSDR}` package takes a tip from `{tidyverse}` packages and utilizes a consistent naming convention when it comes to working with CSDR data.  
 
 Import functions always begin with `import_...` then the type of CSDR deliverable it will import, for example:  
 
 * `import_cdsr_...() # Imports a CDSR (DD Form 1921) file (from a yet unknown file type)`
 * `import_fchr_...() # Imports a FCHR (DD Form 1921-1) file (from a yet unknown file type)`
 
-Finally the function names end with the type of file you are importing that CSDR data from, for example:  
+The function names end with the type of file you are importing that CSDR data from, for example:  
 
 * `import_cdsr_excel() # Imports a CDSR (DD Form 1921) from a source Excel file`
 * `import_fchr_xml() # Imports a FCHR (DD Form 1921-1) from a source XML file`
 
-You then pass the functions the full path (including file name and extension) to where the CSDR file resides on your system, ShareDrive, or network connection.  (The below code won't actually run since this location does not actually exist, but hopefully you get the point.)  
+You then pass the function the full path (including file name and extension) to where the CSDR file you want to import resides on your system, ShareDrive, or network connection.  (The below code won't actually run since this location does not actually exist, but hopefully you get the point.)  
 
 ```{r import-direct-path, eval=FALSE, include=TRUE}
+# Example of a full function call
 import_cdsr_excel("C:/Users/john.doe/Documents/CDSR.xls")
 ```
 
 You could also use `file.choose()` which will create a popup box that you can use to navigate to your file.  
 
 ```{r import-with-file.choose, eval=FALSE, include=TRUE}
+# Another example of a full function call, this one using `file.choose()`
 import_cdsr_excel(file.choose())
 ```
 
@@ -75,6 +77,7 @@ import_cdsr_excel(file.choose())
 Let's import the CDSR and FCHR from the example Excel files provided with the package.  
 
 ```{r import-cdsr-and-fchr}
+# Import the example files included in the {dstCSDR} package
 cdsr <- import_cdsr_excel(dstCSDR_files("Example_CDSR_1921.xls"))
 fchr <- import_fchr_excel(dstCSDR_files("Example_FCHR_1921_1.xls"))
 ```
@@ -84,7 +87,7 @@ This created two new objects in your Global Environment:
 * `cdsr` includes the data found in the `Example_CDSR_1921.xls` file.
 * `fchr` includes the data found in the `Example_FCHR_1921_1.xls` file.
 
-Note that the `dstCSDR_files()` function we used above returned the complete file path for each file since we included the file name (with extension) in the `dstCSDR_files()` function call.  If you wanted to import your own data, you would replace "`dstCSDR_files("...")`" with a direct path to your file.
+(Note that the `dstCSDR_files()` function we used above returned the complete file path for each file since we included the file name (with extension) in the `dstCSDR_files()` function call.  If you wanted to import your own data, you would replace "`dstCSDR_files("...")`" with a direct path to your file.)
 
 ## Review of the Imported CSDR Objects 
 
@@ -94,25 +97,27 @@ Now that we have imported those files into the `cdsr` and `fchr` objects, what d
 
 > What does that mean?  
 
-Fair question.  Let's look at the first level of the `cdsr` object as an example.
+Fair question.  Let's look at the first level of the `cdsr` object as an example:
 
 ```{r str-level-1-cdsr}
 str(cdsr, max.level = 1)
 ```
 
-Above we can see that `cdsr` is comprised of three named tables:
+Above we can see that `cdsr` is comprised of three named tables:  
+
 * `metadata`: Includes the CSDR submission metadata found at the top of the legacy forms.  
 * `reported_data`: Includes reported costs by WBS element (the middle section of the legacy CDSR form).  
 * `summary_reporting_elements`: Includes the summary elements like G&A and fee which are not directly attributable to any one WBS element (the bottom of the legacy CDSR form).  
 
-Here is each of those three tables, one at a time (using `kable()` to print them since that looks nicer than `print()` in HTML):  
+Here is each of those three tables, one at a time (using `gt()` to print them since that looks nicer than `print()` in HTML):  
 
 ## `metadata`
 
 ```{r kable-metadata}
 cdsr[["metadata"]] %>% 
   gt() %>% 
-  tab_options(column_labels.font.size = 11, table.font.size = 11)
+  tab_options(column_labels.font.size = 11,
+              table.font.size = 11)
 ```
 
 ## `reported_data`
@@ -120,7 +125,8 @@ cdsr[["metadata"]] %>%
 ```{r kable-reported-data}
 cdsr[["reported_data"]] %>%
   gt() %>% 
-  tab_options(column_labels.font.size = 11, table.font.size = 11) %>% 
+  tab_options(column_labels.font.size = 11,
+              table.font.size = 11) %>% 
    fmt_currency(columns = starts_with("Costs"),
                 accounting = TRUE,
                 decimals = 1,
@@ -132,7 +138,8 @@ cdsr[["reported_data"]] %>%
 ```{r kable-summary_reporting_elements}
 cdsr[["summary_reporting_elements"]] %>%
   gt() %>% 
-  tab_options(column_labels.font.size = 11, table.font.size = 11) %>% 
+  tab_options(column_labels.font.size = 11,
+              table.font.size = 11) %>% 
   fmt_currency(columns = starts_with("Costs"),
                accounting = TRUE,
                decimals = 1,
@@ -145,21 +152,20 @@ The `fchr` object follows the same pattern:
 str(fchr, max.level = 1)
 ```
 
-In fact, the `metadata` object in both `cdsr` and `fchr` will match exactly (assuming the submitter entered the same metadata).
+In fact, the `metadata` object in both `cdsr` and `fchr` will match exactly (assuming the submitter entered the same metadata).  
 
 # 2. Tidying the `fchr` Data
 
-The `{dstCSDR}` package imports the CSDR data so that the initial tables look similar to the original CSDR forms.  Those CSDR forms are human readable but that format is not particularly conducive to exploratory data analysis (EDA) or use in R (or even Excel).  
+The `{dstCSDR}` package imports the CSDR data so that the initial tables look similar to the original CSDR forms.  In the standard FCHR (DD Form 1921-1), each row of data provides info on a given WBS by functional element code.  The columns in the standard form tell us something about that data by timeframe (i.e., "To Date", "At Completion") and by "Recurring", "Nonrecurring" or "Total".  That format is human readable but is not particularly conducive to exploratory data analysis (EDA) or use in R (or even Excel).  
 
-The `gather_fchr()` and `add_supplemental_fchr_columns()` functions transform the CSDR data from its original format to a tidy/pivot friendly flat file format and combines the reported cost & hours data with reported metadata.  The result is FCHR data in a format that is easier to work with both on its own or with multiple submissions (or multiple program's data) at once.  
-
-Before being transformed, the first few rows of the `fchr` reported data look like this:
+The `gather_fchr()` and `add_supplemental_fchr_columns()` functions transform the CSDR data from its original format to a tidy/pivot friendly flat file format and combines the reported cost & hours data with reported metadata.  Here is what the data looks like before being transformed:
 
 ```{r native-fchr}
 fchr[["reported_data"]] %>%
   head() %>% 
   gt() %>% 
-  tab_options(column_labels.font.size = 11, table.font.size = 11) %>% 
+  tab_options(column_labels.font.size = 11,
+              table.font.size = 11) %>% 
   fmt_number(columns = starts_with("Costs and"),
              decimals = 1,
              rows = `Unit of Measure` == "Hours") %>% 
@@ -170,9 +176,7 @@ fchr[["reported_data"]] %>%
                 locale = "en_US") 
 ```
 
-That data is very wide (so wide, it likely did not even print very well on your screen).  
-
-The `gather_fchr()` takes the all the "Cost and Hours..." columns and moves them down and two the left so that each row in the new table gives just one record of cost or hours data (vs. seven columns of data like the default `fchr` data).  Here is what that same data looks like after we run it though `gather_fchr()`:  
+The `gather_fchr()` takes the all the "Cost and Hours..." columns and makes them rows so that each row in the new table gives just one record of cost or hours data (vs. seven columns of data like the default `fchr` data).  Here is what that same data looks like after we run it though `gather_fchr()`:  
 
 ```{r gathered-fchr}
 fchr %>%
@@ -180,7 +184,8 @@ fchr %>%
   .[["reported_data"]] %>%
   head() %>%
   gt() %>%
-  tab_options(column_labels.font.size = 11, table.font.size = 11) %>%
+  tab_options(column_labels.font.size = 11,
+              table.font.size = 11) %>%
   fmt_number(columns = "Reported Data Value",
              decimals = 1,
              rows = `Unit of Measure` == "Hours") %>% 
@@ -189,13 +194,31 @@ fchr %>%
                 accounting = TRUE,
                 decimals = 1,
                 locale = "en_US") 
-  
 ```
 
-A close look at the code in the last chunk compared to those that came before revales two notable points:  
+A close look at the code in the last chunk compared to those that came before revales one notable point:  
 
 1. In all prior chunks, the second list object `"reported_data"` was specified before we printed something but in the last chunk, the whole `fchr` object was passed to `gather_fchr()`.  This is because `gather_fchr()` is expecting to be passed the whole `fchr`, not just the `"reported data"`.  
 
-2. 
+Now we have the data in a tall (rather than wide) table and it is easier to work with via pivot tables, filters, or other software tools.  Next we can take take our gathered `fchr` data and add metadata from the submission to make it easier to work with multiple CSDR submissions (or CSDRs from multiple program ) at once.  
 
-Now we have the data in a tall (rather than wide) table which is ready to work with via a pivot table or 
+The `add_supplemental_fchr_columns()` can add any of the metadata as a column along side the gathered `fchr` reported data.
+
+```{r add-supp-fchr}
+fchr %>%
+  gather_fchr() %>%
+  add_supplemental_fchr_columns() %>% 
+  .[["reported_data"]] %>%
+  head() %>%
+  gt() %>%
+  tab_options(column_labels.font.size = 11,
+              table.font.size = 11) %>%
+  fmt_number(columns = "Reported Data Value",
+             decimals = 1,
+             rows = `Unit of Measure` == "Hours") %>%
+   fmt_currency(columns = "Reported Data Value",
+                rows = `Unit of Measure` == "TY $K",
+                accounting = TRUE,
+                decimals = 1,
+                locale = "en_US")
+```
