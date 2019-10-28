@@ -76,7 +76,7 @@ render_cr_docs <- function(params_path = file.choose(),
 
   # Source the .cdrl_block_info.R script to read some of the basic CDRL info
   # into R (which will be needed in the render step).
-  source(here::here("R",".cdrl_block_info.R"),
+  source(system.file("R", ".cdrl_block_info.R", package = "dstCSDR"),
          local = TRUE) # `local = TRUE` lets this script access the `params_from_excel`
 
   # This is a function to help render each CDRL into its own Word document.
