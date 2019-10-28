@@ -35,6 +35,10 @@ file.
 filled in with the param values from the "cost_reporting_params.xlsx"
 file.
 }
+
+Technically, nothing is returned this this is not a function but many
+CDRL titles, subtitles, DID numbers, and distro statement letters are
+written to the global environment.
 }
 \description{
 Imports a pre-formatted and filled in Excel file with info on the planned
@@ -53,4 +57,10 @@ render_cr_docs()
 render_cr_docs(params_path = here::here("extdata", "cost_reporting_params.xlsx"),
                output_dir = "C:/Users/john.doe/Desktop")
          }
+Write Basic CDRL Block Data to the Environment =============================
+
+This script puts basic CDRL data in one place, making it easier to update
+stuff like CDRL titles and DID reference (rather than having to update each
+CDRL, one at a time). This script is sourced by `render_cr_docs.R`.
+
 }

@@ -74,6 +74,46 @@ render_cr_docs <- function(params_path = file.choose(),
     tidyr::pivot_wider(names_from = .data$params,
                        values_from = .data$`User Input`)
 
+  params_from_excel <- params_from_excel %>%
+    dplyr::mutate(
+      # Date Columns
+      draft_RFP_release_date   = as.Date(as.numeric(.data$draft_RFP_release_date), origin = "1899-12-30"),
+      RFP_release_date         = as.Date(as.numeric(.data$RFP_release_date), origin = "1899-12-30"),
+      contract_award_date      = as.Date(as.numeric(.data$contract_award_date), origin = "1899-12-30"),
+      contract_end_date        = as.Date(as.numeric(.data$contract_end_date), origin = "1899-12-30"),
+      cdrl_prepared_date       = as.Date(as.numeric(.data$cdrl_prepared_date), origin = "1899-12-30"),
+      cdrl_approved_date       = as.Date(as.numeric(.data$cdrl_approved_date), origin = "1899-12-30"),
+      # Phone Numbers
+      CSDR_plan_POC_phone      = as.numeric(.data$CSDR_plan_POC_phone),
+      pco_phone                = as.numeric(.data$pco_phone),
+      #Contract Values
+      est_contract_value       = as.numeric(.data$est_contract_value),
+      est_contract_swdev_value = as.numeric(.data$est_contract_swdev_value),
+      est_contract_swmx_value  = as.numeric(.data$est_contract_swmx_value),
+      est_contract_sys_value   = as.numeric(.data$est_contract_sys_value),
+      # Logical
+      RDT_CDRL_lgl             = as.logical(RDT_CDRL_lgl),
+      FlexFile_CDRL_lgl        = as.logical(FlexFile_CDRL_lgl),
+      QtyData_CDRL_lgl         = as.logical(QtyData_CDRL_lgl),
+      MR_CDRL_lgl              = as.logical(MR_CDRL_lgl),
+      TDR_CDRL_lgl             = as.logical(TDR_CDRL_lgl),
+      CWBS_CDRL_lgl            = as.logical(CWBS_CDRL_lgl),
+      CDSR_CDRL_lgl            = as.logical(CDSR_CDRL_lgl),
+      FCHR_CDRL_lgl            = as.logical(FCHR_CDRL_lgl),
+      PCR_CDRL_lgl             = as.logical(PCR_CDRL_lgl),
+      CBDR_CDRL_lgl            = as.logical(CBDR_CDRL_lgl),
+      SFCHR_CDRL_lgl           = as.logical(SFCHR_CDRL_lgl),
+      SDR_CDRL_lgl             = as.logical(SDR_CDRL_lgl),
+      SMR_CDRL_lgl             = as.logical(SMR_CDRL_lgl),
+      ERP_CDRL_lgl             = as.logical(ERP_CDRL_lgl),
+      BOM_CDRL_lgl             = as.logical(BOM_CDRL_lgl),
+      LSPD_CDRL_lgl            = as.logical(LSPD_CDRL_lgl),
+      AUMC_CDRL_lgl            = as.logical(AUMC_CDRL_lgl),
+      CFSR_CDRL_lgl            = as.logical(CFSR_CDRL_lgl),
+      PaCR_CDRL_lgl            = as.logical(PaCR_CDRL_lgl),
+      PAC_CDRL_lgl             = as.logical(PAC_CDRL_lgl)
+    )
+
 #' Write Basic CDRL Block Data to the Environment =============================
 #'
 #' This script puts basic CDRL data in one place, making it easier to update
