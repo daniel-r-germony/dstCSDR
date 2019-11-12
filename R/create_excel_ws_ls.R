@@ -26,7 +26,7 @@
 #' @export
 .create_excel_ws_ls <- function(folder_path, recurse = TRUE) {
   excel_ws_ls <- folder_path %>%
-    fs::dir_ls(regexp = "[.]xls[x]$", recurse = recurse) %>%
+    fs::dir_ls(regexp = "[.]xlsx?$", recurse = recurse) %>%
     purrr::map(readxl::excel_sheets) %>%
     tibble::enframe() %>%
     tidyr::unnest(cols = c(.data$value)) %>%
