@@ -18,7 +18,7 @@ wbs_code_to_lvl <- function(wbs_element_code, ...) {
   # Regex for a WBS Element Code
   # Starts with a diget, has at least one grouped period & diget, ends with a
   # diget.
-  wbs_code_regex <- "^(\\d)(\\.\\d)+(\\d)*$"
+  wbs_code_regex <- "^[\\d]*[\\.]{1}[\\.\\d*]*$"
 
   # Error prevention: Ensure the input is a char or factor, otherwise stop.
   if (!is.character(wbs_element_code) &&
