@@ -25,7 +25,7 @@
 
   # Return an NA value if the cell in Excel was blank
   if (nrow(cell_value) == 0)
-    return(NA)
+    return(NA_character_)
 
   # If the Excel cell had a date, it needs special attention to get it type
   # coerced into a char that looks like a date.
