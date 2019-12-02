@@ -18,7 +18,7 @@ wbs_code_to_lvl <- function(wbs_element_code, ...) {
   # Regex for a WBS Element Code
   # Starts with a diget, has at least one grouped period & diget, ends with a
   # diget.
-  wbs_code_regex <- "^(\\d)(\\.\\d)+(\\d)*$"
+  wbs_code_regex <- "^[\\d]*[\\.]{1}[\\.\\d*]*$"
 
   # Error prevention: Ensure the input is a char or factor, otherwise stop.
   if (!is.character(wbs_element_code) &&
@@ -37,8 +37,8 @@ wbs_code_to_lvl <- function(wbs_element_code, ...) {
       'The object provided does not appear to be a WBS Element Code!\n',
       'WBS Element Codes start and end with a diget, include at least one\n',
       'period, and contain no other punctuation or alphabetical characters\n',
-      '(their regular expression is "^(\\d)(\\.\\d)+(\\d)*$"). Here are some\n',
-      'examples of what WBS Element Codes look like:\n',
+      '(their regular expression is "^[\\d]*[\\.]{1}[\\.\\d*]*$". Here are\n',
+      'some examples of what WBS Element Codes look like:\n',
       '- 1.0\n',
       '- 1.1.3\n',
       '- 1.2.1.1.5.4.2'
