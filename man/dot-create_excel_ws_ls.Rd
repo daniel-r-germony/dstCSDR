@@ -36,8 +36,9 @@ the tibble created with this function.
 \code{\link[=.grab_cell]{.grab_cell()}} pulls the value out of an individual Excel cell and
 reurns it to R.
 
-Other dstCSDR Import Excel Data Functions: \code{\link{.grab_cell}},
-  \code{\link{.import_excel_ws_ls}}
+Other dstCSDR Import Excel Data Functions: 
+\code{\link{.grab_cell}()},
+\code{\link{.import_excel_ws_ls}()}
 }
 \author{
 Daniel Germony \email{daniel.r.germony.civ@mail.mil}

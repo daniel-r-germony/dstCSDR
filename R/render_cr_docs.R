@@ -1,14 +1,14 @@
 #' Create Cost Reporting SOW, CDRLs, Attachments with Params
 #'
 #' Imports a pre-formatted and filled in Excel file with info on the planned
-#' contract and system then generates a scope of work, CDRLs, and  (comming
+#' contract and system then generates a scope of work, CDRLs, and (coming
 #' soon) associated contract attachments from template documents.
 #'
 #' @param params_path Required. A full path to a filled-in
 #'   "cost_reporting_params.xlsx" file. If a path is not provided to the
 #'   function call, a file selection box will be opened.
 #' @param output_dir Required. A directory path to where the user wants the
-#'   generated files to be placed. If using Windows, a pop-up box will ppear to
+#'   generated files to be placed. If using Windows, a pop-up box will appear to
 #'   specify an output directory. Non-Windows users must pass a directory path
 #'   in the function call.
 #' @param combine_cdrls Optional. Should all CDRLs be written into one .docx or
@@ -41,19 +41,20 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' # Render the cost reporting documents and select both the
-#' # "cost_reporting_params.xlsx" file and output directory using pop-up boxes.
-#' render_cr_docs()
 #'
-#' # Render the cost reporting documents with the default
-#' # "cost_reporting_params.xlsx" values and put the output on a fake user's
-#' # desktop.
-#' render_cr_docs(params_path = here::here("extdata", "cost_reporting_params.xlsx"),
+#' \dontrun{
+#' ## Render the cost reporting documents and select both the
+#' ## "cost_reporting_params.xlsx" file and output directory using pop-up boxes.
+#' .render_cr_docs()
+#'
+#' ## Render the cost reporting documents with the default
+#' ## "cost_reporting_params.xlsx" values and put the output on a fake user's
+#' ## desktop.
+#' .render_cr_docs(params_path = here::here("extdata", "cost_reporting_params.xlsx"),
 #'                output_dir = "C:/Users/john.doe/Desktop")
 #'          }
-render_cr_docs <- function(params_path = file.choose(),
-                           output_dir = choose.dir(),
+.render_cr_docs <- function(params_path = file.choose(),
+                           output_dir = utils::choose.dir(),
                            combine_cdrls = FALSE) {
 
   # SETUP =====================================================================
@@ -78,11 +79,11 @@ render_cr_docs <- function(params_path = file.choose(),
     dplyr::mutate(
       # Date Columns
       draft_RFP_release_date   = as.Date(as.numeric(.data$draft_RFP_release_date), origin = "1899-12-30"),
-      RFP_release_date         = as.Date(as.numeric(.data$RFP_release_date), origin = "1899-12-30"),
-      contract_award_date      = as.Date(as.numeric(.data$contract_award_date), origin = "1899-12-30"),
-      contract_end_date        = as.Date(as.numeric(.data$contract_end_date), origin = "1899-12-30"),
-      cdrl_prepared_date       = as.Date(as.numeric(.data$cdrl_prepared_date), origin = "1899-12-30"),
-      cdrl_approved_date       = as.Date(as.numeric(.data$cdrl_approved_date), origin = "1899-12-30"),
+      RFP_release_date         = as.Date(as.numeric(.data$RFP_release_date),       origin = "1899-12-30"),
+      contract_award_date      = as.Date(as.numeric(.data$contract_award_date),    origin = "1899-12-30"),
+      contract_end_date        = as.Date(as.numeric(.data$contract_end_date),      origin = "1899-12-30"),
+      cdrl_prepared_date       = as.Date(as.numeric(.data$cdrl_prepared_date),     origin = "1899-12-30"),
+      cdrl_approved_date       = as.Date(as.numeric(.data$cdrl_approved_date),     origin = "1899-12-30"),
       # Phone Numbers
       CSDR_plan_POC_phone      = as.numeric(.data$CSDR_plan_POC_phone),
       pco_phone                = as.numeric(.data$pco_phone),
@@ -92,37 +93,37 @@ render_cr_docs <- function(params_path = file.choose(),
       est_contract_swmx_value  = as.numeric(.data$est_contract_swmx_value),
       est_contract_sys_value   = as.numeric(.data$est_contract_sys_value),
       # Logical
-      RDT_CDRL_lgl             = as.logical(RDT_CDRL_lgl),
-      FlexFile_CDRL_lgl        = as.logical(FlexFile_CDRL_lgl),
-      QtyData_CDRL_lgl         = as.logical(QtyData_CDRL_lgl),
-      MR_CDRL_lgl              = as.logical(MR_CDRL_lgl),
-      TDR_CDRL_lgl             = as.logical(TDR_CDRL_lgl),
-      CWBS_CDRL_lgl            = as.logical(CWBS_CDRL_lgl),
-      CDSR_CDRL_lgl            = as.logical(CDSR_CDRL_lgl),
-      FCHR_CDRL_lgl            = as.logical(FCHR_CDRL_lgl),
-      PCR_CDRL_lgl             = as.logical(PCR_CDRL_lgl),
-      CBDR_CDRL_lgl            = as.logical(CBDR_CDRL_lgl),
-      SFCHR_CDRL_lgl           = as.logical(SFCHR_CDRL_lgl),
-      SDR_CDRL_lgl             = as.logical(SDR_CDRL_lgl),
-      SMR_CDRL_lgl             = as.logical(SMR_CDRL_lgl),
-      ERP_CDRL_lgl             = as.logical(ERP_CDRL_lgl),
-      BOM_CDRL_lgl             = as.logical(BOM_CDRL_lgl),
-      LSPD_CDRL_lgl            = as.logical(LSPD_CDRL_lgl),
-      AUMC_CDRL_lgl            = as.logical(AUMC_CDRL_lgl),
-      CFSR_CDRL_lgl            = as.logical(CFSR_CDRL_lgl),
-      PaCR_CDRL_lgl            = as.logical(PaCR_CDRL_lgl),
-      PAC_CDRL_lgl             = as.logical(PAC_CDRL_lgl)
+      RDT_CDRL_lgl             = as.logical(.data$RDT_CDRL_lgl),
+      FlexFile_CDRL_lgl        = as.logical(.data$FlexFile_CDRL_lgl),
+      QtyData_CDRL_lgl         = as.logical(.data$QtyData_CDRL_lgl),
+      MR_CDRL_lgl              = as.logical(.data$MR_CDRL_lgl),
+      TDR_CDRL_lgl             = as.logical(.data$TDR_CDRL_lgl),
+      CWBS_CDRL_lgl            = as.logical(.data$CWBS_CDRL_lgl),
+      CDSR_CDRL_lgl            = as.logical(.data$CDSR_CDRL_lgl),
+      FCHR_CDRL_lgl            = as.logical(.data$FCHR_CDRL_lgl),
+      PCR_CDRL_lgl             = as.logical(.data$PCR_CDRL_lgl),
+      CBDR_CDRL_lgl            = as.logical(.data$CBDR_CDRL_lgl),
+      SFCHR_CDRL_lgl           = as.logical(.data$SFCHR_CDRL_lgl),
+      SDR_CDRL_lgl             = as.logical(.data$SDR_CDRL_lgl),
+      SMR_CDRL_lgl             = as.logical(.data$SMR_CDRL_lgl),
+      ERP_CDRL_lgl             = as.logical(.data$ERP_CDRL_lgl),
+      BOM_CDRL_lgl             = as.logical(.data$BOM_CDRL_lgl),
+      LSPD_CDRL_lgl            = as.logical(.data$LSPD_CDRL_lgl),
+      AUMC_CDRL_lgl            = as.logical(.data$AUMC_CDRL_lgl),
+      CFSR_CDRL_lgl            = as.logical(.data$CFSR_CDRL_lgl),
+      PaCR_CDRL_lgl            = as.logical(.data$PaCR_CDRL_lgl),
+      PAC_CDRL_lgl             = as.logical(.data$PAC_CDRL_lgl)
     )
 
-#' Write Basic CDRL Block Data to the Environment =============================
-#'
-#' This script puts basic CDRL data in one place, making it easier to update
-#' stuff like CDRL titles and DID reference (rather than having to update each
-#' CDRL, one at a time). This script is sourced by `render_cr_docs.R`.
-#'
-#' @return Technically, nothing is returned this this is not a function but many
-#'   CDRL titles, subtitles, DID numbers, and distro statement letters are
-#'   written to the global environment.
+# Write Basic CDRL Block Data to the Environment =============================
+#
+# This script puts basic CDRL data in one place, making it easier to update
+# stuff like CDRL titles and DID reference (rather than having to update each
+# CDRL, one at a time). This script is sourced by `.render_cr_docs.R`.
+#
+# @return Technically, nothing is returned this this is not a function but many
+#   CDRL titles, subtitles, DID numbers, and distro statement letters are
+#   written to the global environment.
 
 prime_vs_sub <-
   if (params_from_excel$reporting_organization_type == ">>>CSDR_Plan_type<<<") {"Contractor"} else
@@ -208,9 +209,9 @@ CBDR_CDRL_did         <- "DI-FNCL-81765B"
 SFCHR_CDRL_did        <- "DI-FNCL-81992"
 MR_CDRL_did           <- "DI-MGMT-82163"
 TDR_CDRL_did          <- "DI-MGMT-82165"
-SDR_CDRL_did          <- "DI–MGMT-82035A"
-SMR_CDRL_did          <- "DI–MGMT-82035A"
-ERP_CDRL_did          <- "DI–MGMT-82035A"
+SDR_CDRL_did          <- "DI-MGMT-82035A"
+SMR_CDRL_did          <- "DI-MGMT-82035A"
+ERP_CDRL_did          <- "DI-MGMT-82035A"
 CFSR_CDRL_did         <- "DI-MGMT-81468"
 PaCR_CDRL_did         <- "???"  # TODO: Need a DID number for the P&RC
 LSPD_CDRL_did         <- stringr::str_c("See Attachment ", params_from_excel$LSPD_attach_numb)
@@ -273,7 +274,7 @@ PAC_CDRL_dist           <- "D"
   rmarkdown::render(
     input = system.file("Rmd",
                         "cost_reporting_sow_template.Rmd",
-                        package="dstCSDR"),
+                        package = "dstCSDR"),
     output_file = paste0(Sys.Date(),
                          "_",
                          stringr::str_replace(
@@ -290,74 +291,74 @@ PAC_CDRL_dist           <- "D"
 
   # Render each CDRL into its own Word document. ==============================
   if (as.logical(params_from_excel$RDT_CDRL_lgl) == TRUE)
-    .render_cr_cdrl_doc(params_path, output_dir, "RDT_CDRL.Rmd", "RDT")
+    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "RDT_CDRL.Rmd", "RDT")
 
   if (as.logical(params_from_excel$FlexFile_CDRL_lgl) == TRUE)
-    .render_cr_cdrl_doc(params_path, output_dir, "FF_CDRL.Rmd", "FF")
+    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "FF_CDRL.Rmd", "FF")
 
   if (as.logical(params_from_excel$QtyData_CDRL_lgl) == TRUE)
-    .render_cr_cdrl_doc(params_path, output_dir, "Qty_CDRL.Rmd", "Qty")
+    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "Qty_CDRL.Rmd", "Qty")
 
   if (as.logical(params_from_excel$MR_CDRL_lgl) == TRUE)
-    .render_cr_cdrl_doc(params_path, output_dir, "MRR_CDRL.Rmd", "MR")
+    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "MRR_CDRL.Rmd", "MR")
 
   if (as.logical(params_from_excel$TDR_CDRL_lgl) == TRUE)
-    .render_cr_cdrl_doc(params_path, output_dir, "TDR_CDRL.Rmd", "TDR")
+    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "TDR_CDRL.Rmd", "TDR")
 
   if (as.logical(params_from_excel$CWBS_CDRL_lgl) == TRUE)
-    .render_cr_cdrl_doc(params_path, output_dir, "CWBS_CDRL.Rmd", "CWBS")
+    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "CWBS_CDRL.Rmd", "CWBS")
 
   if (as.logical(params_from_excel$CDSR_CDRL_lgl) == TRUE)
-    .render_cr_cdrl_doc(params_path, output_dir, "CDSR_CDRL.Rmd", "CSDR")
+    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "CDSR_CDRL.Rmd", "CSDR")
 
   if (as.logical(params_from_excel$FCHR_CDRL_lgl) == TRUE)
-    .render_cr_cdrl_doc(params_path, output_dir, "FCHR_CDRL.Rmd", "FCHR")
+    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "FCHR_CDRL.Rmd", "FCHR")
 
   if (as.logical(params_from_excel$PCR_CDRL_lgl) == TRUE)
-    .render_cr_cdrl_doc(params_path, output_dir, "PCR_CDRL.Rmd", "PCR")
+    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "PCR_CDRL.Rmd", "PCR")
 
   if (as.logical(params_from_excel$CBDR_CDRL_lgl) == TRUE)
-    .render_cr_cdrl_doc(params_path, output_dir, "CBDR_CDRL.Rmd", "CBDR")
+    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "CBDR_CDRL.Rmd", "CBDR")
 
   if (as.logical(params_from_excel$SFCHR_CDRL_lgl) == TRUE)
-    .render_cr_cdrl_doc(params_path, output_dir, "SFCHR_CDRL.Rmd", "SFCHR")
+    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "SFCHR_CDRL.Rmd", "SFCHR")
 
   if (as.logical(params_from_excel$SDR_CDRL_lgl) == TRUE)
-    .render_cr_cdrl_doc(params_path, output_dir, "SDR_CDRL.Rmd", "SDR")
+    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "SDR_CDRL.Rmd", "SDR")
 
   if (as.logical(params_from_excel$SMR_CDRL_lgl) == TRUE)
-    .render_cr_cdrl_doc(params_path, output_dir, "SMR_CDRL.Rmd", "SMR")
+    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "SMR_CDRL.Rmd", "SMR")
 
   if (as.logical(params_from_excel$ERP_CDRL_lgl) == TRUE)
-    .render_cr_cdrl_doc(params_path, output_dir, "ERP_CDRL.Rmd", "ERP")
+    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "ERP_CDRL.Rmd", "ERP")
 
   if (as.logical(params_from_excel$BOM_CDRL_lgl) == TRUE)
-    .render_cr_cdrl_doc(params_path, output_dir, "BOM_CDRL.Rmd", "BOM")
+    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "BOM_CDRL.Rmd", "BOM")
 
   if (as.logical(params_from_excel$LSPD_CDRL_lgl) == TRUE)
-    .render_cr_cdrl_doc(params_path, output_dir, "LSPD_CDRL.Rmd", "LSPD")
+    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "LSPD_CDRL.Rmd", "LSPD")
 
   if (as.logical(params_from_excel$AUMC_CDRL_lgl) == TRUE)
-    .render_cr_cdrl_doc(params_path, output_dir, "AUMC_CDRL.Rmd", "AUMC")
+    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "AUMC_CDRL.Rmd", "AUMC")
 
   if (as.logical(params_from_excel$CFSR_CDRL_lgl) == TRUE)
-    .render_cr_cdrl_doc(params_path, output_dir, "CFSR_CDRL.Rmd", "CFSR")
+    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "CFSR_CDRL.Rmd", "CFSR")
 
   if (as.logical(params_from_excel$PaCR_CDRL_lgl) == TRUE)
-    .render_cr_cdrl_doc(params_path, output_dir, "PaCR_CDRL.Rmd", "PaCR")
+    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "PaCR_CDRL.Rmd", "PaCR")
 
   if (as.logical(params_from_excel$PAC_CDRL_lgl) == TRUE)
-    .render_cr_cdrl_doc(params_path, output_dir, "PAC_CDRL.Rmd", "PAC")
+    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "PAC_CDRL.Rmd", "PAC")
 
   if (as.logical(params_from_excel$MR_CDRL_lgl) == TRUE)
-    .render_cr_cdrl_doc(params_path, output_dir, "PAC_CDRL.Rmd", "PAC")
+    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "PAC_CDRL.Rmd", "PAC")
 
   # Render Section L language into its own Word document. =====================
 
   rmarkdown::render(
     input = system.file("Rmd",
                         "Section_L.Rmd",
-                        package="dstCSDR"),
+                        package = "dstCSDR"),
     output_file = paste0(Sys.Date(),
                          "_",
                          stringr::str_replace(

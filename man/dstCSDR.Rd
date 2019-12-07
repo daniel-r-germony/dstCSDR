@@ -3,7 +3,6 @@
 \docType{package}
 \name{dstCSDR}
 \alias{dstCSDR}
-\alias{dstCSDR-package}
 \title{\code{dstCSDR} package}
 \description{
 Tools for Cost and Software Data Reporting (CSDR) Data

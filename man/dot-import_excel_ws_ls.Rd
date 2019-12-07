@@ -4,8 +4,7 @@
 \alias{.import_excel_ws_ls}
 \title{.import_excel_ws_ls}
 \usage{
-.import_excel_ws_ls(excel_ws_ls, skip = 0, col_names = TRUE,
-  range = NULL)
+.import_excel_ws_ls(excel_ws_ls, skip = 0, col_names = TRUE, range = NULL)
 }
 \arguments{
 \item{excel_ws_ls}{Required. A tibble object created (preferablly) using
@@ -51,8 +50,9 @@ names.
 \code{\link[=.grab_cell]{.grab_cell()}} pulls the value out of an individual Excel cell and
 reurns it to R.
 
-Other dstCSDR Import Excel Data Functions: \code{\link{.create_excel_ws_ls}},
-  \code{\link{.grab_cell}}
+Other dstCSDR Import Excel Data Functions: 
+\code{\link{.create_excel_ws_ls}()},
+\code{\link{.grab_cell}()}
 }
 \author{
 Daniel Germony \email{daniel.r.germony.civ@mail.mil}

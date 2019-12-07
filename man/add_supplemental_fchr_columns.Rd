@@ -4,21 +4,42 @@
 \alias{add_supplemental_fchr_columns}
 \title{add_supplemental_fchr_columns}
 \usage{
-add_supplemental_fchr_columns(fchr_object, add_wbs_el_lvl = TRUE,
-  add_func_cat = TRUE, add_func_el = TRUE,
-  add_func_data_el_numb = TRUE, add_rec_nr = TRUE, add_to_ac = TRUE,
-  add_short_name = TRUE, add_prog_name = FALSE,
-  add_prog_phase = FALSE, add_pmp = FALSE, add_rep_org_type = FALSE,
-  add_rep_org_address = FALSE, add_rep_divison_name = FALSE,
-  add_plan_numb = TRUE, add_customer = FALSE, add_k_numb = FALSE,
-  add_last_mod_numb = FALSE, add_solicition_numb = FALSE,
-  add_k_name = FALSE, add_order_numb = FALSE,
-  add_pop_start_date = TRUE, add_pop_end_date = TRUE,
-  add_report_cycle = FALSE, add_sub_numb = TRUE,
-  add_resub_numb = TRUE, add_as_of_date = FALSE,
-  add_poc_name = FALSE, add_poc_department = FALSE,
-  add_poc_phone = FALSE, add_poc_email = FALSE,
-  add_prep_date = FALSE, add_appn = FALSE, already_gathered = TRUE)
+add_supplemental_fchr_columns(
+  fchr_object,
+  add_wbs_el_lvl = TRUE,
+  add_func_cat = TRUE,
+  add_func_el = TRUE,
+  add_func_data_el_numb = TRUE,
+  add_rec_nr = TRUE,
+  add_to_ac = TRUE,
+  add_short_name = TRUE,
+  add_prog_name = FALSE,
+  add_prog_phase = FALSE,
+  add_pmp = FALSE,
+  add_rep_org_type = FALSE,
+  add_rep_org_address = FALSE,
+  add_rep_divison_name = FALSE,
+  add_plan_numb = TRUE,
+  add_customer = FALSE,
+  add_k_numb = FALSE,
+  add_last_mod_numb = FALSE,
+  add_solicition_numb = FALSE,
+  add_k_name = FALSE,
+  add_order_numb = FALSE,
+  add_pop_start_date = TRUE,
+  add_pop_end_date = TRUE,
+  add_report_cycle = FALSE,
+  add_sub_numb = TRUE,
+  add_resub_numb = TRUE,
+  add_as_of_date = FALSE,
+  add_poc_name = FALSE,
+  add_poc_department = FALSE,
+  add_poc_phone = FALSE,
+  add_poc_email = FALSE,
+  add_prep_date = FALSE,
+  add_appn = FALSE,
+  already_gathered = TRUE
+)
 }
 \arguments{
 \item{fchr_object}{Required. A list object of CSDR FCHR 1921-1 data that has
