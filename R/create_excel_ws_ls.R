@@ -30,9 +30,7 @@
     purrr::map(readxl::excel_sheets) %>%
     tibble::enframe() %>%
     tidyr::unnest(cols = c(.data$value)) %>%
-    dplyr::mutate(file_name = stringr::str_remove_all(
-      .data$name,
-      paste0(folder_path, "/"))) %>%
+    dplyr::mutate(file_name = basename(.data$name)) %>%
     dplyr::mutate(folder_path = stringr::str_remove_all(
       .data$name,
       .data$file_name)) %>%
