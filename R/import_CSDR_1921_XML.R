@@ -160,12 +160,8 @@ read_xml_ccdr_body <- function(xml_list) {
 # Not exported
 read_xml_ccdr_summary <- function(xml_list) {
 
-  process_summary <- function(r) {
-    dplyr::bind_rows(sapply(r, function(x) ifelse(length(x) == 0, 0, as.numeric(x))))
-  }
-
   # Read in all summary element costs into data frame
-  cost_summary <- dplyr::bind_rows(lapply(xml_list[["summaryElements"]], process_summary))
+  cost_summary <- list_to_df(xml_list[["summaryElements"]])
 
   dplyr::bind_cols(Item = c("SubTotalCost", "GA", "UB", "MR", "FCCM", "TotalCost", "Fee", "TotalPrice"),
                    tibble::as_tibble(cost_summary))
@@ -196,16 +192,16 @@ read_xml_ccdr_summary <- function(xml_list) {
 #' }}
 read_xml_fchr <- function(file_path) {
 
-  xml_data <- XML::xmlParse(file_path)
-  xml_root <- XML::xmlRoot(xml_data)
+  xml_data <- xml2::read_xml(file_path)
+  xml_list <- xml2::as_list(xml_data)[["Form1921_1"]]
 
-  ccdr_version <- XML::xmlGetAttr(xml_root, "csdrDID")
+  ccdr_version <- xml2::xml_attr(xml_data, "csdrDID")
 
   message(paste("reading csdr version", ccdr_version))
 
   # Same header format as 1921
-  list(metadata = read_xml_ccdr_header(xml_root),
-       cost_report = read_xml_fchr_body(xml_root))
+  list(metadata = read_xml_ccdr_header(xml_list),
+       cost_report = read_xml_fchr_body(xml_list))
 
 }
 
@@ -214,30 +210,40 @@ read_xml_fchr_body <- function(xml_root) {
 
   # Process a WBS element
   process_wbs_element <- function(r) {
-    wbs <- XML::xmlValue(r[["wbsElementCode"]])
-    item <- XML::xmlValue(r[["wbsElementName"]])
+    wbs <- unlist(r[["wbsElementCode"]])
+    item <- unlist(r[["wbsElementName"]])
 
-    units_td <- as.numeric(XML::xmlValue(r[["numberOfUnitsToDate"]]))
-    units_ac <- as.numeric(XML::xmlValue(r[["numberOfUnitsAtCompletion"]]))
+    units_td <- as.numeric(unlist(r[["numberOfUnitsToDate"]]))
+    units_ac <- as.numeric(unlist(r[["numberOfUnitsAtCompletion"]]))
 
     # Extract the nested tables (recurring/nonrecurring and to date/at completion) from the report
     extract_nesting <- function(o) {
-      node_name <- XML::xmlName(o)
-      cost <- XML::xmlToDataFrame(o, colClasses = rep("numeric", 3))
+      #node_name <- xml2::xml_name(o)
+      #cost <- XML::xmlToDataFrame(o, colClasses = rep("numeric", 3))
+
+      # Read in all summary element costs into data frame
+      cost <- list_to_df(o)
 
       time_period <- c("to date", "at completion")
       units = c(units_td, units_ac)
 
-      tibble::add_column(cost, Element = node_name, Time_Period = time_period, Units = units, .before = 1)
+      tibble::add_column(cost, Time_Period = time_period, Units = units, .before = 1)
     }
 
-    costs <- lapply(XML::xmlChildren(r[["functionalDataElements"]]), extract_nesting)
-    tibble::add_column(dplyr::bind_rows(costs), WBS = wbs, Item = item, .before = 1)
+    costs <- lapply(r[["functionalDataElements"]], extract_nesting)
+    tibble::add_column(dplyr::bind_rows(costs), WBS = wbs, Element = item, Item = item, .before = 1)
   }
 
   # Read children of wbsElements (all cost rows on the report)
-  child_elements <- XML::xmlChildren(xml_root[["wbsElements"]])
+  child_elements <- xml_list[["wbsElements"]]
 
   # Convert cost rows into data frame
   dplyr::bind_rows(lapply(child_elements, process_wbs_element))
+}
+
+list_to_df <- function(list_root) {
+
+  list_to_num <- function(r) dplyr::bind_rows(sapply(r, function(x) ifelse(length(x) == 0, 0, as.numeric(x))))
+
+  dplyr::bind_rows(lapply(list_root, list_to_num))
 }
