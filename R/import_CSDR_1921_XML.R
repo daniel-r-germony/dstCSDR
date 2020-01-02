@@ -62,21 +62,21 @@ get_files_ccdr <- function(file_path) {
 #' }}
 read_xml_ccdr <- function(file_path) {
 
-  xml_data <- XML::xmlParse(file_path)
-  xml_root <- XML::xmlRoot(xml_data)
+  xml_data <- xml2::read_xml(file_path)
+  xml_list <- xml2::as_list(xml_data)[["Form1921"]]
 
-  ccdr_version <- XML::xmlGetAttr(xml_root, "csdrDID")
+  ccdr_version <- xml2::xml_attr(xml_data, "csdrDID")
 
   message(paste("reading csdr version", ccdr_version))
 
-  list(metadata = read_xml_ccdr_header(xml_root),
-       cost_report = read_xml_ccdr_body(xml_root),
-       cost_summary = read_xml_ccdr_summary(xml_root))
+  list(metadata = read_xml_ccdr_header(xml_list),
+       cost_report = read_xml_ccdr_body(xml_list),
+       cost_summary = read_xml_ccdr_summary(xml_list))
 
 }
 
 # Not exported
-read_xml_ccdr_header <- function(xml_root) {
+read_xml_ccdr_header <- function(xml_list) {
 
   header_vars <- tibble::tribble(~xpath, ~var_name, ~data_type,
                                  "programName", "program_name", "chr",
@@ -114,12 +114,13 @@ read_xml_ccdr_header <- function(xml_root) {
   )
 
   get_xpath <- function(xpath) {
-    node_eval_str <- paste0("XML::xmlValue(xml_root",
+    node_eval_str <- paste0("unlist(xml_list",
                             paste(paste0("[['",stringr::str_split(xpath, "/", simplify = TRUE), "']]"),
                                   collapse = ""),
                             ")")
 
-    eval(parse(text = node_eval_str))
+    return_str <- eval(parse(text = node_eval_str))
+    ifelse(is.null(return_str), NA_character_, return_str)
   }
 
   header <- tibble::as_tibble(setNames(lapply(header_vars$xpath, get_xpath), header_vars$var_name))
@@ -130,18 +131,18 @@ read_xml_ccdr_header <- function(xml_root) {
 }
 
 # Not exported
-read_xml_ccdr_body <- function(xml_root) {
+read_xml_ccdr_body <- function(xml_list) {
 
   process_wbs_element <- function(r) {
-    wbs <- XML::xmlValue(r[["wbsElementCode"]])
-    item <- XML::xmlValue(r[["wbsElementName"]])
+    wbs <- unlist(r[["wbsElementCode"]])
+    item <- unlist(r[["wbsElementName"]])
 
-    units_td <- as.numeric(XML::xmlValue(r[["numberOfUnitsToDate"]]))
-    units_ac <- as.numeric(XML::xmlValue(r[["numberOfUnitsAtCompletion"]]))
+    units_td <- as.numeric(unlist(r[["numberOfUnitsToDate"]]))
+    units_ac <- as.numeric(unlist(r[["numberOfUnitsAtCompletion"]]))
     units <- c(units_td, units_ac)
 
-    cost_td <- dplyr::bind_cols(lapply(XML::xmlToList(r[["costsIncurredToDate"]]), as.numeric))
-    cost_ac <- dplyr::bind_cols(lapply(XML::xmlToList(r[["costsIncurredAtCompletion"]]), as.numeric))
+    cost_td <- dplyr::bind_cols(lapply(r[["costsIncurredToDate"]], as.numeric))
+    cost_ac <- dplyr::bind_cols(lapply(r[["costsIncurredAtCompletion"]], as.numeric))
     cost <- dplyr::bind_rows(cost_td, cost_ac)
 
     time_period <- c("to date", "at completion")
@@ -150,19 +151,21 @@ read_xml_ccdr_body <- function(xml_root) {
   }
 
   # Read children of wbsElements (all cost rows on the report)
-  child_elements <- XML::xmlChildren(xml_root[["wbsElements"]])
+  child_elements <- xml_list[["wbsElements"]]
 
   # Convert cost rows into data frame
   dplyr::bind_rows(lapply(child_elements, process_wbs_element))
 }
 
 # Not exported
-read_xml_ccdr_summary <- function(xml_root) {
+read_xml_ccdr_summary <- function(xml_list) {
+
+  process_summary <- function(r) {
+    dplyr::bind_rows(sapply(r, function(x) ifelse(length(x) == 0, 0, as.numeric(x))))
+  }
 
   # Read in all summary element costs into data frame
-  cost_summary <- XML::xmlToDataFrame(XML::xmlChildren(xml_root[["summaryElements"]]), stringsAsFactors = F)
-  cost_summary <- sapply(cost_summary, as.numeric)
-  cost_summary[is.na(cost_summary)] <- 0
+  cost_summary <- dplyr::bind_rows(lapply(xml_list[["summaryElements"]], process_summary))
 
   dplyr::bind_cols(Item = c("SubTotalCost", "GA", "UB", "MR", "FCCM", "TotalCost", "Fee", "TotalPrice"),
                    tibble::as_tibble(cost_summary))
