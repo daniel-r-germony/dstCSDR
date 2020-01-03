@@ -1,13 +1,32 @@
-## CCDR XML Module
+## ===== Functions to import CSDR files from XML =====
+## Designed for work with xml2 and dplyr
 
-#' Get CCDR Files from a Directory
+#' Import CCDR files from XML
 #'
-#' For a given directory (i.e., file path), return a recursive list of all CSDR XML files.
+#' Import CSDR (DD Form 1921 and 1921-1) files from the XML source.
+#'
+#' @param the_file The file to read.
+#'
+#' @name import_xml_data
+#'
+#' @return A list of three tables (tbl_df): \cr
+#'    \describe{
+#'       \item{metadata}{The document metadata (e.g., Program Name, Contract Number, Report As Of Date, etc.).}
+#'       \item{cost_report}{The WBS level cost report data.}
+#'       \item{cost_summary}{The summary level cost report data (e.g., Subtotal, G&A, Fee).}
+#'    }
+#'
+NULL
+
+#' Get CCDR file list from a directory
+#'
+#' \code{get_files_ccdr} returns a tibble of all valid files within a directory.
+#'
+#' @export
 #'
 #' @param file_path The root directory to search from.
 #'
 #' @return A 6 column table (tbl_df) of XML files and their type (e.g., 1921, 1921-1).
-#' @export
 #'
 #' @examples
 #' \dontrun{\donttest{
@@ -36,47 +55,18 @@ get_files_ccdr <- function(file_path) {
     ccdr_files[match_ext, c("ext", "type")] = ccdr_xml_ext[file_index,]
   }
 
+  ccdr_files <- dplyr::mutate(ccdr_files, dir = ifelse(is.na(dir), "", dir))
+
   dplyr::select(ccdr_files, id, id_report, dplyr::everything())
 }
 
-#' Read a DD Form 1921 XML File
+#' Read 2007 CCDR metadata
 #'
-#' Parse the data for a given file name with a valid extension (i.e., '1921.xml').
+#' @keywords internal
 #'
-#' @param file_path The file to read.
+#' @param xml_list List object from xml2 parsed file.
 #'
-#' @return A list of three tables (tbl_df): \cr
-#'    \describe{
-#'       \item{metadata}{The document metadata (e.g., Program Name, Contract Number, Report As Of Date, etc.).}
-#'       \item{cost_report}{The WBS level cost report data.}
-#'       \item{cost_summary}{The summary level cost report data (e.g., Subtotal, G&A, Fee).}
-#'    }
-#' @export
-#'
-#' @examples
-#' \dontrun{\donttest{
-#' file_path <- system.file("extdata", package = "dstCSDR")
-#' get_files_ccdr(file_path)
-#'
-#' cost_report_1 <- read_xml_ccdr(paste0(file_path, ccdr_files$file[1]))
-#' }}
-read_xml_ccdr <- function(file_path) {
-
-  xml_data <- XML::xmlParse(file_path)
-  xml_root <- XML::xmlRoot(xml_data)
-
-  ccdr_version <- XML::xmlGetAttr(xml_root, "csdrDID")
-
-  message(paste("reading csdr version", ccdr_version))
-
-  list(metadata = read_xml_ccdr_header(xml_root),
-       cost_report = read_xml_ccdr_body(xml_root),
-       cost_summary = read_xml_ccdr_summary(xml_root))
-
-}
-
-# Not exported
-read_xml_ccdr_header <- function(xml_root) {
+read_xml_header_2007 <- function(xml_list) {
 
   header_vars <- tibble::tribble(~xpath, ~var_name, ~data_type,
                                  "programName", "program_name", "chr",
@@ -114,12 +104,13 @@ read_xml_ccdr_header <- function(xml_root) {
   )
 
   get_xpath <- function(xpath) {
-    node_eval_str <- paste0("XML::xmlValue(xml_root",
+    node_eval_str <- paste0("unlist(xml_list",
                             paste(paste0("[['",stringr::str_split(xpath, "/", simplify = TRUE), "']]"),
                                   collapse = ""),
                             ")")
 
-    eval(parse(text = node_eval_str))
+    return_str <- eval(parse(text = node_eval_str))
+    ifelse(is.null(return_str), NA_character_, return_str)
   }
 
   header <- tibble::as_tibble(setNames(lapply(header_vars$xpath, get_xpath), header_vars$var_name))
@@ -129,19 +120,56 @@ read_xml_ccdr_header <- function(xml_root) {
   suppressWarnings(dplyr::mutate_at(header, .vars = header_vars$var_name[header_vars$data_type == "date"], .funs = as.Date))
 }
 
-# Not exported
-read_xml_ccdr_body <- function(xml_root) {
+## ===== 1921 Functions =====
+
+#' Import DD Form 1921 file from XML
+#'
+#' \code{import_cdsr_xml} parses CSDR data (DD Form 1921). Requires a file with a valid extension (i.e., '1921.xml').
+#'
+#' @export
+#'
+#' @rdname import_xml_data
+#'
+#' @examples
+#' \dontrun{\donttest{
+#' file_path <- system.file("extdata", package = "dstCSDR")
+#' get_files_ccdr(file_path)
+#'
+#' cost_report_1 <- import_cdsr_xml(paste(file_path, ccdr_files$file[1], sep = "/"))
+#' }}
+import_cdsr_xml <- function(the_file) {
+
+  xml_data <- xml2::read_xml(the_file)
+  xml_list <- xml2::as_list(xml_data)[["Form1921"]]
+
+  ccdr_version <- xml2::xml_attr(xml_data, "csdrDID")
+
+  message(paste("reading csdr version", ccdr_version))
+
+  list(metadata = read_xml_header_2007(xml_list),
+       cost_report = read_csdr_xml_body(xml_list),
+       cost_summary = read_csdr_xml_summary(xml_list))
+
+}
+
+#' Read CSDR body data
+#'
+#' @keywords internal
+#'
+#' @inheritParams read_xml_header_2007
+#'
+read_csdr_xml_body <- function(xml_list) {
 
   process_wbs_element <- function(r) {
-    wbs <- XML::xmlValue(r[["wbsElementCode"]])
-    item <- XML::xmlValue(r[["wbsElementName"]])
+    wbs <- unlist(r[["wbsElementCode"]])
+    item <- unlist(r[["wbsElementName"]])
 
-    units_td <- as.numeric(XML::xmlValue(r[["numberOfUnitsToDate"]]))
-    units_ac <- as.numeric(XML::xmlValue(r[["numberOfUnitsAtCompletion"]]))
+    units_td <- as.numeric(unlist(r[["numberOfUnitsToDate"]]))
+    units_ac <- as.numeric(unlist(r[["numberOfUnitsAtCompletion"]]))
     units <- c(units_td, units_ac)
 
-    cost_td <- dplyr::bind_cols(lapply(XML::xmlToList(r[["costsIncurredToDate"]]), as.numeric))
-    cost_ac <- dplyr::bind_cols(lapply(XML::xmlToList(r[["costsIncurredAtCompletion"]]), as.numeric))
+    cost_td <- dplyr::bind_cols(lapply(r[["costsIncurredToDate"]], as.numeric))
+    cost_ac <- dplyr::bind_cols(lapply(r[["costsIncurredAtCompletion"]], as.numeric))
     cost <- dplyr::bind_rows(cost_td, cost_ac)
 
     time_period <- c("to date", "at completion")
@@ -150,91 +178,110 @@ read_xml_ccdr_body <- function(xml_root) {
   }
 
   # Read children of wbsElements (all cost rows on the report)
-  child_elements <- XML::xmlChildren(xml_root[["wbsElements"]])
+  child_elements <- xml_list[["wbsElements"]]
 
   # Convert cost rows into data frame
   dplyr::bind_rows(lapply(child_elements, process_wbs_element))
 }
 
-# Not exported
-read_xml_ccdr_summary <- function(xml_root) {
+#' Read CSDR summary data
+#'
+#' @keywords internal
+#'
+#' @inheritParams read_xml_header_2007
+#'
+read_csdr_xml_summary <- function(xml_list) {
 
   # Read in all summary element costs into data frame
-  cost_summary <- XML::xmlToDataFrame(XML::xmlChildren(xml_root[["summaryElements"]]), stringsAsFactors = F)
-  cost_summary <- sapply(cost_summary, as.numeric)
-  cost_summary[is.na(cost_summary)] <- 0
+  cost_summary <- list_to_df(xml_list[["summaryElements"]])
 
   dplyr::bind_cols(Item = c("SubTotalCost", "GA", "UB", "MR", "FCCM", "TotalCost", "Fee", "TotalPrice"),
                    tibble::as_tibble(cost_summary))
 
 }
 
-# ====== 1921-1 Functions =======
+## ===== 1921-1 Functions =====
 
-#' Read a DD Form 1921-1 XML File
+#' Import DD FOrm 1921-1 file from XML
 #'
-#' Parse the data for a given file name with a valid extension (i.e., '1921_1.xml').
+#' \code{import_fchr_xml} parses FCHR data (DD Form 1921-1). Requires a file with a valid extension (i.e., '1921_1.xml').
 #'
-#' @param file_path The file to read.
-#'
-#' @return A list of two tables (tbl_df): \cr
-#'    \describe{
-#'       \item{metadata}{The document metadata (e.g., Program Name, Contract Number, Report As Of Date, etc.).}
-#'       \item{cost_report}{The WBS level cost report data.}
-#'    }
 #' @export
+#'
+#' @rdname import_xml_data
 #'
 #' @examples
 #' \dontrun{\donttest{
-#' file_path <- paste0(system.file("extdata", package = "costTools"), "/CCDR_Data/")
+#' file_path <- system.file("extdata", package = "dstCSDR")
 #' get_files_ccdr(file_path)
 #'
-#' cost_report_2 <- read_xml_fchr(paste0(file_path, ccdr_files$dir[2], ccdr_files$file[2]))
+#' cost_report_2 <- import_fchr_xml(paste(file_path, ccdr_files$file[2], sep = "/"))
 #' }}
-read_xml_fchr <- function(file_path) {
+import_fchr_xml <- function(the_file) {
 
-  xml_data <- XML::xmlParse(file_path)
-  xml_root <- XML::xmlRoot(xml_data)
+  xml_data <- xml2::read_xml(the_file)
+  xml_list <- xml2::as_list(xml_data)[["Form1921_1"]]
 
-  ccdr_version <- XML::xmlGetAttr(xml_root, "csdrDID")
+  ccdr_version <- xml2::xml_attr(xml_data, "csdrDID")
 
-  message(paste("reading csdr version", ccdr_version))
+  message(paste("reading fchr version", ccdr_version))
 
   # Same header format as 1921
-  list(metadata = read_xml_ccdr_header(xml_root),
-       cost_report = read_xml_fchr_body(xml_root))
+  list(metadata = read_xml_header_2007(xml_list),
+       cost_report = read_fchr_xml_body(xml_list))
 
 }
 
-# Not exported
-read_xml_fchr_body <- function(xml_root) {
+#' Read FCHR body data
+#'
+#' @keywords internal
+#'
+#' @inheritParams read_xml_header_2007
+#'
+read_fchr_xml_body <- function(xml_list) {
 
   # Process a WBS element
   process_wbs_element <- function(r) {
-    wbs <- XML::xmlValue(r[["wbsElementCode"]])
-    item <- XML::xmlValue(r[["wbsElementName"]])
+    wbs <- unlist(r[["wbsElementCode"]])
+    item <- unlist(r[["wbsElementName"]])
 
-    units_td <- as.numeric(XML::xmlValue(r[["numberOfUnitsToDate"]]))
-    units_ac <- as.numeric(XML::xmlValue(r[["numberOfUnitsAtCompletion"]]))
+    units_td <- as.numeric(unlist(r[["numberOfUnitsToDate"]]))
+    units_ac <- as.numeric(unlist(r[["numberOfUnitsAtCompletion"]]))
 
     # Extract the nested tables (recurring/nonrecurring and to date/at completion) from the report
     extract_nesting <- function(o) {
-      node_name <- XML::xmlName(o)
-      cost <- XML::xmlToDataFrame(o, colClasses = rep("numeric", 3))
+
+      # Read in all summary element costs into data frame
+      cost <- list_to_df(o)
 
       time_period <- c("to date", "at completion")
       units = c(units_td, units_ac)
 
-      tibble::add_column(cost, Element = node_name, Time_Period = time_period, Units = units, .before = 1)
+      tibble::add_column(cost, Time_Period = time_period, Units = units, .before = 1)
     }
 
-    costs <- lapply(XML::xmlChildren(r[["functionalDataElements"]]), extract_nesting)
-    tibble::add_column(dplyr::bind_rows(costs), WBS = wbs, Item = item, .before = 1)
+    costs <- lapply(r[["functionalDataElements"]], extract_nesting)
+    tibble::add_column(dplyr::bind_rows(costs), WBS = wbs, Element = item, Item = item, .before = 1)
   }
 
   # Read children of wbsElements (all cost rows on the report)
-  child_elements <- XML::xmlChildren(xml_root[["wbsElements"]])
+  child_elements <- xml_list[["wbsElements"]]
 
   # Convert cost rows into data frame
   dplyr::bind_rows(lapply(child_elements, process_wbs_element))
+}
+
+## ===== Parse Helper Functions =====
+
+#' Read FCHR body data
+#'
+#' @keywords internal
+#'
+#' @param list_root List object for the data frame processing.
+#'
+list_to_df <- function(list_root) {
+
+  list_to_num <- function(r) dplyr::bind_rows(sapply(r, function(x) ifelse(length(x) == 0, 0, as.numeric(x))))
+
+  dplyr::bind_rows(lapply(list_root, list_to_num))
 }
