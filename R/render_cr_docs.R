@@ -291,67 +291,67 @@ PAC_CDRL_dist           <- "D"
 
   # Render each CDRL into its own Word document. ==============================
   if (as.logical(params_from_excel$RDT_CDRL_lgl) == TRUE)
-    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "RDT_CDRL.Rmd", "RDT")
+    .render_cr_cdrl_doc(params_path, output_dir, "RDT_CDRL.Rmd", "RDT")
 
   if (as.logical(params_from_excel$FlexFile_CDRL_lgl) == TRUE)
-    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "FF_CDRL.Rmd", "FF")
+    .render_cr_cdrl_doc(params_path, output_dir, "FF_CDRL.Rmd", "FF")
 
   if (as.logical(params_from_excel$QtyData_CDRL_lgl) == TRUE)
-    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "Qty_CDRL.Rmd", "Qty")
+    .render_cr_cdrl_doc(params_path, output_dir, "Qty_CDRL.Rmd", "Qty")
 
   if (as.logical(params_from_excel$MR_CDRL_lgl) == TRUE)
-    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "MRR_CDRL.Rmd", "MR")
+    .render_cr_cdrl_doc(params_path, output_dir, "MRR_CDRL.Rmd", "MR")
 
   if (as.logical(params_from_excel$TDR_CDRL_lgl) == TRUE)
-    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "TDR_CDRL.Rmd", "TDR")
+    .render_cr_cdrl_doc(params_path, output_dir, "TDR_CDRL.Rmd", "TDR")
 
   if (as.logical(params_from_excel$CWBS_CDRL_lgl) == TRUE)
-    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "CWBS_CDRL.Rmd", "CWBS")
+    .render_cr_cdrl_doc(params_path, output_dir, "CWBS_CDRL.Rmd", "CWBS")
 
   if (as.logical(params_from_excel$CDSR_CDRL_lgl) == TRUE)
-    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "CDSR_CDRL.Rmd", "CSDR")
+    .render_cr_cdrl_doc(params_path, output_dir, "CDSR_CDRL.Rmd", "CSDR")
 
   if (as.logical(params_from_excel$FCHR_CDRL_lgl) == TRUE)
-    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "FCHR_CDRL.Rmd", "FCHR")
+    .render_cr_cdrl_doc(params_path, output_dir, "FCHR_CDRL.Rmd", "FCHR")
 
   if (as.logical(params_from_excel$PCR_CDRL_lgl) == TRUE)
-    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "PCR_CDRL.Rmd", "PCR")
+    .render_cr_cdrl_doc(params_path, output_dir, "PCR_CDRL.Rmd", "PCR")
 
   if (as.logical(params_from_excel$CBDR_CDRL_lgl) == TRUE)
-    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "CBDR_CDRL.Rmd", "CBDR")
+    .render_cr_cdrl_doc(params_path, output_dir, "CBDR_CDRL.Rmd", "CBDR")
 
   if (as.logical(params_from_excel$SFCHR_CDRL_lgl) == TRUE)
-    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "SFCHR_CDRL.Rmd", "SFCHR")
+    .render_cr_cdrl_doc(params_path, output_dir, "SFCHR_CDRL.Rmd", "SFCHR")
 
   if (as.logical(params_from_excel$SDR_CDRL_lgl) == TRUE)
-    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "SDR_CDRL.Rmd", "SDR")
+    .render_cr_cdrl_doc(params_path, output_dir, "SDR_CDRL.Rmd", "SDR")
 
   if (as.logical(params_from_excel$SMR_CDRL_lgl) == TRUE)
-    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "SMR_CDRL.Rmd", "SMR")
+    .render_cr_cdrl_doc(params_path, output_dir, "SMR_CDRL.Rmd", "SMR")
 
   if (as.logical(params_from_excel$ERP_CDRL_lgl) == TRUE)
-    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "ERP_CDRL.Rmd", "ERP")
+    .render_cr_cdrl_doc(params_path, output_dir, "ERP_CDRL.Rmd", "ERP")
 
   if (as.logical(params_from_excel$BOM_CDRL_lgl) == TRUE)
-    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "BOM_CDRL.Rmd", "BOM")
+    .render_cr_cdrl_doc(params_path, output_dir, "BOM_CDRL.Rmd", "BOM")
 
   if (as.logical(params_from_excel$LSPD_CDRL_lgl) == TRUE)
-    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "LSPD_CDRL.Rmd", "LSPD")
+    .render_cr_cdrl_doc(params_path, output_dir, "LSPD_CDRL.Rmd", "LSPD")
 
   if (as.logical(params_from_excel$AUMC_CDRL_lgl) == TRUE)
-    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "AUMC_CDRL.Rmd", "AUMC")
+    .render_cr_cdrl_doc(params_path, output_dir, "AUMC_CDRL.Rmd", "AUMC")
 
   if (as.logical(params_from_excel$CFSR_CDRL_lgl) == TRUE)
-    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "CFSR_CDRL.Rmd", "CFSR")
+    .render_cr_cdrl_doc(params_path, output_dir, "CFSR_CDRL.Rmd", "CFSR")
 
   if (as.logical(params_from_excel$PaCR_CDRL_lgl) == TRUE)
-    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "PaCR_CDRL.Rmd", "PaCR")
+    .render_cr_cdrl_doc(params_path, output_dir, "PaCR_CDRL.Rmd", "PaCR")
 
   if (as.logical(params_from_excel$PAC_CDRL_lgl) == TRUE)
-    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "PAC_CDRL.Rmd", "PAC")
+    .render_cr_cdrl_doc(params_path, output_dir, "PAC_CDRL.Rmd", "PAC")
 
   if (as.logical(params_from_excel$MR_CDRL_lgl) == TRUE)
-    dstCSDR::.render_cr_cdrl_doc(params_path, output_dir, "PAC_CDRL.Rmd", "PAC")
+    .render_cr_cdrl_doc(params_path, output_dir, "PAC_CDRL.Rmd", "PAC")
 
   # Render Section L language into its own Word document. =====================
 
