@@ -1,0 +1,6 @@
+---
+title: "sow_bom"
+output: html_document
+---
+#### Bill of Materials (BOM)
+The `r prime_vs_sub` shall prepare and submit the "Bill of Materials (BOM)" in accordance with CDRL `r BOM_CDRL_numb` for its `r system_name_abbr` design. The "Bill of Materials (BOM)" reports a complete list of material (e.g., part numbers, software, fluids) including all levels of assembly required to build, assemble, and sustain a complete `r system_name_abbr` end item to include any kits or appliqué equipment. The first submission of the BOM shall identify the `r prime_vs_sub`'s `r system_name_abbr` design as of the date of contract award and the final submission shall identify the `r system_name_abbr` design current as of the end of the contract.  

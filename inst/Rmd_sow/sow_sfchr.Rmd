@@ -1,0 +1,6 @@
+---
+title: "sow_sfchr"
+output: html_document
+---
+#### Sustainment Functional Cost-Hour Report (SFCHR)
+The `r prime_vs_sub` shall prepare and submit the "Sustainment Functional Cost-Hour Report (DD Form 1921-5)" in accordance with CDRL `r SFCHR_CDRL_numb`. The "Sustainment Functional Cost-Hour Report (DD Form 1921-5)" reports information on actual and forecasted sustainment labor hours, overhead costs, material costs, and other direct and indirect costs by WBS element specified in Attachment `r CSDR_plan_attch_numb` - CSDR Plan.

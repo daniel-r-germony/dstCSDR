@@ -1,0 +1,15 @@
+---
+title: "sow_pac"
+output: html_document
+---
+#### Post-Award Cost (PAC) and Software Data Reporting Conference
+The `r prime_vs_sub` shall host a CSDR Post-Award Conference (PAC) at the `r prime_vs_sub`’s facility where CSDRs are prepared with the Government’s Cost Working Group Integrated Product Team (CWIPT) IAW DFARS 242.503-2(b) and DoD 5000.04 (CSDR Manual). The purpose of the Post-Award CSDR Conference is to review the contract’s CSDR requirements and assess how the Contractor’s accounting system satisfies the CSDR requirements found in DoD 5000.04 (CSDR Manual) and Attachment `r CSDR_plan_attch_numb` - CSDR Plan. In a briefing presented by the Contractor in its own format, the Contractor shall:  
+- Demonstrate how it collects cost data in its accounting system and how that data will be utilized to provide actual cost transactions and minimize cost allocations when preparing CSDR data deliverables.  
+- Describe how recurring vs. nonrecurring costs are segregated in its accounting system and for the purpose of CSDR reporting.  
+- Demonstrate how the data from its accounting system will be mapped into the CSDR reports required by Attachment `r CSDR_plan_attch_numb` - CSDR Plan and associated CDRLs.  
+- Present the methodologies used for mapping internal cost accounts to the WBS, specifically showing how individual WBS elements and functional element codes will be populated.  
+- Propose any changes to Attachment `r CSDR_plan_attch_numb` - CSDR Plan in order to tailor the plan to the `r prime_vs_sub`’s accounting system, to include any `r prime_vs_sub` recommended changes or additions to the WBS elements. These changes may include adjustments to the submission events and/or submission timelines, particularly in the case of a direct-reporting subcontractor performing against a different delivery schedule than the associated prime contractor.  
+
+The `r prime_vs_sub` and CWIPT will also review the initial submission of the "Resource Distribution Table (RDT)" (CDRL `r RDT_CDRL_numb`), in order to finalize which subcontractors will be required to provide CSDR reporting and electronic submission of deliverables directly to the Defense Cost and Resource Center (DCARC) and which subcontractors may qualify for a CSDR direct reporting subcontractor waiver.  
+
+The PAC shall be held within 60 days of contract award or the start of work meeting on a date mutually agreed to by the CWIPT and the `r prime_vs_sub`. This meeting has an anticipated duration of one business day.  

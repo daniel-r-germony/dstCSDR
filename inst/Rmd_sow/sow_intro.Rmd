@@ -1,0 +1,34 @@
+---
+title: "sow_intro"
+output: html_document
+---
+### Cost and Software Data Reporting (CSDR)
+Cost and Software Data are the primary means by which the Department of Defense (DoD) collects data on the costs that contractors incur on DoD programs. Reliable and comprehensive cost data is essential to produce credible cost estimates as required in both statute and regulation. The Government's goals and use of CSDR data is to improve the quality of cost estimates, ensure proper resource allocation occurs within the DoD, and enable data driven decision making by program and department leadership.  
+
+The `r prime_vs_sub` shall systematically collect and report actual contract costs in accordance with the following Contract Data Requirements Lists (CDRLs) and Attachment `r CSDR_plan_attch_numb`, the "Contract Cost and Software Data Reporting (CSDR) Plan":  
+
+```{r}
+# TODO: Need to build the below table via a df then pipe it into GT. The df would only include only the CDRLs tagged to be included (so only FlexFile if FlexFile plan, or only Legacy CDRLs if a Legacy plan).
+```
+
+
+| Report Title                                                                    |             CDRL              |
+| :------------------------------------------------------------------------------ | :---------------------------: |
+| Resource Distribution Table                                                     |   `r RDT_CDRL_numb`    |
+| Cost and Hour Report (FlexFile)                                                 | `r FlexFile_CDRL_numb` |
+| Quantity Data Report                                                            |   `r QtyData_CDRL_numb`|
+| Maintenance and Repair Parts Data Report                                        |    `r MR_CDRL_numb`    |
+| Technical Data Report                                                           |   `r TDR_CDRL_numb`    |
+| Contract Work Breakdown Structure and Dictionary                                |   `r CWBS_CDRL_numb`   |
+| Cost Data Summary Report (DD Form 1921)                                         |   `r CDSR_CDRL_numb`   |
+| Functional Cost-Hour Report (DD Form 1921-1)                                    |   `r FCHR_CDRL_numb`   |
+| Progress Curve Report (DD Form 1921-2)                                          |   `r PCR_CDRL_numb`    |
+| Contractor Business Data Report (DD Form 1921-3)                                |   `r CBDR_CDRL_numb`   |
+| Sustainment Functional Cost-Hour Report (DD Form 1921-5)                        |  `r SFCHR_CDRL_numb`   |
+| Software Development Report (DD Form 3026-1)                                    |   `r SDR_CDRL_numb`    |
+| Software Maintenance Report (DD Form 3026-2)                                    |   `r SMR_CDRL_numb`    |
+| Enterprise Resource Planning (ERP) Software Development Report (DD Form 3026-3) |   `r ERP_CDRL_numb`    |
+| Bill of Materials (BOM)                                                         |   `r BOM_CDRL_numb`    |
+| Lot Size Pricing Data (LSPD)                                                    |   `r LSPD_CDRL_numb`   |
+| Average Unit Manufacturing Cost (AUMC) Report                                   |   `r AUMC_CDRL_numb`   |
+| Post Award Conference Materials                                                 |   `r PAC_CDRL_numb`    |

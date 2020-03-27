@@ -1,0 +1,6 @@
+---
+title: "sow_pcr"
+output: html_document
+---
+#### Progress Curve Report (PCR, DD Form 1921-2)
+The `r prime_vs_sub` shall prepare and submit "Progress Curve Report (DD Form 1921-2)" in accordance with CDRL `r PCR_CDRL_numb`. The "Progress Curve Report (DD Form 1921-2)" reports actual production cost and hours data at the unit or sub-lot level, as specified in Attachment `r CSDR_plan_attch_numb` - CSDR Plan.  

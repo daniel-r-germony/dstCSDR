@@ -1,0 +1,6 @@
+---
+title: "sow_fchr"
+output: html_document
+---
+#### Functional Cost-Hour Report (FCHR, DD Form 1921-1)
+The `r prime_vs_sub` shall prepare and submit the "Functional Cost-Hour Report (DD Form 1921-1)" in accordance with CDRL `r FCHR_CDRL_numb`. The "Functional Cost-Hour Report (DD Form 1921-1)" reports information on actual and forecasted production labor hours, overhead costs, material costs, and other direct and indirect costs by WBS element specified in Attachment `r CSDR_plan_attch_numb` - CSDR Plan.  

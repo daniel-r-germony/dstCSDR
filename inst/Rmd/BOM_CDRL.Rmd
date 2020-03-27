@@ -91,7 +91,7 @@ xxiv) Production Level of Assembly (Yes/Below/Above): “Yes” if the row repre
 
 xxv) Sustainment Level of Assembly (Yes/Below/Above): Write “Yes” if the AOPN starts with anything other than “57k” or the row represents a level of assembly at which the system may be disassembled for the purposes of schedule or unscheduled service (i.e., the part is a consumable or a reparable). “Below” if the row is part of a higher level assembly which will not be disassembled for the purposes of schedule or unscheduled service. “Above” if the row represents a level of assembly higher than what may be removed and replaced as part of scheduled or unscheduled service.  
 
-xxvi) End-Item Nomenclature: Identify the name of the End-Item the row is associated with.  
+xxvi) End Item Nomenclature: Identify the name of the End Item the row is associated with.  
 
 xxvii) WBS Number: The WBS number of the lowest applicable level Product Orientated WBS element from the `r params_from_excel$CSDR_plan_attch_numb` - CSDR Plan.  
 

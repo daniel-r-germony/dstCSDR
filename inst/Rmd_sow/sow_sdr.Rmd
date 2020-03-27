@@ -1,0 +1,6 @@
+---
+title: "sow_sdr"
+output: html_document
+---
+#### Software Resources Data Report (SRDR) - Development
+The `r prime_vs_sub` shall prepare and submit the "Software Resource Data Report (SRDR)" in accordance with CDRL `r SDR_CDRL_numb`. The "Software Resource Data Report (SRDR)" reports expected and actual cost and performance data associated with software development and upgrade efforts.  

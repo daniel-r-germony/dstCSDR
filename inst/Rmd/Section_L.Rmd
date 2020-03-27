@@ -19,7 +19,7 @@ L.*.1.1 In order to comply with the above cited requirements, the Offeror shall 
 ```{r, eval=FALSE, echo=FALSE}
 # If FlexFile
 ```
-L.*.1.1 In order to comply with the above cited requirements, the Offeror shall utilize the CSDR Plan (Attachment `r params_from_excel$CSDR_plan_attch_numb`) to submit a copy of the following with its proposal in the same format as: 1) Cost and Hour Report (FlexFile) (CDRL `r params_from_excel$FlexFile_CDRL_numb`), 2) Quantity Data Report (DD Form 1921-Q) (CDRL `r params_from_excel$QtyData_CDRL_numb`), 3) Resource Distribution Table (CDRL `r params_from_excel$RDT_CDRL_numb`). The total reported price within each deliverable submission shall the total value of the Offeror's proposal using the maximum allowable contract quantities, hours, or options (as applicable).  
+L.*.1.1 In order to comply with the above cited requirements, the Offeror shall utilize the CSDR Plan (Attachment `r params_from_excel$CSDR_plan_attch_numb`) to submit a copy of the following with its proposal in the same format as: 1) Cost and Hour Report (FlexFile) (CDRL `r params_from_excel$FlexFile_CDRL_numb`), 2) Quantity Data Report (CDRL `r params_from_excel$QtyData_CDRL_numb`), 3) Resource Distribution Table (CDRL `r params_from_excel$RDT_CDRL_numb`). The total reported price within each deliverable submission shall the total value of the Offeror's proposal using the maximum allowable contract quantities, hours, or options (as applicable).  
 
 L.*.1.2 The Offeror shall submit a report which contains the following:  
 

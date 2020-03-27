@@ -1,0 +1,6 @@
+---
+title: "sow_erp"
+output: html_document
+---
+#### Enterprise Resource Planning (ERP) Software Development Report (DD Form 3026-3)
+The `r prime_vs_sub` shall prepare and submit the "Enterprise Resource Planning (ERP) Software Development Report (DD Form 3026-3)" in accordance with CDRL `r ERP_CDRL_numb`. The "Enterprise Resource Planning (ERP) Software Development Report (DD Form 3026-3)" reports expected and actual cost and performance data associated with the development of ERP systems.  

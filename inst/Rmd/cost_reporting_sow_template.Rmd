@@ -248,21 +248,21 @@ params:
       - TRUE
       - FALSE
     input: select
-    label: "Quantity Data Report (DD Form 1921-Q) CDRL Required"
+    label: "Quantity Data Report CDRL Required"
     value: TRUE
   MR_CDRL_lgl:
     choices:
       - TRUE
       - FALSE
     input: select
-    label: "Maintenance and Repair Report (DD Form 1921-M/R) CDRL Required"
+    label: "Maintenance and Repair Report CDRL Required"
     value: TRUE
   TDR_CDRL_lgl:
     choices:
       - TRUE
       - FALSE
     input: select
-    label: "Technical Data Report (DD Form 1921-T) CDRL Required"
+    label: "Technical Data Report CDRL Required"
     value: TRUE
   CWBS_CDRL_lgl:
     choices:
@@ -388,15 +388,15 @@ params:
     value: ">>>FlexFile_CDRL_numb<<<"
   QtyData_CDRL_numb:
     input: text
-    label: "Quantity Data Report (DD Form 1921-Q) CDRL Number"
+    label: "Quantity Data Report CDRL Number"
     value: ">>>QtyData_CDRL_numb<<<"
   MR_CDRL_numb:
     input: text
-    label: "Maintenance and Repair Report (DD Form 1921-M/R) CDRL Number"
+    label: "Maintenance and Repair Report CDRL Number"
     value: ">>>MR_CDRL_numb<<<"
   TDR_CDRL_numb:
     input: text
-    label: "Technical Data Report (DD Form 1921-T) CDRL Number"
+    label: "Technical Data Report CDRL Number"
     value: ">>>TDR_CDRL_numb<<<"
   CWBS_CDRL_numb:
     input: text
@@ -523,9 +523,9 @@ The `r prime_vs_sub` shall systematically collect and report actual contract cos
 | :------------------------------------------------------------------------------ | :---------------------------: |
 | Resource Distribution Table                                                     |   `r params$RDT_CDRL_numb`    |
 | Cost and Hour Report (FlexFile)                                                 | `r params$FlexFile_CDRL_numb` |
-| Quantity Data Report (DD Form 1921-Q)                                           |   `r params$QtyData_CDRL_numb`|
-| Maintenance and Repair Report (DD Form 1921-M/R)                                |    `r params$MR_CDRL_numb`    |
-| Technical Data Report (DD Form 1921-T)                                          |   `r params$TDR_CDRL_numb`    |
+| Quantity Data Report                                                            |   `r params$QtyData_CDRL_numb`|
+| Maintenance and Repair Report                                                   |    `r params$MR_CDRL_numb`    |
+| Technical Data Report                                                           |   `r params$TDR_CDRL_numb`    |
 | Contract Work Breakdown Structure and Dictionary                                |   `r params$CWBS_CDRL_numb`   |
 | Cost Data Summary Report (DD Form 1921)                                         |   `r params$CDSR_CDRL_numb`   |
 | Functional Cost-Hour Report (DD Form 1921-1)                                    |   `r params$FCHR_CDRL_numb`   |
@@ -546,7 +546,7 @@ The `r prime_vs_sub` shall systematically collect and report actual contract cos
 ```{r , eval=FALSE, echo=FALSE}
 # TODO: Need to automatically identify $20M vs. $50M and MTA memo vs. 5000 as the subcontractor reporting threshold.
 ```
-The `r prime_vs_sub` shall flow-down CSDR requirements referenced in section `r params$cost_rep_sow_numb` and its sub-paragraphs to subcontractors (regardless of subcontractor tier) when the subcontract value is expected to exceed \$20 million using the maximum allowable contract quantities, hours, or options (as applicable), as required by Department of Defense (DoD) 5000.04-M-1 - CSDR Manual. The Contractor shall require subcontractors to electronically submit CSDRs deliverables directly to the Defense Cost and Resource Center (DCARC). The Contractor shall ensure that Subcontractors subject to CSDR reporting thresholds collect data in sufficient detail to meet Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan requirements. The Contractor shall collect and deliver data on all subcontractors to comply with Attachment `r params$RDT_attach_numb` and CDRL `r params$RDT_CDRL_numb` - Resource Distribution Table and Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan requirements. A “subcontract” is any agreement, purchase order, or instrument other than a prime contract calling for work or for the material required for the performance of one or more prime contracts. A “subcontract” usually covers procurement of major components or subsystems that require the subcontractor to do extensive design, development, engineering, and testing to meet a prime contractor’s procurement specifications.   
+The `r prime_vs_sub` shall flow down CSDR requirements referenced in section `r params$cost_rep_sow_numb` and its sub-paragraphs to subcontractors (regardless of subcontractor tier) when the subcontract value is expected to exceed \$20 million using the maximum allowable contract quantities, hours, or options (as applicable), as required by Department of Defense (DoD) 5000.04-M-1 - CSDR Manual. The Contractor shall require subcontractors to electronically submit CSDRs deliverables directly to the Defense Cost and Resource Center (DCARC). The Contractor shall ensure that Subcontractors subject to CSDR reporting thresholds collect data in sufficient detail to meet Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan requirements. The Contractor shall collect and deliver data on all subcontractors to comply with Attachment `r params$RDT_attach_numb` and CDRL `r params$RDT_CDRL_numb` - Resource Distribution Table and Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan requirements. A “subcontract” is any agreement, purchase order, or instrument other than a prime contract calling for work or for the material required for the performance of one or more prime contracts. A “subcontract” usually covers procurement of major components or subsystems that require the subcontractor to do extensive design, development, engineering, and testing to meet a prime contractor’s procurement specifications.   
 
 #### Resource Distribution Table (RDT)
 The `r prime_vs_sub` shall prepare and submit the "Resource Distribution Table (RDT)" in accordance with CDRL `r params$RDT_CDRL_numb`. The "Resource Distribution Table (RDT)" identifies the value of work assigned to the Contractor and its subcontractors by for each WBS element listed in Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan, and is the primary means of identifying subcontractors who qualify for CSDR reporting.  
@@ -560,8 +560,8 @@ The `r prime_vs_sub` shall utilize the Contract Work Breakdown Structure (WBS) i
 #### Cost and Hour Report (FlexFile)
 The `r prime_vs_sub` shall prepare and submit the "Cost and Hour Report (FlexFile)" in accordance with CDRL `r params$FlexFile_CDRL_numb`. The "Cost and Hour Report (FlexFile)" reports incurred and forecasted costs and hours related business data in order to perform this contract.  
 
-#### Quantity Data Report (DD Form 1921-Q)
-The `r prime_vs_sub` shall prepare and submit the "Quantity Data Report (DD Form 1921-Q)" in accordance with CDRL `r params$QtyData_CDRL_numb`. The "Quantity Data Report (DD Form 1921-Q)" reports quantity information to provide context to the data reported in FlexFile submissions and in order to derive accurate unit cost information.  
+#### Quantity Data Report  
+The `r prime_vs_sub` shall prepare and submit the "Quantity Data Report" in accordance with CDRL `r params$QtyData_CDRL_numb`. The "Quantity Data Report" reports quantity information to provide context to the data reported in FlexFile submissions and in order to derive accurate unit cost information.  
 
 #### Cost Data Summary Report (CDSR, DD Form 1921)
 The `r prime_vs_sub` shall prepare and submit the "Cost Data Summary Report (DD Form 1921)" in accordance with CDRL `r params$CDSR_CDRL_numb`. The "Cost Data Summary Report (DD Form 1921)" reports actual and forecasted cost and quantity data by WBS element specified in Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan.  
@@ -578,11 +578,11 @@ The `r prime_vs_sub` shall prepare and submit the "Contractor Business Data Repo
 #### Sustainment Functional Cost-Hour Report (SFCHR)
 The `r prime_vs_sub` shall prepare and submit the "Sustainment Functional Cost-Hour Report (DD Form 1921-5)" in accordance with CDRL `r params$MR_CDRL_numb`. The "Sustainment Functional Cost-Hour Report (DD Form 1921-5)" reports information on actual and forecasted sustainment labor hours, overhead costs, material costs, and other direct and indirect costs by WBS element specified in Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan.  
 
-#### Maintenance and Repair Report (DD Form 1921-M/R)
-The `r prime_vs_sub` shall prepare and submit the "Maintenance and Repair Report (DD Form 1921-M/R)" in accordance with CDRL `r params$SFCHR_CDRL_numb`. The "Maintenance and Repair Report (DD Form 1921-M/R)" reports sustainment information including labor hours, parts consumption, overhead costs, material costs, and other direct and indirect cost, by maintenance event, vehicle, part number, and contract line item number.  
+#### Maintenance and Repair Report
+The `r prime_vs_sub` shall prepare and submit the "Maintenance and Repair Report" in accordance with CDRL `r params$SFCHR_CDRL_numb`. The "Maintenance and Repair Report" reports sustainment information including labor hours, parts consumption, overhead costs, material costs, and other direct and indirect cost, by maintenance event, vehicle, part number, and contract line item number.  
 
-#### Technical Data Report (TDR, DD Form 1921-T)
-The `r prime_vs_sub` shall prepare and submit the "Technical Data Report (DD Form 1921-T)" in accordance with CDRL `r params$TDR_CDRL_numb`. The "Technical Data Report (DD Form 1921-T)" reports technical parameter data to provide context to the data reported in FlexFile submissions and in order to derive parametric cost estimating relationships.  
+#### Technical Data Report (TDR)
+The `r prime_vs_sub` shall prepare and submit the "Technical Data Report" in accordance with CDRL `r params$TDR_CDRL_numb`. The "Technical Data Report" reports technical parameter data to provide context to the data reported in FlexFile submissions in order to derive parametric cost estimating relationships.  
 
 #### Software Resources Data Report (SRDR) - Development
 The `r prime_vs_sub` shall prepare and submit the "Software Resource Data Report (SRDR)" in accordance with CDRL `r params$SDR_CDRL_numb`. The "Software Resource Data Report (SRDR)" reports expected and actual cost and performance data associated with software development and upgrade efforts.  
@@ -603,10 +603,10 @@ The `r prime_vs_sub` shall prepare and submit the "Performance & Cost Report (P&
 The `r prime_vs_sub` shall collect Lot Size Pricing Data (LSPD) from `r params$acqusition_phase_abbr` subcontractors on all components which are classified either as a Major End Item (MEI) or Component of Interest (CoI), and deliver the "Lot Size Pricing Data (LSPD) Report" to the Government in accordance with CDRL `r params$LSPD_CDRL_numb` and Attachment `r params$LSPD_attach_numb` - Lot Size Pricing Data. The "Lot Size Pricing Data (LSPD) Report" reports information on the expected costs of parts given various procurement quantities and is utilized to estimate rate effects.  
 
 #### Average Unit Manufacturing Cost (AUMC) Report
-The `r prime_vs_sub` shall prepare and submit the "Average Unit Manufacturing Cost (AUMC) Report" in accordance with CDRL `r params$AUMC_CDRL_numb` and Attachment `r params$AUMC_attach_numb` - Average Unit Manufacturing Cost (AUMC) Report. The "Average Unit Manufacturing Cost (AUMC) Report" reports non-binding estimates on the `r prime_vs_sub`'s anticipated Average Unit Manufacturing Costs (AUMC) and any `r prime_vs_sub` planned changes to its manufacturing process, end-item design, supply chain process, and any other significant planned processes changes that may impact the AUMC of the `r params$system_name_abbr` between the `r params$acqusition_phase_abbr` and a potential `r params$system_name_abbr` follow-on contract, assuming the `r prime_vs_sub` were to be awarded said follow-on contract(s).  
+The `r prime_vs_sub` shall prepare and submit the "Average Unit Manufacturing Cost (AUMC) Report" in accordance with CDRL `r params$AUMC_CDRL_numb` and Attachment `r params$AUMC_attach_numb` - Average Unit Manufacturing Cost (AUMC) Report. The "Average Unit Manufacturing Cost (AUMC) Report" reports non-binding estimates on the `r prime_vs_sub`'s anticipated Average Unit Manufacturing Costs (AUMC) and any `r prime_vs_sub` planned changes to its manufacturing process, end item design, supply chain process, and any other significant planned processes changes that may impact the AUMC of the `r params$system_name_abbr` between the `r params$acqusition_phase_abbr` and a potential `r params$system_name_abbr` follow-on contract, assuming the `r prime_vs_sub` were to be awarded said follow-on contract(s).  
 
 #### Bill of Materials (BOM)
-The `r prime_vs_sub` shall prepare and submit the "Bill of Materials (BOM)" in accordance with CDRL `r params$BOM_CDRL_numb` for its `r params$system_name_abbr` design. The "Bill of Materials (BOM)" reports a complete list of material (e.g., part numbers, software, fluids) including all levels of assembly required to build, assemble, and sustain a complete `r params$system_name_abbr` end-item to include any kits or appliqué equipment. The first submission of the BOM shall identify the `r prime_vs_sub`'s `r params$system_name_abbr` design as of the date of contract award and the final submission shall identify the `r params$system_name_abbr` design current as of the end of the contract.
+The `r prime_vs_sub` shall prepare and submit the "Bill of Materials (BOM)" in accordance with CDRL `r params$BOM_CDRL_numb` for its `r params$system_name_abbr` design. The "Bill of Materials (BOM)" reports a complete list of material (e.g., part numbers, software, fluids) including all levels of assembly required to build, assemble, and sustain a complete `r params$system_name_abbr` end item to include any kits or appliqué equipment. The first submission of the BOM shall identify the `r prime_vs_sub`'s `r params$system_name_abbr` design as of the date of contract award and the final submission shall identify the `r params$system_name_abbr` design current as of the end of the contract.
 
 #### Post-Award Cost and Software Data Reporting Conference
 The `r prime_vs_sub` shall host a Post-Award CSDR Conference at the `r prime_vs_sub`’s facility where CSDRs are prepared with the Government’s Cost Working Group Integrated Product Team (CWIPT) IAW DFARS 242.503-2(b) and DoD 5000.04-M-1 (CSDR Manual). The purpose of the Post-Award CSDR Conference is to review the contract’s CSDR requirements and assess how the Contractor’s accounting system satisfies the CSDR requirements found in DoD 5000.04-M-1, “CSDR Manual” and Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan. In a briefing presented by the Contractor in its own format, the Contractor shall:  

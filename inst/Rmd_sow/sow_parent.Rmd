@@ -1,0 +1,20 @@
+---
+title: "Cost Reporting Scope of Work"
+output:
+  html_document: default
+---
+
+```{r echo=FALSE}
+
+prime_vs_sub <- "Contractor"
+
+CSDR_plan_attch_numb <- "0004"
+
+RDT_CDRL_numb <- "A005"
+
+print_sow_RDT <- TRUE
+```
+
+
+```{r sow_RDT, eval=print_sow_RDT, child="sow_RDT.Rmd"}
+```

@@ -1,0 +1,6 @@
+---
+title: "sow_mr"
+output: html_document
+---
+#### Maintenance and Repair Report
+The `r prime_vs_sub` shall prepare and submit the "Maintenance and Repair Report" in accordance with CDRL `r MR_CDRL_numb`. The "Maintenance and Repair Report" reports sustainment information including labor hours, parts consumption, overhead costs, material costs, and other direct and indirect cost, by maintenance event, vehicle, part number, and contract line item number.  
