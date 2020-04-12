@@ -1,0 +1,5 @@
+---
+title: "CSDR CDRL Block 10-13"
+output: html_document
+---
+Block 10, 11, 12, and 13: The `r prime_vs_sub` shall submit reports at frequencies specified in Attachment `r CSDR_plan_attch_numb` - CSDR Plan.  

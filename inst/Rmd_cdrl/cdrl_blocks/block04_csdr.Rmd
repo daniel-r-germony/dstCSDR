@@ -1,0 +1,5 @@
+---
+title: "CSDR CDRL Block 04"
+output: html_document
+---
+Block 04: The `r prime_vs_sub` shall develop, maintain, and deliver the data item in accordance with `r CDRL_did`, the CSDR Manual (DoD Manual 5000.04), and as tailored in this CDRL and Attachment `r CSDR_plan_attch_numb` - CSDR Plan. The CSDR Manual is available from the CADE website at https://cade.osd.mil/.  

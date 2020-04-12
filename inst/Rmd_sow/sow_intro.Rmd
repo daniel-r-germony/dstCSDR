@@ -12,8 +12,8 @@ The `r prime_vs_sub` shall systematically collect and report actual contract cos
 ```
 
 
-| Report Title                                                                    |             CDRL              |
-| :------------------------------------------------------------------------------ | :---------------------------: |
+| Report Title                                                                    |          CDRL          |
+| :------------------------------------------------------------------------------ | :--------------------: |
 | Resource Distribution Table                                                     |   `r RDT_CDRL_numb`    |
 | Cost and Hour Report (FlexFile)                                                 | `r FlexFile_CDRL_numb` |
 | Quantity Data Report                                                            |   `r QtyData_CDRL_numb`|

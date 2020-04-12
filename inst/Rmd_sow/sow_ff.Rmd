@@ -1,0 +1,7 @@
+---
+title: "sow_ff"
+output: html_document
+---
+
+#### Cost and Hour Report (FlexFile)
+The `r prime_vs_sub` shall prepare and submit the "Cost and Hour Report (FlexFile)" in accordance with CDRL `r FlexFile_CDRL_numb`. The "Cost and Hour Report (FlexFile)" reports incurred and forecasted costs and hours related business data in order to perform this contract.

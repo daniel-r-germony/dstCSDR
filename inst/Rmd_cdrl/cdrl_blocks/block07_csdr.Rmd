@@ -1,0 +1,5 @@
+---
+title: "CSDR CDRL Block 07"
+output: html_document
+---
+Block 07: Deliverables will be reviewed by the Government for technical content and format compliance. The DCARC office will issue a letter stating if the submission to the DCARC website has been accepted or rejected. The DCARC letter will identify reasons a submission was redirected, if applicable. The `r prime_vs_sub` shall make all corrections to the deliverable identified in the rejection letter and shall resubmit to the DCARC. The rejection letter will include a resubmission timeline which will be at least 15 calendar days from receipt of a rejection letter.  

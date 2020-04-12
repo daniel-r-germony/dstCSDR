@@ -1,0 +1,5 @@
+---
+title: "CBDR CDRL Block 10-13"
+output: html_document
+---
+Block 10, 11, 12, and 13: The `r prime_vs_sub`shall be required to submit a 1921-3 Contractor Business Data Report on an annual basis within 60 days of the end of the contractor's fiscal year for the life of the contract in accordance with `r CDRL_did`. One report is required to be completed and submitted by each Forward Pricing Rate (FPR) unit (e.g., plant, site, business unit) per year, independent of the number of contracts within the FPR unit which contain this CDRL item.   

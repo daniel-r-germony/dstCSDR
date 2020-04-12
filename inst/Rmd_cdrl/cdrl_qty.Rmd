@@ -1,0 +1,60 @@
+---
+title: "Quantity Data Report CDRL"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+version: 0.2.0
+---
+
+A. CONTRACT LINE ITEM NO.........: `r cdrl_clin_numb`  
+B. EXHIBIT.......................: `r cdrl_exhibit`  
+C. CATEGORY......................: Other.  
+D. SYSTEM/ITEM...................: `r prime_mission_product`  
+E. CONTRACT/PR NUMBER............: `r contract_numb`  
+F. CONTRACTOR....................: `r contractor_name`  
+G. PREPARED BY...................: `r cdrl_prepared_by`  
+H. DATE..........................: `r cdrl_prepared_date`  
+I. APPROVED BY...................: `r cdrl_approved_by`  
+J. DATE..........................: `r cdrl_approved_date`  
+01. DATA ITEM NUMBER.............: `r QtyData_CDRL_numb`  
+02. TITLE OF DATA ITEM...........: `r QtyData_CDRL_title`  
+03. SUBTITLE ....................: `r QtyData_CDRL_subtitle`  
+04. AUTHORITY....................: `r QtyData_CDRL_did`(T) and see Block 16.  
+05. CONTRACT REFERENCE...........:   
+06. REQUIRING OFFICE.............: `r program_office_name_abbr`  
+07. DD 250 REQ...................: See Block 16.  
+08. APPROVAL CODE................: None.  
+09. DIST. STATEMENT REQUIRED.....: `r QtyData_CDRL_dist`  
+10. FREQUENCY....................: See Block 16.  
+11. AS OF DATE...................: See Block 16.  
+12. DATE OF FIRST SUBMISSION.....: See Block 16.  
+13. DATE OF SUBSEQUENT SUBMISSION: See Block 16.  
+14. DISTRIBUTION.................: See Block 16.  
+15. TOTAL........................: See Attachment `r CSDR_plan_attch_numb` - CSDR Plan.  
+16. REMARKS......................:  
+
+Block 04: The `r prime_vs_sub` shall develop, maintain, and deliver the data item in accordance with `r QtyData_CDRL_did`, the CSDR Manual (DoD Manual 5000.04), and as tailored in this CDRL and Attachment `r CSDR_plan_attch_numb` - CSDR Plan. The CSDR Manual is available from the CADE website at https://cade.osd.mil/.  
+
+```{r include=FALSE}
+CDRL_did <- QtyData_CDRL_did
+```
+
+```{r child='cdrl_blocks/block04_csdr.Rmd'}
+```
+
+The Quantity Date Report shall be delivered in either a) MS Excel (file extension ".xlsx") or comma separated values (file extension ".csv") in the `r prime_vs_sub`’s format of choosing, so long as it fulfills the requirements of the DD FORM 2794 as is in accordance with the Quantity Data Report DID (`r QtyData_CDRL_did`) or b) JavaScript Object Notation (JSON) as described in the Quantity Data Report Format Specification (FFS) and Data Exchange Instructions (DEI) referenced in the Quantity Data Report DID Requirements Section 2.  
+
+```{r child='cdrl_blocks/block07_csdr.Rmd'}
+```
+
+```{r child='cdrl_blocks/block10-13_csdr.Rmd'}
+```
+
+```{r child='cdrl_blocks/block14_csdr.Rmd'}
+```
+
+`r submission_instructions`  
+
+17. PRICE GROUP..................: N/A
+18. ESTIMATED TOTAL PRICE........: N/A
