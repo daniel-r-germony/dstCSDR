@@ -1,0 +1,59 @@
+---
+title: "Contractor Business Data Report Dictionary CDRL"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+version: 0.2.0
+---
+
+A. CONTRACT LINE ITEM NO.........: `r cdrl_clin_numb`  
+B. EXHIBIT.......................: `r cdrl_exhibit`  
+C. CATEGORY......................: Other.  
+D. SYSTEM/ITEM...................: `r prime_mission_product`  
+E. CONTRACT/PR NUMBER............: `r contract_numb`  
+F. CONTRACTOR....................: `r contractor_name`  
+G. PREPARED BY...................: `r cdrl_prepared_by`  
+H. DATE..........................: `r cdrl_prepared_date`  
+I. APPROVED BY...................: `r cdrl_approved_by`  
+J. DATE..........................: `r cdrl_approved_date`  
+01. DATA ITEM NUMBER.............: `r CBDR_CDRL_numb`  
+02. TITLE OF DATA ITEM...........: `r CBDR_CDRL_title`  
+03. SUBTITLE ....................: `r CBDR_CDRL_subtitle`  
+04. AUTHORITY....................: `r CBDR_CDRL_did`(T) and see Block 16.  
+05. CONTRACT REFERENCE...........:  
+06. REQUIRING OFFICE.............:`r program_office_name_abbr`  
+07. DD 250 REQ...................: See Block 16.  
+08. APPROVAL CODE................: None.  
+09. DIST. STATEMENT REQUIRED.....: `r CBDR_CDRL_dist`  
+10. FREQUENCY....................: See Block 16.  
+11. AS OF DATE...................: See Block 16.  
+12. DATE OF FIRST SUBMISSION.....: See Block 16.  
+13. DATE OF SUBSEQUENT SUBMISSION: See Block 16.  
+14. DISTRIBUTION.................: See Block 16.  
+15. TOTAL........................: See Block 16.  
+16. REMARKS......................:  
+
+```{r include=FALSE}
+CDRL_did <- CBDR_CDRL_did
+```
+
+```{r child='cdrl_blocks/block04_csdr.Rmd'}
+```
+
+The Contractor Business Data Report is to be prepared by and for the business entity (e.g., plant, site, or business unit) responsible for submitting the Forward Pricing Rate Proposal (FPRP) representing the basis for Forward Pricing Rate Agreement (FPRA) negotiations with the government. In the absence of a FPR requirement, the term “FPR unit” shall be interpreted for reporting purposes as “business unit” as defined in the FAR.  
+
+The required form and file type for each 1921-3 report is specified in `r CBDR_CDRL_did`.
+
+```{r child='cdrl_blocks/block07_csdr.Rmd'}
+```
+
+Block 10, 11, 12, and 13: The `r prime_vs_sub`shall be required to submit a 1921-3 Contractor Business Data Report on an annual basis within 60 days of the end of the contractor's fiscal year for the life of the contract in accordance with `r CDRL_did`. One report is required to be completed and submitted by each Forward Pricing Rate (FPR) unit (e.g., plant, site, business unit) per year, independent of the number of contracts within the FPR unit which contain this CDRL item.   
+
+```{r child='cdrl_blocks/block14_csdr.Rmd'}
+```
+
+`r submission_instructions`  
+
+17. PRICE GROUP..................: N/A
+18. ESTIMATED TOTAL PRICE........: N/A

@@ -1,0 +1,56 @@
+---
+title: "Enterprise Resource Planning (ERP) Software Development Report CDRL"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+version: 0.2.0
+---
+
+A. CONTRACT LINE ITEM NO.........: `r params_from_excel$cdrl_clin_numb`  
+B. EXHIBIT.......................: `r params_from_excel$cdrl_exhibit`  
+C. CATEGORY......................: Other.  
+D. SYSTEM/ITEM...................: `r params_from_excel$prime_mission_product`  
+E. CONTRACT/PR NUMBER............: `r params_from_excel$contract_numb`  
+F. CONTRACTOR....................: `r params_from_excel$contractor_name`  
+G. PREPARED BY...................: `r params_from_excel$cdrl_prepared_by`  
+H. DATE..........................: `r params_from_excel$cdrl_prepared_date`  
+I. APPROVED BY...................: `r params_from_excel$cdrl_approved_by`  
+J. DATE..........................: `r params_from_excel$cdrl_approved_date`  
+01. DATA ITEM NUMBER.............: `r params_from_excel$ERP_CDRL_numb`  
+02. TITLE OF DATA ITEM...........: `r ERP_CDRL_title`  
+03. SUBTITLE ....................: `r ERP_CDRL_subtitle`  
+04. AUTHORITY....................: `r ERP_CDRL_did`(T) and see Block 16.  
+05. CONTRACT REFERENCE...........:  
+06. REQUIRING OFFICE.............: `r params_from_excel$program_office_name_abbr`  
+07. DD 250 REQ...................: See Block 16.  
+08. APPROVAL CODE................: None.  
+09. DIST. STATEMENT REQUIRED.....: `r ERP_CDRL_dist`  
+10. FREQUENCY....................: See Block 16.  
+11. AS OF DATE...................: See Block 16.  
+12. DATE OF FIRST SUBMISSION.....: See Block 16.  
+13. DATE OF SUBSEQUENT SUBMISSION: See Block 16.  
+14. DISTRIBUTION.................: See Block 16.  
+15. TOTAL........................: See Attachment `r params_from_excel$CSDR_plan_attch_numb` - CSDR Plan.  
+16. REMARKS......................:  
+
+```{r include=FALSE}
+CDRL_did <- ERP_CDRL_did
+```
+
+```{r child='cdrl_blocks/block04_csdr.Rmd'}
+``` 
+
+```{r child='cdrl_blocks/block07_csdr.Rmd'}
+```
+
+```{r child='cdrl_blocks/block10-13_csdr.Rmd'}
+```
+
+```{r child='cdrl_blocks/block14_csdr.Rmd'}
+``` 
+
+`r params_from_excel$submission_instructions`  
+
+17. PRICE GROUP..................: N/A
+18. ESTIMATED TOTAL PRICE........: N/A

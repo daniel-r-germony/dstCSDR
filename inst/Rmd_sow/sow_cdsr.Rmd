@@ -3,4 +3,4 @@ title: "sow_cdsr"
 output: html_document
 ---
 #### Cost Data Summary Report (CDSR, DD Form 1921)
-The `r prime_vs_sub` shall prepare and submit the "Cost Data Summary Report (DD Form 1921)" in accordance with CDRL `r params$CDSR_CDRL_numb`. The "Cost Data Summary Report (DD Form 1921)" reports actual and forecasted cost and quantity data by WBS element specified in Attachment `r params$CSDR_plan_attch_numb` - CSDR Plan.  
+The `r prime_vs_sub` shall prepare and submit the "Cost Data Summary Report (DD Form 1921)" in accordance with CDRL `r CDSR_CDRL_numb`. The "Cost Data Summary Report (DD Form 1921)" reports actual and forecasted cost and quantity data by WBS element specified in Attachment `r CSDR_plan_attch_numb` - CSDR Plan.  
