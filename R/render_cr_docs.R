@@ -148,7 +148,7 @@ ERP_CDRL_title_abbr          <- "ERP"
 CFSR_CDRL_title_abbr         <- "CFSR"
 PaCR_CDRL_title_abbr         <- "PaCR"
 LSPD_CDRL_title_abbr         <- "LSPD"
-AUMC_CDRL_title_abbr         <- "AUCM"
+AUMC_CDRL_title_abbr         <- "AUMC"
 BOM_CDRL_title_abbr          <- "BOM"
 PAC_CDRL_title_abbr          <- "PAC"
 
@@ -171,7 +171,7 @@ ERP_CDRL_title          <- "Software Development Enterprise Resource Planning (E
 CFSR_CDRL_title         <- "Contract Funds Status Report (CFSR)"
 PaCR_CDRL_title         <- "Performance & Cost Report"
 LSPD_CDRL_title         <- "Lot Size Pricing Data (LSPD)"
-AUMC_CDRL_title         <- "Average Unit Manufacturing Cost (AUCM) Report"
+AUMC_CDRL_title         <- "Average Unit Manufacturing Cost (AUMC) Report"
 BOM_CDRL_title          <- "Bill of Materials (BOM)"
 PAC_CDRL_title          <- "CSDR PAC Briefing Material"
 
@@ -215,7 +215,7 @@ ERP_CDRL_did          <- "DI-MGMT-82035A"
 CFSR_CDRL_did         <- "DI-MGMT-81468"
 PaCR_CDRL_did         <- "???"  # TODO: Need a DID number for the P&RC
 LSPD_CDRL_did         <- stringr::str_c("See Attachment ", params_from_excel$LSPD_attach_numb)
-AUMC_CDRL_did         <- "DI-MGMT-81334D(T)"
+AUMC_CDRL_did         <- stringr::str_c("See Attachment ", params_from_excel$AUMC_attach_numb)
 BOM_CDRL_did          <- "DI-MGMT-81994"
 PAC_CDRL_did          <- "DI-MGMT-81605"
 

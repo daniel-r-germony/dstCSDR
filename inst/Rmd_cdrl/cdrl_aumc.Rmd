@@ -1,5 +1,5 @@
 ---
-title: "Average Unit Manufacturing Cost CDRL"
+title: "Average Unit Manufacturing Cost (AUMC) CDRL"
 output:
   word_document: default
   html_document:
@@ -31,62 +31,15 @@ J. DATE..........................: `r cdrl_approved_date`
 12. DATE OF FIRST SUBMISSION.....: See Block 16.  
 13. DATE OF SUBSEQUENT SUBMISSION: See Block 16.  
 14. DISTRIBUTION.................: See Block 16.  
-15. TOTAL........................: See Attachment `r CSDR_plan_attch_numb` - CSDR Plan.  
+15. TOTAL........................: 1.  
 16. REMARKS......................:  
 
-Block 04: The `r prime_vs_sub` shall develop, maintain, and deliver the data item in accordance with `r AUMC_CDRL_did` and as tailored in this CDRL.  
-
-The "Requirements" section of the DID is deleted and replaced with the following:  
-1. Content: The information provided in the Average Unit Manufacturing Cost (AUMC) Report will be utilized by Army and Office of the Secretary of Defense (OSD) cost analysis offices to support budget submissions by better understanding and estimating future `r prime_mission_product_abbr` costs. The information provided in this report will supplement Cost and Software Data Report deliverables provided on this contract to ensure the program is appropriately funded for enduring success. All data provided in this CDRL’s deliverable is non-binding and does not commit the `r prime_vs_sub` to any future agreements.  
-
-The report shall contain information regarding how the `r prime_vs_sub` intends to change its manufacturing process, system design, supply chain, and any other significant process changes that would impact the Average Unit Manufacturing Cost (AUMC) of the `r prime_mission_product_abbr` between the `r acqusition_phase_abbr` and a potential follow-on contract, assuming the `r prime_vs_sub` were to be awarded said follow-on contract(s).  
-
-2. Required Information:  
-a. The following topics shall be included in the deliverable via a written report and submitted in a Microsoft Word file (extension ".docx"):  
-
-|    i. MANUFACTURING LOCATION(s): A description of where the manufacturing on the current contract occurred (e.g., where were major sub-assemblies built, where were major sub-assemblies matted together/assembled into the final end item?). A description of where the `r prime_vs_sub` intends to manufacturing potential follow-on contract(s) major sub-assemblies and vehicles. A description of how the differences between `r acqusition_phase_abbr` and a potential follow-on contract(s) manufacturing location(s) may affect the AUC in follow-on contract(s); describe what effect the differences in manufacturing location(s) will have from a material cost, labor cost, and other direct cost perspective.  
-
-|    ii. MANUFACTURING PROCESS: A description of the manufacturing process utilized in the current contract (e.g., were end items built in specialized bays or on an LRIP/FRP representative production line, how were sub-assemblies produced and provided to the final assembly process, how many production shifts were utilized?). A description of the manufacturing process the `r prime_vs_sub` intends to utilize in order to produce LRIP and/or FRP `r prime_mission_product_abbr` end item. A description of how the differences between the current contract and a potential follow-on contract(s) manufacturing process will affect the AUMC of the `r prime_mission_product_abbr`; include what effect the differences in manufacturing process will have from a material cost, labor cost, and other direct cost perspective.  
-
-|    iii. SUPPLY CHAIN: A description of the supply chain process/suppliers utilized to produce the prototype vehicles on the current contract (e.g., which major sub-assemblies were produced by subcontractors vs. produced by the prime contractor?). A description of the supply chain process/suppliers the `r prime_vs_sub` intends to utilize in order to produce LRIP and/or FRP `r prime_mission_product_abbr` end items. A description of how the differences between the current cntract and a potential follow-on contract(s) LRIP and/or FRP supply chain process/suppliers will affect the AUMC of the LRIP/FRP end items; include what effect the differences in supply chain processes will have from a material cost, labor cost, and other direct cost perspective. If a Lot Size Pricing Data CDRL is included on the contract, then the `r prime_vs_sub` shall include a discussion of the rate effects it anticipates in an LRIP and/or FRP type production environment for both parts it produces and parts it procures from subcontractors given the data collected from and reported in CDRL `r LSPD_CDRL_numb` - Lot Size Pricing Data (e.g., does the `r prime_vs_sub` anticipate similar rate effects for parts it produces, does the `r prime_vs_sub` anticipate subcontractor rate effects to differ from those reported in the `r LSPD_CDRL_numb` in a LRIP/FRP environment and if so, how does it expect them to differ?).  
-
-|    iv. END ITEM DESIGN: A description of design changes from the current contract to the potential LRIP and/or FRP contract(s) the `r prime_vs_sub` intends to make to its `r prime_mission_product_abbr` end item (e.g., which major sub-assemblies/capabilities will be added or removed?). A description of how the differences between the current cntract and a potential LRIP and/or FRP `r prime_mission_product_abbr` end item design will affect the AUMC of the LRIP/FRP `r prime_mission_product_abbr` end item; include what effect that differences in `r prime_mission_product_abbr` end item design will have from a material cost, labor cost, and other direct cost perspective.  
-
-|    v. Additional Considerations:  
-|    - Include a description of the data sources, methodologies, ground rules, assumptions, and facts utilized when developing this CDRL deliverable.  
-|    - Include a description description of risks that may impact the plausibility of the data sources, methodologies, ground rules, assumptions, and facts used in this CDRL deliverable.  
-|    - Include a description of learning and rate curves used to calculate the AUMC values provided in this CDRL deliverable, which are of particular interest to the Government and may have a significant impact on budget submissions and future available funding to the program.  
-|    - Include a description of the assumed approach to subcontracting, namely an assessment of the congruency (or lack thereof) between the assumed Government `r prime_mission_product` order quantities and the associated material quantities purchased from subcontractors.  
-
-b. The `r prime_vs_sub` shall provide responses for this section (2.b.) of the CDRL in an Excel file (either submitted at the same time or embedded within the associated Word file from section 2.a.). Given the intended changes discussed in section 2.a. of the CDRL deliverable, the report shall include at least the following information given three scenarios:   
-
-|    i. AUMC at MINIMUM SUSTAINING RATE: Given the intended manufacturing location, process, supply and design changes provided in section 2.a., the `r prime_vs_sub` shall provide the annual production quantity of vehicles it would produce at the `r prime_vs_sub`’s minimum production rate, assuming LRIP production begins in the year after this contract is complete and ends when the complete Army Acquisition Objective or Army Procurement Objective quantity of `r prime_mission_product_abbr` are produced. The `r prime_vs_sub` shall provide the associated annual and total AUMC given the minimum sustaining rate of production. AUMC values shall be reported as labor cost, material cost, and other direct costs. If the `r prime_vs_sub` would modify any of the information provided in section 2.a., provide updated descriptions associated with this scenario.  
-
-|    ii. AUMC at USG PROVIDED PRODUCTION RATE: The USG shall provide an annual `r prime_mission_product_abbr` production profile not later than 60 days before this CDRL deliverable submission date. The `r prime_vs_sub` shall utilize the USG provided production profile and shall describe its intended manufacturing location, process, supply and design changes provided in section 2.a. The `r prime_vs_sub` shall provide the associated annual and total AUMC given the USG provided rate of production. AUMC values shall be reported as labor cost, material cost, and other direct costs. If the `r prime_vs_sub` would modify any of the information provided in section 2.a., provide updated descriptions associated with this scenario.  
-
-|    iii. AUMC at MAXIMUM PRODUCTION RATE: Given the intended manufacturing location, process, supply and design changes provided in section 2.a., the `r prime_vs_sub` shall provide the annual production quantity of vehicles it would produce at the `r prime_vs_sub`’s maximum production rate, assuming LRIP production begins in the year after this contract is complete and ends when the complete Army Acquisition Objective quantity of `r prime_mission_product_abbr` are produced. The `r prime_vs_sub` shall provide the associated annual and total AUMC given the maximum rate of production. AUMC values shall be reported as labor, material, and other direct costs. If the `r prime_vs_sub` would modify any of the information provided in section 2.a., provide updated descriptions associated with this scenario.  
-
-DEFINITIONS:  
-
-i. Average Unit Manufacturing Cost (AUMC) – Includes the costs of all materials, labor, other direct costs incurred in the fabrication, checkout, paint, preparation for shipment to its acceptance destination, processing and installation of parts, sub-assemblies, major assemblies, and subsystems needed for the final system, and associated burdens (i.e., overhead, general and administrative, cost of money, and profit/fee) necessary to build complete production vehicles by the prime contractor and all subcontractors. AUMC includes the labor and other direct costs to integrate GFE into the final vehicle if completed prior to final acceptance. Annual costs are divided by an annual quantity of vehicles produced, if calculating an annual AUMC, or total cost is divided over the full Approved Acquisition Objective (AAO) or Army Procurement Objective (APO) quantity of vehicles if calculating a total AUMC. AUMC does NOT include the costs associated with the procurement of GFE hardware (which is issued to the prime contractor for integration into the final vehicle prior to acceptance or delivery), recurring Systems Engineering/Program Management, Engineering Change Orders (ECOs), vehicle modifications, nonrecurring engineering, training, support equipment, integrated logistics support, data, or initial spares; rather, AUMC includes only those costs necessary to build the vehicle.  
-
-ii. Minimum Sustaining Rate – The lowest feasible level of production for a production line to stay open.  
-
-iii. Maximum Production Rate – The maximum/fastest feasible level of production to go from producing 0 of an end item annually till a given number has been delivered.  
-
-iv. Labor Cost – Costs uniquely attributable to direct hourly labor rates for touch labor to produce or manufacture an end item and indirect labor cost overheads (e.g., the cost of supervisors overseeing touch labor) as well as any fringe benefits or other costs due solely to the execution of touch labor.  
-
-v. Material Cost – The cost paid for any crude, semi-fabricated, or fully fabricated assemblies, sub-assemblies, or discrete components incorporated into the final manufacture of the end item.  
- 
-vi. Other Direct Cost – All costs other than labor costs and material costs to include General and Administrative, profit/fee, security, royalty, license fees, transportation, preservation and applicable Federal excise tax. 
+Block 04: The `r prime_vs_sub` shall develop, maintain, and deliver the data item in accordance with Attachment - `r AUMC_attach_numb` and as tailored in this CDRL.  
 
 ```{r child='cdrl_blocks/block07_csdr.Rmd'}
 ```
 
-`r # TODO: Fix submission event reference.  It should not be pointing to the CSDR Plan.`  
-
-```{r child='cdrl_blocks/block10-13_csdr.Rmd'}
-```
+Block 10, 11, 12, and 13: The `r prime_vs_sub` shall submit reports at frequencies specified in Attachment `r AUMC_attach_numb` - Average Unit Manufacturing Cost Report.  
 
 ```{r child='cdrl_blocks/block14_csdr.Rmd'}
 ```
