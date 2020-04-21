@@ -1,0 +1,49 @@
+---
+title: "Contract Funds Status Report (CFSR) CDRL"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+version: 0.2.0.9000
+---
+
+A. CONTRACT LINE ITEM NO.........: `r cdrl_clin_numb`  
+B. EXHIBIT.......................: `r cdrl_exhibit`  
+C. CATEGORY......................: Other.  
+D. SYSTEM/ITEM...................: `r prime_mission_product`  
+E. CONTRACT/PR NUMBER............: `r contract_numb`  
+F. CONTRACTOR....................: `r contractor_name`  
+G. PREPARED BY...................: `r cdrl_prepared_by`  
+H. DATE..........................: `r cdrl_prepared_date`  
+I. APPROVED BY...................: `r cdrl_approved_by`  
+J. DATE..........................: `r cdrl_approved_date`  
+01. DATA ITEM NUMBER.............: `r CFSR_CDRL_numb`  
+02. TITLE OF DATA ITEM...........: `r CFSR_CDRL_title`  
+03. SUBTITLE ....................: `r CFSR_CDRL_subtitle`  
+04. AUTHORITY....................: `r CFSR_CDRL_did`(T) and see Block 16. 
+05. CONTRACT REFERENCE...........:  
+06. REQUIRING OFFICE.............: `r program_office_name_abbr`  
+07. DD 250 REQ...................: See Block 16.  
+08. APPROVAL CODE................: None.  
+09. DIST. STATEMENT REQUIRED.....: `r CFSR_CDRL_dist`  
+10. FREQUENCY....................: QRTLY (i.e., Quarterly)  
+11. AS OF DATE...................: See `r CFSR_CDRL_did`.  
+12. DATE OF FIRST SUBMISSION.....: See `r CFSR_CDRL_did`.  
+13. DATE OF SUBSEQUENT SUBMISSION: See `r CFSR_CDRL_did`.  
+14. DISTRIBUTION.................: See Block 16.  
+15. TOTAL........................: See `r CFSR_CDRL_did`.  
+16. REMARKS......................:  
+
+Block 04: The `r prime_vs_sub` shall develop, maintain, and deliver the data item in accordance with `r CFSR_CDRL_did` and as tailored in this CDRL.  
+
+Block 07: The DCARC office will issue a letter stating if the submission to the DCARC website has been accepted or rejected. Deliverables will be reviewed for technical content and/or format. Should the Government require the data item to be corrected after its delivery the `r prime_vs_sub` shall resubmit an update within 15 calendar days after receipt of Government comments.  
+
+`r # TODO: Fix submission event reference.  It should not be pointing to the CSDR Plan.`
+Block 10, 11, 12, and 13: The contractor shall submit reports at frequencies specified in Attachment `r CSDR_plan_attch_numb` - CSDR Plan.  
+
+Block 14: The `r prime_vs_sub` shall submit files electronically using the CADE website. Data submitters shall register through the CADE website and possess a DoD-approved ECA digital certificate or DoD-issued CAC to obtain a CADE Portal account and be authorized to upload CSDR content. Users can obtain access by submitting user information about themselves and their organizations to the CADE Portal and requesting a CSDR submitter user role. After the registration information has been verified, CAPE shall authorize the user account and requested roles. All CADE Portal accounts shall be renewed at least annually.  
+
+`r submission_instructions`  
+
+17. PRICE GROUP..................: N/A
+18. ESTIMATED TOTAL PRICE........: N/A

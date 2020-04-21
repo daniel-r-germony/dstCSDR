@@ -1,0 +1,65 @@
+---
+title: "Lot Size Pricing Data (LSPD) CDRL"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+version: 0.2.0
+---
+
+B. EXHIBIT.......................: `r cdrl_exhibit`  
+A. CONTRACT LINE ITEM NO.........: `r cdrl_clin_numb`  
+C. CATEGORY......................: Other.  
+D. SYSTEM/ITEM...................: `r prime_mission_product`  
+E. CONTRACT/PR NUMBER............: `r contract_numb`  
+F. CONTRACTOR....................: `r contractor_name`  
+G. PREPARED BY...................: `r cdrl_prepared_by`  
+H. DATE..........................: `r cdrl_prepared_date`  
+I. APPROVED BY...................: `r cdrl_approved_by`  
+J. DATE..........................: `r cdrl_approved_date`  
+01. DATA ITEM NUMBER.............: `r LSPD_CDRL_numb`  
+02. TITLE OF DATA ITEM...........: `r LSPD_CDRL_title`  
+03. SUBTITLE ....................: `r LSPD_CDRL_subtitle`  
+04. AUTHORITY....................: `r LSPD_CDRL_did`(T) and see Block 16.  
+05. CONTRACT REFERENCE...........:  
+06. REQUIRING OFFICE.............: `r program_office_name_abbr`  
+07. DD 250 REQ...................: See Block 16.  
+08. APPROVAL CODE................: None.  
+09. DIST. STATEMENT REQUIRED.....: `r LSPD_CDRL_dist`  
+10. FREQUENCY....................: See Block 16.  
+11. AS OF DATE...................: See Block 16.  
+12. DATE OF FIRST SUBMISSION.....: See Block 16.  
+13. DATE OF SUBSEQUENT SUBMISSION: See Block 16.  
+14. DISTRIBUTION.................: See Block 16.  
+15. TOTAL........................: See Attachment `r CSDR_plan_attch_numb` - CSDR Plan.  
+16. REMARKS......................:  
+
+Block 04: The `r prime_vs_sub` shall develop, maintain, and deliver the data item in accordance with `r LSPD_CDRL_did`, Attachment `r LSPD_attach_numb` - Lot Size Pricing Data, and as tailored in this CDRL.  
+
+The purpose of the LSPD Report, CDRL `r LSPD_CDRL_numb` is to provide data on how changes in lot/production quantity may effect unit price (i.e., when higher quantities are ordered, how much does unit price change).  
+
+A Major End Item (MEI) is defined as: a component procured by the Contractor wherein the cost to the Prime Contractor is greater than \$100,000 per unit. A Component of Interest (CoI) is defined as: a component part for which the Government determines there is a significant technical, cost, or schedule risk implication. The list of CoIs will be identified by the Government within 30 days of acceptance of the Contractor’s BOM, CDRL `r BOM_CDRL_numb`, and will be modified into the LSPD Workbook (Attachment `r LSPD_attach_numb`). For planning purposes, the Contractor shall assume approximately 15 components will be considered CoI.  
+
+For all MEI or Col, the prime Contractor shall obtain and provide information from its subcontractors to include Rough Order Magnitude (ROM)-level pricing information and quantity discount information based on the procurement buy quantities provided by the Government within the LSPD Workbook (Attachment `r LSPD_attach_numb`). The notional list of components that could be included in the LSPD Workbook (Attachment `r LSPD_attach_numb`) includes, but is not limited to, the following subsystems:
+
+1. Hull weldment
+2. Suspension system
+3. Hydraulic system
+4. Environmental control system
+5. Hull armor
+6. Automotive drive shafts/differentials
+7. Dressed engine
+8. Transmission  
+
+```{r child='cdrl_blocks/block07_csdr.Rmd'}
+```
+
+Block 10, 11, 12, and 13: The `r prime_vs_sub` shall submit reports at frequencies specified in Attachment `r LSPD_attach_numb` - Lot Size Pricing Data.  
+
+```{r child='cdrl_blocks/block14_csdr.Rmd'}
+```
+
+`r submission_instructions`  
+
+17. PRICE GROUP..................: N/A
+18. ESTIMATED TOTAL PRICE........: N/A

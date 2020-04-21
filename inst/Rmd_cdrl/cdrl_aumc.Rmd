@@ -33,8 +33,8 @@ J. DATE..........................: `r cdrl_approved_date`
 14. DISTRIBUTION.................: See Block 16.  
 15. TOTAL........................: 1.  
 16. REMARKS......................:  
-
-Block 04: The `r prime_vs_sub` shall develop, maintain, and deliver the data item in accordance with Attachment - `r AUMC_attach_numb` and as tailored in this CDRL.  
+ 
+Block 04: The `r prime_vs_sub` shall develop, maintain, and deliver the data item in accordance with `r LSPD_CDRL_did`, Attachment `r AUMC_attach_numb` - Average Unit Manufacturing Cost, and as tailored in this CDRL.  
 
 ```{r child='cdrl_blocks/block07_csdr.Rmd'}
 ```

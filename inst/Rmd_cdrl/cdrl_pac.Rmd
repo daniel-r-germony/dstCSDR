@@ -1,0 +1,57 @@
+---
+title: "Post Award Conference (PAC) Materials CDRL"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+version: 0.2.0
+---
+
+A. CONTRACT LINE ITEM NO.........: `r cdrl_clin_numb`  
+B. EXHIBIT.......................: `r cdrl_exhibit`  
+C. CATEGORY......................: Other.  
+D. SYSTEM/ITEM...................: `r prime_mission_product`  
+E. CONTRACT/PR NUMBER............: `r contract_numb`  
+F. CONTRACTOR....................: `r contractor_name`  
+G. PREPARED BY...................: `r cdrl_prepared_by`  
+H. DATE..........................: `r cdrl_prepared_date`  
+I. APPROVED BY...................: `r cdrl_approved_by`  
+J. DATE..........................: `r cdrl_approved_date`  
+01. DATA ITEM NUMBER.............: `r PAC_CDRL_numb`  
+02. TITLE OF DATA ITEM...........: `r PAC_CDRL_title`  
+03. SUBTITLE ....................: `r PAC_CDRL_subtitle`  
+04. AUTHORITY....................: `r PAC_CDRL_did`(T) see Block 16.  
+05. CONTRACT REFERENCE...........:  
+06. REQUIRING OFFICE.............: `r program_office_name_abbr`  
+07. DD 250 REQ...................: LT  
+08. APPROVAL CODE................: A  
+09. DIST. STATEMENT REQUIRED.....: `r PAC_CDRL_dist`  
+10. FREQUENCY....................: See Block 16.  
+11. AS OF DATE...................: See Block 16.  
+12. DATE OF FIRST SUBMISSION.....: See Block 16.  
+13. DATE OF SUBSEQUENT SUBMISSION:   
+14. DISTRIBUTION.................: See Block 16.  
+15. TOTAL........................: 1  
+16. REMARKS......................:  
+
+Block 04: The `r prime_vs_sub` shall deliver the data item in accordance with `r PAC_CDRL_did` and as tailored in this CDRL.  
+
+The "Requirements" section of the DID is deleted and replaced with the following:  
+
+1. Content & Required Information: The submission shall contain all briefing materials and supporting documents presented or displayed at the "Post Award Cost and Software Data Reporting Conference".  
+
+2. Formats: The `r prime_vs_sub` may develop and submit the deliverable in any of the following  format(s)/file extensions: ".xlsx", ".xls", ".xlsb", ".pdf", ".docx", ".txt", ".csv", ".pptx", ".ppt", ".vsd", and/or ".mpp". The `r prime_vs_sub` shall not encrypt or password protected any submitted files.  
+
+Block 10: One time.  
+
+Block 11: Date of the CSDR Post Award Conference.  
+
+Block 12: The `r prime_vs_sub` shall submit data within seven days of the CSDR Post Award Conference.  
+
+```{r child='cdrl_blocks/block14_csdr.Rmd'}
+``` 
+
+`r submission_instructions`  
+
+17. PRICE GROUP..................: N/A
+18. ESTIMATED TOTAL PRICE........: N/A

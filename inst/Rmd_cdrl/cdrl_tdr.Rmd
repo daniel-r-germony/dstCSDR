@@ -1,10 +1,10 @@
 ---
-title: "Technical Data Report CDRL"
+title: "Technical Data Report (TDR) CDRL"
 output:
   word_document: default
   html_document:
     df_print: paged
-version: 0.1.0
+version: 0.2.0
 ---
 
 A. CONTRACT LINE ITEM NO.........: `r cdrl_clin_numb`  
