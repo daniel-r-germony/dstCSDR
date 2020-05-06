@@ -1,9 +1,8 @@
 ---
-title: "sow_pac"
 output: html_document
 ---
 #### Post-Award Cost (PAC) and Software Data Reporting Conference
-The `r prime_vs_sub` shall host a CSDR Post-Award Conference (PAC) at the `r prime_vs_sub`’s facility where CSDRs are prepared with the Government’s Cost Working Group Integrated Product Team (CWIPT) IAW DFARS 242.503-2(b) and DoD 5000.04 (CSDR Manual). The purpose of the Post-Award CSDR Conference is to review the contract’s CSDR requirements and assess how the Contractor’s accounting system satisfies the CSDR requirements found in DoD 5000.04 (CSDR Manual) and Attachment `r CSDR_plan_attch_numb` - CSDR Plan. In a briefing presented by the Contractor in its own format, the Contractor shall:  
+The `r prime_vs_sub` shall host a CSDR Post-Award Conference (PAC) at the `r prime_vs_sub`’s facility where CSDRs are prepared with the Government’s Cost Working Group Integrated Product Team (CWIPT) IAW DFARS 242.503-2(b) and DoD Manual 5000.04 (CSDR Manual). The purpose of the Post-Award CSDR Conference is to review the contract’s CSDR requirements and assess how the Contractor’s accounting system satisfies the CSDR requirements found in DoD 5000.04 (CSDR Manual) and Attachment `r CSDR_plan_attch_numb` - CSDR Plan. In a briefing presented by the Contractor in its own format, the Contractor shall:  
 - Demonstrate how it collects cost data in its accounting system and how that data will be utilized to provide actual cost transactions and minimize cost allocations when preparing CSDR data deliverables.  
 - Describe how recurring vs. nonrecurring costs are segregated in its accounting system and for the purpose of CSDR reporting.  
 - Demonstrate how the data from its accounting system will be mapped into the CSDR reports required by Attachment `r CSDR_plan_attch_numb` - CSDR Plan and associated CDRLs.  

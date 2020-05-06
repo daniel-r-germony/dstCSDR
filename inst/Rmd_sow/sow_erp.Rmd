@@ -1,5 +1,4 @@
 ---
-title: "sow_erp"
 output: html_document
 ---
 #### Enterprise Resource Planning (ERP) Software Development Report (DD Form 3026-3)

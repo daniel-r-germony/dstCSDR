@@ -1,5 +1,4 @@
 ---
-title: "sow_sdr"
 output: html_document
 ---
 #### Software Resources Data Report (SRDR) - Development

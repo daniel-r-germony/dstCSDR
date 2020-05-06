@@ -1,6 +1,5 @@
 ---
 output: html_document
 ---
-
 #### Resource Distribution Table (RDT)
-The `r prime_vs_sub` shall prepare and submit the "Resource Distribution Table (RDT)" in accordance with CDRL `r RDT_CDRL_numb`. The "Resource Distribution Table (RDT)" identifies the value of work assigned to the Contractor and its subcontractors by for each WBS element listed in Attachment `r CSDR_plan_attch_numb` - CSDR Plan, and is the primary means of identifying which subcontractors qualify for CSDR flow down reporting.  
+The `r prime_vs_sub` shall prepare and submit the "Resource Distribution Table (RDT)" in accordance with CDRL `r RDT_CDRL_numb` and Attachment `r AUMC_attach_numb` - Resource Distribution Table. The "Resource Distribution Table (RDT)" identifies the value of work assigned to the Contractor and its subcontractors by for each WBS element listed in Attachment `r CSDR_plan_attch_numb` - CSDR Plan, and is the primary means of identifying which subcontractors qualify for CSDR flow down reporting.  

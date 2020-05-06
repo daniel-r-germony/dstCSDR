@@ -1,7 +1,5 @@
 ---
-title: "sow_quantity"
 output: html_document
 ---
-
 #### Quantity Data Report
 The `r prime_vs_sub` shall prepare and submit the "Quantity Data Report" in accordance with CDRL `QtyData_CDRL_numb`. The "Quantity Data Report" reports quantity information to provide context to the data reported in FlexFile submissions and in order to derive accurate unit cost information.  

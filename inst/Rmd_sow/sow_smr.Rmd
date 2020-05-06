@@ -1,5 +1,4 @@
 ---
-title: "sow_smr"
 output: html_document
 ---
 #### Software Resources Data Report (SRDR) - Maintenance

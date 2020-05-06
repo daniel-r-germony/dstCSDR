@@ -1,5 +1,4 @@
 ---
-title: "sow_bom"
 output: html_document
 ---
 #### Bill of Materials (BOM)

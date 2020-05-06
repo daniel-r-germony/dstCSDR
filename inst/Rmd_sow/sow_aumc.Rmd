@@ -1,0 +1,5 @@
+---
+output: html_document
+---
+#### Average Unit Manufacturing Cost (AUMC) Report
+The `r prime_vs_sub` shall prepare and submit the "Average Unit Manufacturing Cost (AUMC) Report" in accordance with CDRL `r AUMC_CDRL_numb` and Attachment `r AUMC_attach_numb` - Average Unit Manufacturing Cost (AUMC) Report. The "Average Unit Manufacturing Cost (AUMC) Report" reports non-binding estimates on the `r prime_vs_sub`'s anticipated Average Unit Manufacturing Costs (AUMC) and any `r prime_vs_sub` planned changes to its manufacturing process, end item design, supply chain process, and any other significant planned processes changes anticipated on potential LRIP/FRP follow-on contract(s), assuming the `r prime_vs_sub` were to be awarded said follow-on contract(s).  

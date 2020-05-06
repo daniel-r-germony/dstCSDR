@@ -1,5 +1,4 @@
 ---
-title: "sow_cbdr"
 output: html_document
 ---
 #### Contractor Business Data Report (CBDR, DD Form 1921-3)

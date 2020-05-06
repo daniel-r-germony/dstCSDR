@@ -1,5 +1,4 @@
 ---
-title: "sow_pcr"
 output: html_document
 ---
 #### Progress Curve Report (PCR, DD Form 1921-2)
